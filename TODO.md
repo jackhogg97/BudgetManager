@@ -1,0 +1,4 @@
+- Add ColorPicker
+- Store transactions
+  - Make DataStore generic
+- UI improvements
