@@ -11,13 +11,13 @@ struct EditBudgets: View
 {
     @Binding var showing: Page
 
-    var dataStore: DataStore
+    var dataStore: DataStore<Category>
 
     @State private var categories: [Category] = []
 
     init(showing: Binding<Page>)
     {
-        self.dataStore = DataStore()
+        self.dataStore = DataStore<Category>(location: "categories")
         self._categories = State(initialValue: self.dataStore.data)
         self._showing = showing
     }

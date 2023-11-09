@@ -28,14 +28,14 @@ struct BudgetView: View
                 }
                 .padding(.horizontal)
                 
-                let jsonData = DataStore()
+                let categoryStore = DataStore<Category>(location: "categories")
 
-                let rowHeight = geometry.size.height / CGFloat(jsonData.data.count)
+                let rowHeight = geometry.size.height / CGFloat(categoryStore.data.count)
 
                 let labelWidth = geometry.size.width * 0.13
                 let valueWidth = geometry.size.width * 0.18
 
-                ForEach(jsonData.data)
+                ForEach(categoryStore.data)
                 {
                     category in
                     HStack 

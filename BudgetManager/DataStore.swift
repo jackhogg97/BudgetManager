@@ -7,17 +7,19 @@
 
 import Foundation
 
-public final class DataStore
+public final class DataStore<T: Codable>
 {
-    var data: [Category] = []
+    var data: [T] = []
+    let filename: String
 
-    init()
+    init(location: String)
     {
+        self.filename = location
         self.loadData()
     }
 
     func saveData(data: [Category]) {
-        if let url = Bundle.main.url(forResource: "categories.json", withExtension: nil)
+        if let url = getDataLocation()
         {
             let encoder = JSONEncoder()
 
@@ -34,18 +36,27 @@ public final class DataStore
     }
 
     private func loadData() {
-        if let url = Bundle.main.url(forResource: "categories.json", withExtension: nil) {
+        if let url = getDataLocation() {
             if let data = try? Data(contentsOf: url)
             {
                 let decoder = JSONDecoder()
 
                 do {
-                    let result = try decoder.decode([Category].self, from: data)
+                    let result = try decoder.decode([T].self, from: data)
                     self.data = result
                 } catch {
                     print("Error loading data \(error)")
                 }
             }
+        }
+    }
+
+    private func getDataLocation() -> URL? {
+        if let url = Bundle.main.url(forResource: self.filename, withExtension: "json") {
+            return url
+        } else {
+            print("Error: Unable find location of stored data")
+            return nil
         }
     }
 }
