@@ -17,6 +17,16 @@ struct AddTransactionView: View
     @State private var amount: Double = 0.0
     @State private var notes: String = ""
 
+    private var TransactionStore: DataStore<Transaction>
+    @State private var transactions: [Transaction]
+
+    init(showing: Binding<Page>)
+    {
+        self._showing = showing
+        self.TransactionStore = DataStore<Transaction>(location: "transactions")
+        self._transactions = State(initialValue: self.TransactionStore.getData())
+    }
+
     var body: some View
     {
         VStack(alignment: .leading) 
@@ -59,7 +69,8 @@ struct AddTransactionView: View
                         self.showing = .BudgetPage
                     }
                     Button("Add") {
-                        // Do some things
+                        self.transactions.append(Transaction(name: self.name, category: self.category, date: self.date, amount: self.amount, notes: self.notes))
+                        self.TransactionStore.saveData(data: self.transactions)
                         self.showing = .BudgetPage
                     }
                 }

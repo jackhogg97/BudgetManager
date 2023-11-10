@@ -15,7 +15,8 @@
 		B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */; };
 		B3244E352AFCEF0D00CE5CD3 /* EditBudgets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E342AFCEF0D00CE5CD3 /* EditBudgets.swift */; };
 		B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE3D2AFD47FD00144798 /* DataStore.swift */; };
-		B3436C132AFD18C5004F337F /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = B3436C122AFD18C5004F337F /* categories.json */; };
+		B330AE452AFD53FE00144798 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE442AFD53FE00144798 /* categories.json */; };
+		B330AE472AFD56DA00144798 /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE462AFD56DA00144798 /* transactions.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,7 +29,8 @@
 		B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		B3244E342AFCEF0D00CE5CD3 /* EditBudgets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgets.swift; sourceTree = "<group>"; };
 		B330AE3D2AFD47FD00144798 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
-		B3436C122AFD18C5004F337F /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		B330AE442AFD53FE00144798 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		B330AE462AFD56DA00144798 /* transactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +63,8 @@
 		B3244E1F2AFBE7BC00CE5CD3 /* BudgetManager */ = {
 			isa = PBXGroup;
 			children = (
-				B3436C122AFD18C5004F337F /* categories.json */,
+				B330AE442AFD53FE00144798 /* categories.json */,
+				B330AE462AFD56DA00144798 /* transactions.json */,
 				B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */,
 				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
 				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
@@ -141,7 +144,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */,
-				B3436C132AFD18C5004F337F /* categories.json in Resources */,
+				B330AE452AFD53FE00144798 /* categories.json in Resources */,
+				B330AE472AFD56DA00144798 /* transactions.json in Resources */,
 				B3244E252AFBE7C000CE5CD3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

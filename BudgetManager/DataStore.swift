@@ -9,8 +9,8 @@ import Foundation
 
 public final class DataStore<T: Codable>
 {
-    var data: [T] = []
-    let filename: String
+    private var data: [T] = []
+    private let filename: String
 
     init(location: String)
     {
@@ -18,7 +18,12 @@ public final class DataStore<T: Codable>
         self.loadData()
     }
 
-    func saveData(data: [Category]) {
+    func getData() -> [T] {
+        self.loadData()
+        return self.data
+    }
+
+    func saveData(data: [T]) {
         if let url = getDataLocation()
         {
             let encoder = JSONEncoder()

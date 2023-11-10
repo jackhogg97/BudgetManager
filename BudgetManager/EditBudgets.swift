@@ -18,7 +18,7 @@ struct EditBudgets: View
     init(showing: Binding<Page>)
     {
         self.dataStore = DataStore<Category>(location: "categories")
-        self._categories = State(initialValue: self.dataStore.data)
+        self._categories = State(initialValue: self.dataStore.getData())
         self._showing = showing
     }
 
@@ -61,14 +61,6 @@ struct EditBudgets: View
     }
 }
 
-//#Preview {
-//    struct PreviewWrapper: View {
-//        @State var value: Bool = true
-//
-//        var body: some View {
-//            EditBudgets()
-//        }
-//    }
-//    return PreviewWrapper()
-////    EditBudgets(showing: .BudgetPage, categories: testData, colorValue: .blue, body: () -> View)
-//}
+#Preview {
+    EditBudgets(showing: .constant(.BudgetPage))
+}

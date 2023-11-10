@@ -33,11 +33,31 @@ func largestCategory(categories: [Category]) -> Double {
     return largest
 }
 
-struct Transaction: Identifiable {
-    let id = UUID()
-    let name: String
-    let category: String
-    let date: String
-    let amount: Double
-    let notes: String
+struct Transaction: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var category: String
+    var date: Date
+    var amount: Double
+    var notes: String
+}
+
+struct CategorySpend {
+    let Name: String
+    let Spend: Double
+}
+
+func calculateCurrentSpend(transactions: [Transaction], categories: inout [Category]) -> [Category]
+{
+    print(transactions)
+    print(categories)
+    for transaction in transactions
+    {
+        if let index = categories.firstIndex(where: { $0.name == transaction.category }) 
+        {
+            categories[index].currentSpend += transaction.amount
+        }
+    }
+    print(categories)
+    return categories
 }

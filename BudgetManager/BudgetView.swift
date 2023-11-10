@@ -11,6 +11,18 @@ struct BudgetView: View
 {
     @Binding var showing: Page
 
+    @State var categories: [Category] = []
+
+    let categoryStore: DataStore<Category>
+    let transactionStore: DataStore<Transaction>
+
+    init(showing: Binding<Page>) 
+    {
+        self._showing = showing
+        self.categoryStore = DataStore<Category>(location: "categories")
+        self.transactionStore = DataStore<Transaction>(location: "transactions")
+    }
+
     var body: some View
     {
         GeometryReader
@@ -23,29 +35,36 @@ struct BudgetView: View
                     Text("Budgets")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .padding(.horizontal)
+                        .onAppear {
+                            self.categories = self.categoryStore.getData()
+                            calculateCurrentSpend(transactions: self.transactionStore.getData())
+                        }
                     Spacer()
                     Button("Edit") { self.showing = .EditBudgetsPage }
                 }
-                .padding(.horizontal)
+                .padding()
                 
-                let categoryStore = DataStore<Category>(location: "categories")
-
-                let rowHeight = geometry.size.height / CGFloat(categoryStore.data.count)
+                let rowHeight = geometry.size.height / CGFloat(self.categories.count)
 
                 let labelWidth = geometry.size.width * 0.13
                 let valueWidth = geometry.size.width * 0.18
 
-                ForEach(categoryStore.data)
+                if self.categories.isEmpty
+                {
+                    Text("Click edit to add budgets")
+                }
+                Spacer()
+                ForEach(self.$categories)
                 {
                     category in
                     HStack 
                     {
-                        Text(category.name)
+                        Text(category.name.wrappedValue)
                             .font(.caption)
                             .bold()
                             .frame(maxWidth: labelWidth, maxHeight: .infinity, alignment: .leading)
 
-                        let percentFilled = calculateRowWidth(category: category)
+                        let percentFilled = calculateRowWidth(category: category.wrappedValue)
                         let maxWidth = 225.0
 
                         ZStack(alignment: .leading) 
@@ -59,11 +78,11 @@ struct BudgetView: View
                                 .cornerRadius(5)
                                 .padding(.vertical, 5)
                                 .frame(maxWidth: maxWidth * percentFilled, maxHeight: 100.0)
-                                .foregroundColor(Color(category.color))
+                                .foregroundColor(.blue)
                         }
                         .frame(alignment: .center)
 
-                        Text(formatBudget(category: category))
+                        Text(formatBudget(category: category.wrappedValue))
                             .font(.caption2)
                             .frame(maxWidth: valueWidth, maxHeight: .infinity, alignment: .leading)
 
@@ -93,6 +112,16 @@ struct BudgetView: View
     }
     func calculateRowWidth(category: Category) -> Double {
         return category.currentSpend / category.budget
+    }
+    func calculateCurrentSpend(transactions: [Transaction])
+    {
+        for transaction in transactions
+        {
+            if let index = self.categories.firstIndex(where: { $0.name == transaction.category })
+            {
+                self.categories[index].currentSpend += transaction.amount
+            }
+        }
     }
 }
 

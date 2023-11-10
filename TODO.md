@@ -1,4 +1,4 @@
 - Add ColorPicker
 - Store transactions
-  - Make DataStore generic
 - UI improvements
+- Add category drop down
