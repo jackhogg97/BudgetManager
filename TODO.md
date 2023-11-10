@@ -1,4 +1,2 @@
 - Add ColorPicker
-- Store transactions
 - UI improvements
-- Add category drop down

@@ -82,7 +82,7 @@ struct BudgetView: View
                         }
                         .frame(alignment: .center)
 
-                        Text(formatBudget(category: category.wrappedValue))
+                        formatBudget(category: category.wrappedValue)
                             .font(.caption2)
                             .frame(maxWidth: valueWidth, maxHeight: .infinity, alignment: .leading)
 
@@ -107,12 +107,21 @@ struct BudgetView: View
         }
     }
 
-    func formatBudget(category: Category) -> String {
-        return String(format: "£%.2F / £%.2F", category.currentSpend, category.budget)
+    func formatBudget(category: Category) -> Text {
+        let current = Text(String(format: "£%.2F", category.currentSpend))
+
+        if category.currentSpend > category.budget {
+            return current.foregroundColor(.red) +
+                Text(String(format: " / £%.2F", category.budget))
+        } else {
+            return current + Text(String(format: " / £%.2F", category.budget))
+        }
     }
+
     func calculateRowWidth(category: Category) -> Double {
         return category.currentSpend / category.budget
     }
+
     func calculateCurrentSpend(transactions: [Transaction])
     {
         for transaction in transactions
