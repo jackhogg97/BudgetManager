@@ -45,6 +45,7 @@ struct AddTransactionView: View
                     {
                         Text("Name")
                         TextField("Name", text: $name)
+                            .multilineTextAlignment(.trailing)
                     }
                     HStack
                     {
@@ -63,12 +64,13 @@ struct AddTransactionView: View
                     HStack
                     {
                         Text("Amount")
-                        TextField("Amount", value: $amount, format: .number)
+                        TextField("", value: $amount, format: .number)
+                            .multilineTextAlignment(.trailing)
                     }
                     HStack
                     {
-                        Text("Notes")
                         TextField("Notes", text: $notes)
+                            .frame(height: 150, alignment: .topLeading)
                     }
                 }
                 Section {

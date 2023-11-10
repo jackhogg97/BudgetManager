@@ -28,7 +28,12 @@ struct BudgetView: View
         GeometryReader
         {
             geometry in
-            VStack(alignment: .center, spacing: 0) 
+
+            let BAR_MAX_WIDTH = 360.0
+            let BAR_MAX_HEIGHT = 35.0
+            let BAR_IDEAL_HEIGHT = 35.0
+
+            VStack(alignment: .center, spacing: 0)
             {
                 HStack
                 {
@@ -43,52 +48,48 @@ struct BudgetView: View
                     Button("Edit") { self.showing = .EditBudgetsPage }
                 }
                 .padding()
-                
-                let rowHeight = geometry.size.height / CGFloat(self.categories.count)
-
-                let labelWidth = geometry.size.width * 0.13
-                let valueWidth = geometry.size.width * 0.18
 
                 if self.categories.isEmpty
                 {
                     Text("Click edit to add budgets")
                 }
                 Spacer()
-                ForEach(self.$categories)
+                ScrollView
                 {
-                    category in
-                    HStack 
+                    ForEach(self.$categories)
                     {
-                        Text(category.name.wrappedValue)
-                            .font(.caption)
-                            .bold()
-                            .frame(maxWidth: labelWidth, maxHeight: .infinity, alignment: .leading)
-
-                        let percentFilled = calculateRowWidth(category: category.wrappedValue)
-                        let maxWidth = 225.0
-
-                        ZStack(alignment: .leading) 
+                        category in
+                        VStack(spacing: 0)
                         {
-                            Rectangle()
-                                .cornerRadius(5)
-                                .padding(.vertical, 5)
-                                .frame(maxWidth: maxWidth, maxHeight: 100.0)
-                                .foregroundColor(.gray)
-                            Rectangle()
-                                .cornerRadius(5)
-                                .padding(.vertical, 5)
-                                .frame(maxWidth: maxWidth * percentFilled, maxHeight: 100.0)
-                                .foregroundColor(category.color.wrappedValue)
+                            HStack
+                            {
+                                Text(category.name.wrappedValue)
+                                    .font(.caption)
+                                    .bold()
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                                formatBudget(category: category.wrappedValue)
+                                    .font(.caption2)
+                                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
+                            }
+                            .padding(.horizontal)
+
+                            let percentFilled = calculateRowWidth(category: category.wrappedValue)
+                            ZStack(alignment: .leading)
+                            {
+                                Rectangle()
+                                    .cornerRadius(5)
+                                    .padding(.vertical, 5)
+                                    .frame(maxWidth: BAR_MAX_WIDTH, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
+                                    .foregroundColor(.gray)
+                                Rectangle()
+                                    .cornerRadius(5)
+                                    .padding(.vertical, 5)
+                                    .frame(maxWidth: BAR_MAX_WIDTH * percentFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
+                                    .foregroundColor(category.color.wrappedValue)
+                            }
+                            .padding(.horizontal)
                         }
-                        .frame(alignment: .center)
-
-                        formatBudget(category: category.wrappedValue)
-                            .font(.caption2)
-                            .frame(maxWidth: valueWidth, maxHeight: .infinity, alignment: .leading)
-
                     }
-                    .padding(.horizontal)
-                    .frame(maxHeight: rowHeight)
                 }
 
                 VStack(alignment: .center)
@@ -101,8 +102,9 @@ struct BudgetView: View
                             .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     })
                 }
+                .padding(.vertical)
 
-            }.padding(.vertical)
+            }
 
         }
     }
