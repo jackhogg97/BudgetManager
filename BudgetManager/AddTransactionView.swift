@@ -17,7 +17,8 @@ struct AddTransactionView: View
     @State private var amount: Double = 0.0
     @State private var notes: String = ""
 
-    private var TransactionStore: DataStore<Transaction>
+    private let CategoryStore: DataStore<Category>
+    private let TransactionStore: DataStore<Transaction>
     @State private var transactions: [Transaction]
 
     init(showing: Binding<Page>)
@@ -25,6 +26,7 @@ struct AddTransactionView: View
         self._showing = showing
         self.TransactionStore = DataStore<Transaction>(location: "transactions")
         self._transactions = State(initialValue: self.TransactionStore.getData())
+        self.CategoryStore = DataStore<Category>(location: "categories")
     }
 
     var body: some View
@@ -46,8 +48,13 @@ struct AddTransactionView: View
                     }
                     HStack
                     {
-                        Text("Category")
-                        TextField("Category", text: $category)
+                        Picker("Category", selection: $category)
+                        {
+                            ForEach(CategoryStore.getData(), id: \.name)
+                            {
+                                Text($0.name)
+                            }
+                        }
                     }
                     HStack
                     {
