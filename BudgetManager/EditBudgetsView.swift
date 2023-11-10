@@ -1,13 +1,13 @@
 //
-//  EditBudgets.swift
+//  EditBudgetsView.swift
 //  BudgetManager
 //
-//  Created by JACK HOGG on 09/11/2023.
+//  Created by JACK HOGG on 10/11/2023.
 //
 
 import SwiftUI
 
-struct EditBudgets: View 
+struct EditBudgets: View
 {
     @Binding var showing: Page
 
