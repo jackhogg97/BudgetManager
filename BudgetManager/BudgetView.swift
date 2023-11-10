@@ -78,7 +78,7 @@ struct BudgetView: View
                                 .cornerRadius(5)
                                 .padding(.vertical, 5)
                                 .frame(maxWidth: maxWidth * percentFilled, maxHeight: 100.0)
-                                .foregroundColor(.blue)
+                                .foregroundColor(category.color.wrappedValue)
                         }
                         .frame(alignment: .center)
 

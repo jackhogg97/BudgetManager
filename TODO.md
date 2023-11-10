@@ -1,2 +1,1 @@
-- Add ColorPicker
 - UI improvements

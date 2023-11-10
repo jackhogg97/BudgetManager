@@ -17,6 +17,7 @@
 		B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE3D2AFD47FD00144798 /* DataStore.swift */; };
 		B330AE452AFD53FE00144798 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE442AFD53FE00144798 /* categories.json */; };
 		B330AE472AFD56DA00144798 /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE462AFD56DA00144798 /* transactions.json */; };
+		B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE482AFE3D2A00144798 /* ColorTransformer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		B330AE3D2AFD47FD00144798 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		B330AE442AFD53FE00144798 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
 		B330AE462AFD56DA00144798 /* transactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
+		B330AE482AFE3D2A00144798 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				B330AE3D2AFD47FD00144798 /* DataStore.swift */,
 				B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */,
 				B3244E262AFBE7C000CE5CD3 /* Preview Content */,
+				B330AE482AFE3D2A00144798 /* ColorTransformer.swift */,
 			);
 			path = BudgetManager;
 			sourceTree = "<group>";
@@ -160,6 +163,7 @@
 				B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B3244E352AFCEF0D00CE5CD3 /* EditBudgets.swift in Sources */,
+				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Model.swift in Sources */,
 				B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */,
