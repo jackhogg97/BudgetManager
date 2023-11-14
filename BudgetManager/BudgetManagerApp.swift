@@ -15,6 +15,7 @@ enum Page
 @main
 struct BudgetManagerApp: App 
 {
+    @StateObject private var dataController = DataController()
     @State var showing : Page = .BudgetPage
 
     var body: some Scene 
@@ -27,10 +28,13 @@ struct BudgetManagerApp: App
                 {
                     case .BudgetPage:
                         BudgetView(showing: $showing)
+                            .environment(\.managedObjectContext, dataController.container.viewContext)
                     case .AddTransactionPage:
                         AddTransactionView(showing: $showing)
+                            .environment(\.managedObjectContext, dataController.container.viewContext)
                     case .EditBudgetsPage:
-                        EditBudgets(showing: $showing)
+                        EditBudgetsView(showing: $showing)
+                            .environment(\.managedObjectContext, dataController.container.viewContext)
                 }
 
             }

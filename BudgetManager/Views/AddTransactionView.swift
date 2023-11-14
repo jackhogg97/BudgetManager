@@ -11,23 +11,15 @@ struct AddTransactionView: View
 {
     @Binding var showing: Page
 
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
+    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+
     @State private var name: String = ""
-    @State private var category: String = ""
+    @State private var category: String?
     @State private var date: Date = Date()
     @State private var amount: Double = 0.0
     @State private var notes: String = ""
-
-    private let CategoryStore: DataStore<Category>
-    private let TransactionStore: DataStore<Transaction>
-    @State private var transactions: [Transaction]
-
-    init(showing: Binding<Page>)
-    {
-        self._showing = showing
-        self.TransactionStore = DataStore<Transaction>(location: "transactions")
-        self._transactions = State(initialValue: self.TransactionStore.getData())
-        self.CategoryStore = DataStore<Category>(location: "categories")
-    }
 
     var body: some View
     {
@@ -51,9 +43,9 @@ struct AddTransactionView: View
                     {
                         Picker("Category", selection: $category)
                         {
-                            ForEach(CategoryStore.getData(), id: \.name)
+                            ForEach(self.categories, id: \.name)
                             {
-                                Text($0.name)
+                                Text($0.name!).tag($0.name)
                             }
                         }
                     }
@@ -78,10 +70,27 @@ struct AddTransactionView: View
                         self.showing = .BudgetPage
                     }
                     Button("Add") {
-                        self.transactions.append(Transaction(name: self.name, category: self.category, date: self.date, amount: self.amount, notes: self.notes))
-                        self.TransactionStore.saveData(data: self.transactions)
+                        let newTransaction = Transaction(context: self.moc)
+                        newTransaction.id = UUID()
+                        newTransaction.name = $name.wrappedValue
+                        newTransaction.category = $category.wrappedValue
+                        newTransaction.date = $date.wrappedValue
+                        newTransaction.amount = $amount.wrappedValue
+                        newTransaction.notes = $notes.wrappedValue
+                        try? self.moc.save()
+
                         self.showing = .BudgetPage
                     }
+                }
+                Section {
+                    Button("Delete all transactions") {
+                        self.transactions.forEach {
+                            self.moc.delete($0)
+                        }
+                        try? self.moc.save()
+                        self.showing = .BudgetPage
+                    }
+                    .foregroundStyle(.red)
                 }
             }
         }

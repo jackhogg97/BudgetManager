@@ -6,22 +6,15 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct BudgetView: View 
 {
     @Binding var showing: Page
 
-    @State var categories: [Category] = []
-
-    let categoryStore: DataStore<Category>
-    let transactionStore: DataStore<Transaction>
-
-    init(showing: Binding<Page>) 
-    {
-        self._showing = showing
-        self.categoryStore = DataStore<Category>(location: "categories")
-        self.transactionStore = DataStore<Transaction>(location: "transactions")
-    }
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
+    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
     var body: some View
     {
@@ -41,39 +34,38 @@ struct BudgetView: View
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .padding(.horizontal)
                         .onAppear {
-                            self.categories = self.categoryStore.getData()
-                            calculateCurrentSpend(transactions: self.transactionStore.getData())
+                            calculateCurrentSpend()
                         }
                     Spacer()
                     Button("Edit") { self.showing = .EditBudgetsPage }
                 }
                 .padding()
 
-                if self.categories.isEmpty
+                if categories.isEmpty
                 {
                     Text("Click edit to add budgets")
                 }
                 Spacer()
                 ScrollView
                 {
-                    ForEach(self.$categories)
+                    ForEach(self.categories, id: \.id)
                     {
                         category in
                         VStack(spacing: 0)
                         {
                             HStack
                             {
-                                Text(category.name.wrappedValue)
+                                Text(category.name ?? "Unknown")
                                     .font(.caption)
                                     .bold()
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                                formatBudget(category: category.wrappedValue)
+                                formatBudget(category: category)
                                     .font(.caption2)
                                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
                             }
                             .padding(.horizontal)
 
-                            let percentFilled = calculateRowWidth(category: category.wrappedValue)
+                            let percentFilled = calculateRowWidth(category: category)
                             ZStack(alignment: .leading)
                             {
                                 Rectangle()
@@ -85,7 +77,7 @@ struct BudgetView: View
                                     .cornerRadius(5)
                                     .padding(.vertical, 5)
                                     .frame(maxWidth: BAR_MAX_WIDTH * percentFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
-                                    .foregroundColor(category.color.wrappedValue)
+                                    .foregroundColor(.blue)
                             }
                             .padding(.horizontal)
                         }
@@ -124,9 +116,12 @@ struct BudgetView: View
         return category.currentSpend / category.budget
     }
 
-    func calculateCurrentSpend(transactions: [Transaction])
+    func calculateCurrentSpend()
     {
-        for transaction in transactions
+        self.categories.forEach {
+            $0.currentSpend = 0
+        }
+        for transaction in self.transactions
         {
             if let index = self.categories.firstIndex(where: { $0.name == transaction.category })
             {

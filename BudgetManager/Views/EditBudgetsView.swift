@@ -7,61 +7,113 @@
 
 import SwiftUI
 
-struct EditBudgets: View
+struct EditBudgetsView: View 
 {
     @Binding var showing: Page
 
-    var dataStore: DataStore<Category>
+    @Environment(\.managedObjectContext) var moc
+    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
 
-    @State private var categories: [Category] = []
-    @State private var chosenColor: Color = .blue
-
-    init(showing: Binding<Page>)
-    {
-        self.dataStore = DataStore<Category>(location: "categories")
-        self._categories = State(initialValue: self.dataStore.getData())
-        self._showing = showing
-    }
+    @State private var categoriesToEdit: [NewCategory] = []
 
     var body: some View
     {
         VStack(alignment: .leading)
         {
-            ForEach($categories)
+            HStack
             {
-                data in HStack
+                Spacer()
+                Button("Delete all")
                 {
-                    TextField(data.name.wrappedValue, text: data.name)
-                    TextField(String(data.budget.wrappedValue), value: data.budget, format: .number)
-                    ColorPicker("Colour", selection: data.color)
+                    self.categories.forEach {
+                        self.moc.delete($0)
+                    }
+                    try? self.moc.save()
+                    self.showing = .BudgetPage
                 }
-
+                .foregroundStyle(.red)
             }
-            Button(action: { categories.append(Category(name: "New Category", budget: 0.0, currentSpend: 0.0, color: .blue))})
+            Spacer()
+            ForEach($categoriesToEdit, id: \.id)
+            {
+                category in
+                HStack
+                {
+                    TextField("Category Name", text: category.name)
+                    TextField("Budget", value: category.budget, formatter: NumberFormatter())
+//                    ColorPicker("Color", selection: categoryEdit.color)
+                }
+            }
+            Spacer()
+
+            Button(action: 
+            {
+                self.categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
+            })
             {
                 Image(systemName: "plus.circle")
                     .resizable()
                     .scaledToFill()
-                    .frame(width: 25.0, height: 25.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(width: 25.0, height: 25.0, alignment: .center)
             }
             .padding(.vertical)
-            HStack {
-                Button("Cancel") {
+
+            HStack 
+            {
+                Button("Cancel") 
+                {
                     self.showing = .BudgetPage
                 }
                 Spacer()
-                Button("Save") {
-                    dataStore.saveData(data: self.categories)
+                Button("Save") 
+                {
+                    for newCategory in self.categoriesToEdit {
+                        if let index = self.categories.firstIndex(where: { $0.id == newCategory.id }) {
+                            self.categories[index].id = newCategory.id
+                            self.categories[index].name = newCategory.name
+                            self.categories[index].budget = newCategory.budget
+                            self.categories[index].color = newCategory.color
+                        } else {
+                            let categoryToAdd = Category(context: moc)
+                            categoryToAdd.id = newCategory.id
+                            categoryToAdd.name = newCategory.name
+                            categoryToAdd.budget = newCategory.budget
+                            categoryToAdd.color = newCategory.color
+                        }
+                    }
+
+                    try? self.moc.save()
+
                     self.showing = .BudgetPage
                 }
             }
             .padding(.vertical)
         }
+        .onAppear
+        {
+            self.categoriesToEdit = self.categories.map { NewCategory(from: $0) }
+        }
         .padding(.horizontal)
     }
 }
 
-#Preview {
-    EditBudgets(showing: .constant(.BudgetPage))
-}
+struct NewCategory {
+    var id: UUID
+    var name: String
+    var budget: Double
+    var color: Float
 
+    init(from: Category) {
+        self.id = from.id ?? UUID()
+        self.name = from.wrappedName
+        self.budget = from.budget
+        self.color = from.color
+    }
+
+    init(id: UUID, name: String, budget: Double, color: Float) {
+        self.id = id
+        self.name = name
+        self.budget = budget
+        self.color = color
+    }
+}

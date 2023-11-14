@@ -19,6 +19,8 @@
 		B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE482AFE3D2A00144798 /* ColorTransformer.swift */; };
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
 		B330AE512AFE5B7A00144798 /* categories.test.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE502AFE5B7A00144798 /* categories.test.json */; };
+		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
+		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		B330AE482AFE3D2A00144798 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
 		B330AE502AFE5B7A00144798 /* categories.test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.test.json; sourceTree = "<group>"; };
+		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
+		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,7 @@
 				B330AE502AFE5B7A00144798 /* categories.test.json */,
 				B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */,
 				B3244E262AFBE7C000CE5CD3 /* Preview Content */,
+				B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */,
 			);
 			path = BudgetManager;
 			sourceTree = "<group>";
@@ -103,6 +108,7 @@
 				B3244E302AFBEAF700CE5CD3 /* Model.swift */,
 				B330AE3D2AFD47FD00144798 /* DataStore.swift */,
 				B330AE482AFE3D2A00144798 /* ColorTransformer.swift */,
+				B330AE552AFE8B9500144798 /* DataController.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -181,8 +187,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */,
+				B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
+				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Model.swift in Sources */,
 				B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */,
@@ -245,7 +253,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -302,7 +310,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -320,6 +328,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetManager/Preview Content\"";
+				DEVELOPMENT_TEAM = 4BJ67S8UAF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -332,7 +341,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.BudgetManager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackhogg.BudgetManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -348,6 +357,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"BudgetManager/Preview Content\"";
+				DEVELOPMENT_TEAM = 4BJ67S8UAF;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -360,7 +370,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.BudgetManager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackhogg.BudgetManager;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -390,6 +400,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */,
+			);
+			currentVersion = B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */;
+			path = DataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = B3244E152AFBE7BC00CE5CD3 /* Project object */;
 }
