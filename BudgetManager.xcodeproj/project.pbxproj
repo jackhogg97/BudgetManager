@@ -13,12 +13,8 @@
 		B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */; };
 		B3244E312AFBEAF700CE5CD3 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E302AFBEAF700CE5CD3 /* Model.swift */; };
 		B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */; };
-		B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE3D2AFD47FD00144798 /* DataStore.swift */; };
-		B330AE452AFD53FE00144798 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE442AFD53FE00144798 /* categories.json */; };
-		B330AE472AFD56DA00144798 /* transactions.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE462AFD56DA00144798 /* transactions.json */; };
 		B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE482AFE3D2A00144798 /* ColorTransformer.swift */; };
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
-		B330AE512AFE5B7A00144798 /* categories.test.json in Resources */ = {isa = PBXBuildFile; fileRef = B330AE502AFE5B7A00144798 /* categories.test.json */; };
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
 /* End PBXBuildFile section */
@@ -31,12 +27,8 @@
 		B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		B3244E302AFBEAF700CE5CD3 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
-		B330AE3D2AFD47FD00144798 /* DataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
-		B330AE442AFD53FE00144798 /* categories.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
-		B330AE462AFD56DA00144798 /* transactions.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = transactions.json; sourceTree = "<group>"; };
 		B330AE482AFE3D2A00144798 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
-		B330AE502AFE5B7A00144798 /* categories.test.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = categories.test.json; sourceTree = "<group>"; };
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,9 +66,6 @@
 				B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */,
 				B330AE4E2AFE4DA200144798 /* Views */,
 				B330AE4F2AFE4DDE00144798 /* Util */,
-				B330AE462AFD56DA00144798 /* transactions.json */,
-				B330AE442AFD53FE00144798 /* categories.json */,
-				B330AE502AFE5B7A00144798 /* categories.test.json */,
 				B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */,
 				B3244E262AFBE7C000CE5CD3 /* Preview Content */,
 				B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */,
@@ -106,7 +95,6 @@
 			isa = PBXGroup;
 			children = (
 				B3244E302AFBEAF700CE5CD3 /* Model.swift */,
-				B330AE3D2AFD47FD00144798 /* DataStore.swift */,
 				B330AE482AFE3D2A00144798 /* ColorTransformer.swift */,
 				B330AE552AFE8B9500144798 /* DataController.swift */,
 			);
@@ -172,10 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */,
-				B330AE452AFD53FE00144798 /* categories.json in Resources */,
-				B330AE472AFD56DA00144798 /* transactions.json in Resources */,
 				B3244E252AFBE7C000CE5CD3 /* Assets.xcassets in Resources */,
-				B330AE512AFE5B7A00144798 /* categories.test.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +171,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B330AE3E2AFD47FD00144798 /* DataStore.swift in Sources */,
 				B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
