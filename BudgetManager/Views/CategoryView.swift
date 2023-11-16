@@ -44,7 +44,7 @@ struct CategoryView: View
                             transaction in
                             HStack
                             {
-                                Text(transaction.category ?? "")
+                                Text(transaction.wrappedName)
                                 Spacer()
                                 Text(String(format: "£%.2F", transaction.amount))
                             }
