@@ -44,7 +44,6 @@ struct EditBudgetsView: View
 //                    ColorPicker("Color", selection: categoryEdit.color)
                 }
             }
-            Spacer()
 
             Button(action: 
             {
@@ -53,10 +52,10 @@ struct EditBudgetsView: View
             {
                 Image(systemName: "plus.circle")
                     .resizable()
-                    .scaledToFill()
                     .frame(width: 25.0, height: 25.0, alignment: .center)
             }
             .padding(.vertical)
+            Spacer()
 
             HStack 
             {

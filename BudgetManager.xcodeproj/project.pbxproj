@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31718F52B06B19F00A16B81 /* CategoryView.swift */; };
 		B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */; };
 		B3244E252AFBE7C000CE5CD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */; };
 		B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B31718F52B06B19F00A16B81 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		B3244E1D2AFBE7BC00CE5CD3 /* BudgetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManagerApp.swift; sourceTree = "<group>"; };
 		B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -87,6 +89,7 @@
 				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
 				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
+				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				B3244E312AFBEAF700CE5CD3 /* Model.swift in Sources */,
 				B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */,
 				B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */,
+				B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

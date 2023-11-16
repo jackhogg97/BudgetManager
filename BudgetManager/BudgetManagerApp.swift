@@ -9,7 +9,7 @@ import SwiftUI
 
 enum Page 
 {
-   case BudgetPage, AddTransactionPage, EditBudgetsPage
+   case BudgetPage, AddTransactionPage, EditBudgetsPage, CategoryPage
 }
 
 @main
@@ -17,6 +17,7 @@ struct BudgetManagerApp: App
 {
     @StateObject private var dataController = DataController()
     @State var showing : Page = .BudgetPage
+    @State var categoryPageTitle: String = ""
 
     var body: some Scene 
     {
@@ -27,7 +28,7 @@ struct BudgetManagerApp: App
                 switch showing
                 {
                     case .BudgetPage:
-                        BudgetView(showing: $showing)
+                        BudgetView(showing: $showing, categoryPageTitle: $categoryPageTitle)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
                     case .AddTransactionPage:
                         AddTransactionView(showing: $showing)
@@ -35,8 +36,10 @@ struct BudgetManagerApp: App
                     case .EditBudgetsPage:
                         EditBudgetsView(showing: $showing)
                             .environment(\.managedObjectContext, dataController.container.viewContext)
+                    case .CategoryPage:
+                        CategoryView(showing: $showing, category: $categoryPageTitle)
+                            .environment(\.managedObjectContext, dataController.container.viewContext)
                 }
-
             }
         }
     }

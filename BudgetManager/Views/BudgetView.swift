@@ -16,6 +16,8 @@ struct BudgetView: View
     @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
     @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
+    @Binding var categoryPageTitle: String
+
     var body: some View
     {
         GeometryReader
@@ -90,6 +92,11 @@ struct BudgetView: View
                             }
                             .padding(.horizontal)
                         }
+                        .onTapGesture
+                        {
+                            self.categoryPageTitle = category.wrappedName
+                            self.showing = .CategoryPage
+                        }
                     }
                 }
 
@@ -99,7 +106,6 @@ struct BudgetView: View
                     {
                         Image(systemName: "plus.circle")
                             .resizable()
-                            .scaledToFill()
                             .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     })
                 }
@@ -111,7 +117,8 @@ struct BudgetView: View
     }
 
     // TODO: Refactor functions
-    func formatBudget(category: Category) -> Text {
+    func formatBudget(category: Category) -> Text 
+    {
         let current = Text(String(format: "£%.2F", category.currentSpend))
 
         if category.currentSpend > category.budget {
@@ -155,6 +162,7 @@ struct BudgetView: View
     }
 }
 
-#Preview {
-    BudgetView(showing: .constant(.BudgetPage))
+#Preview 
+{
+    BudgetView(showing: .constant(.BudgetPage), categoryPageTitle: .constant(""))
 }
