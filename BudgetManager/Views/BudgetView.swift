@@ -13,7 +13,7 @@ struct BudgetView: View
     @Binding var showing: Page
 
     @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
+    @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
     @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
     @Binding var categoryPageTitle: String
