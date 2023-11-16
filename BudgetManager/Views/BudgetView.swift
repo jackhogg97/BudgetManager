@@ -45,6 +45,15 @@ struct BudgetView: View
                 {
                     Text("Click edit to add budgets")
                 }
+                else
+                {
+                    HStack
+                    {
+                        Spacer()
+                        calculateTotal().bold()
+                    }
+                    .padding()
+                }
                 Spacer()
                 ScrollView
                 {
@@ -101,6 +110,7 @@ struct BudgetView: View
         }
     }
 
+    // TODO: Refactor functions
     func formatBudget(category: Category) -> Text {
         let current = Text(String(format: "£%.2F", category.currentSpend))
 
@@ -127,6 +137,20 @@ struct BudgetView: View
             {
                 self.categories[index].currentSpend += transaction.amount
             }
+        }
+    }
+
+    func calculateTotal() -> Text
+    {
+        let totalCurrentSpend = self.categories.reduce(0) { $0 + $1.currentSpend }
+        let totalBudget = self.categories.reduce(0) { $0 + $1.budget }
+        let current = Text(String(format: "£%.2F", totalCurrentSpend))
+
+        if totalCurrentSpend > totalBudget {
+            return current.foregroundColor(.red) +
+            Text(String(format: " / £%.2F", totalBudget))
+        } else {
+            return current + Text(String(format: " / £%.2F", totalBudget))
         }
     }
 }
