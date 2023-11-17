@@ -40,7 +40,7 @@ struct EditBudgetsView: View
                 HStack
                 {
                     TextField("Category Name", text: category.name)
-                    TextField("Budget", value: category.budget, formatter: NumberFormatter())
+                    TextField("Budget", value: category.budget, format: .number).keyboardType(.numberPad)
 //                    ColorPicker("Color", selection: categoryEdit.color)
                 }
             }

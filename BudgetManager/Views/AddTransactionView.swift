@@ -58,6 +58,7 @@ struct AddTransactionView: View
                         Text("Amount")
                         TextField("", value: $amount, format: .number)
                             .multilineTextAlignment(.trailing)
+                            .keyboardType(.numberPad)
                     }
                     HStack
                     {
