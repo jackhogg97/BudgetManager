@@ -18,6 +18,7 @@
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
+		B3648D092B0779DC0047981C /* MonthlyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3648D082B0779DC0047981C /* MonthlyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +34,7 @@
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		B3648D082B0779DC0047981C /* MonthlyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
+				B3648D082B0779DC0047981C /* MonthlyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
+				B3648D092B0779DC0047981C /* MonthlyView.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Model.swift in Sources */,
 				B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */,

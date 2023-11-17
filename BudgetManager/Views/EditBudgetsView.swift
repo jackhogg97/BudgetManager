@@ -29,7 +29,7 @@ struct EditBudgetsView: View
                         self.moc.delete($0)
                     }
                     try? self.moc.save()
-                    self.showing = .BudgetPage
+                    self.showing = .MonthlyView
                 }
                 .foregroundStyle(.red)
             }
@@ -60,7 +60,7 @@ struct EditBudgetsView: View
             {
                 Button("Cancel") 
                 {
-                    self.showing = .BudgetPage
+                    self.showing = .MonthlyView
                 }
                 Spacer()
                 Button("Save") 
@@ -82,7 +82,7 @@ struct EditBudgetsView: View
 
                     try? self.moc.save()
 
-                    self.showing = .BudgetPage
+                    self.showing = .MonthlyView
                 }
             }
             .padding(.vertical)

@@ -10,7 +10,7 @@ import LocalAuthentication
 
 enum Page 
 {
-   case BudgetPage, AddTransactionPage, EditBudgetsPage, CategoryPage
+   case MonthlyView, AddTransactionPage, EditBudgetsPage, CategoryPage
 }
 
 @main
@@ -18,7 +18,7 @@ struct BudgetManagerApp: App
 {
     @State private var isUnlocked = false
     @StateObject private var dataController = DataController()
-    @State var showing : Page = .BudgetPage
+    @State var showing : Page = .MonthlyView
     @State var categoryPageTitle: String = ""
 
     var body: some Scene 
@@ -31,8 +31,8 @@ struct BudgetManagerApp: App
                 {
                     switch showing
                     {
-                        case .BudgetPage:
-                            BudgetView(showing: $showing, categoryPageTitle: $categoryPageTitle)
+                        case .MonthlyView:
+                            MonthlyView(showing: $showing, categoryPageTitle: $categoryPageTitle)
                                 .environment(\.managedObjectContext, dataController.container.viewContext)
                         case .AddTransactionPage:
                             AddTransactionView(showing: $showing)

@@ -14,7 +14,9 @@ struct BudgetView: View
 
     @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+//    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+
+    var transactions: [FetchedResults<Transaction>.Element]
 
     @Binding var categoryPageTitle: String
 
@@ -30,19 +32,6 @@ struct BudgetView: View
 
             VStack(alignment: .center, spacing: 0)
             {
-                HStack
-                {
-                    Text("Budgets")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                        .padding(.horizontal)
-                        .onAppear {
-                            calculateCurrentSpend()
-                        }
-                    Spacer()
-                    Button("Edit") { self.showing = .EditBudgetsPage }
-                }
-                .padding()
-
                 if categories.isEmpty
                 {
                     Text("Click edit to add budgets")
@@ -100,17 +89,10 @@ struct BudgetView: View
                     }
                 }
 
-                VStack(alignment: .center)
-                {
-                    Button(action: { self.showing = .AddTransactionPage }, label: 
-                    {
-                        Image(systemName: "plus.circle")
-                            .resizable()
-                            .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    })
-                }
-                .padding(.vertical)
 
+            }
+            .onAppear {
+                calculateCurrentSpend()
             }
 
         }
@@ -160,9 +142,4 @@ struct BudgetView: View
             return current + Text(String(format: " / £%.2F", totalBudget))
         }
     }
-}
-
-#Preview 
-{
-    BudgetView(showing: .constant(.BudgetPage), categoryPageTitle: .constant(""))
 }

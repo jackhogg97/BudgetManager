@@ -68,7 +68,7 @@ struct AddTransactionView: View
                 }
                 Section {
                     Button("Cancel") {
-                        self.showing = .BudgetPage
+                        self.showing = .MonthlyView
                     }
                     Button("Add") {
                         let newTransaction = Transaction(context: self.moc)
@@ -80,7 +80,7 @@ struct AddTransactionView: View
                         newTransaction.notes = $notes.wrappedValue
                         try? self.moc.save()
 
-                        self.showing = .BudgetPage
+                        self.showing = .MonthlyView
                     }
                 }
                 Section {
@@ -89,7 +89,7 @@ struct AddTransactionView: View
                             self.moc.delete($0)
                         }
                         try? self.moc.save()
-                        self.showing = .BudgetPage
+                        self.showing = .MonthlyView
                     }
                     .foregroundStyle(.red)
                 }

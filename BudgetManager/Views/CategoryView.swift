@@ -24,7 +24,7 @@ struct CategoryView: View
             {
                 Text(category).font(.title)
                 Spacer()
-                Button(action: { self.showing = .BudgetPage }, label:
+                Button(action: { self.showing = .MonthlyView }, label:
                 {
                     Image(systemName: "multiply")
                         .resizable()
