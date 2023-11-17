@@ -59,7 +59,6 @@ struct CategoryView: View
                                 moc.delete(transactionToDelete)
                                 try? moc.save()
                             }
-
                         }
                     }
                 }

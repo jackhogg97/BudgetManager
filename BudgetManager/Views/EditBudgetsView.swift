@@ -44,7 +44,6 @@ struct EditBudgetsView: View
 //                    ColorPicker("Color", selection: categoryEdit.color)
                 }
             }
-
             Button(action: 
             {
                 self.categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
