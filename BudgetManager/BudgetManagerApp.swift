@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LocalAuthentication
 
 enum Page 
 {
@@ -15,6 +16,7 @@ enum Page
 @main
 struct BudgetManagerApp: App 
 {
+    @State private var isUnlocked = false
     @StateObject private var dataController = DataController()
     @State var showing : Page = .BudgetPage
     @State var categoryPageTitle: String = ""
@@ -25,22 +27,62 @@ struct BudgetManagerApp: App
         {
             ZStack
             {
-                switch showing
+                if isUnlocked
                 {
-                    case .BudgetPage:
-                        BudgetView(showing: $showing, categoryPageTitle: $categoryPageTitle)
-                            .environment(\.managedObjectContext, dataController.container.viewContext)
-                    case .AddTransactionPage:
-                        AddTransactionView(showing: $showing)
-                            .environment(\.managedObjectContext, dataController.container.viewContext)
-                    case .EditBudgetsPage:
-                        EditBudgetsView(showing: $showing)
-                            .environment(\.managedObjectContext, dataController.container.viewContext)
-                    case .CategoryPage:
-                        CategoryView(showing: $showing, category: $categoryPageTitle)
-                            .environment(\.managedObjectContext, dataController.container.viewContext)
+                    switch showing
+                    {
+                        case .BudgetPage:
+                            BudgetView(showing: $showing, categoryPageTitle: $categoryPageTitle)
+                                .environment(\.managedObjectContext, dataController.container.viewContext)
+                        case .AddTransactionPage:
+                            AddTransactionView(showing: $showing)
+                                .environment(\.managedObjectContext, dataController.container.viewContext)
+                        case .EditBudgetsPage:
+                            EditBudgetsView(showing: $showing)
+                                .environment(\.managedObjectContext, dataController.container.viewContext)
+                        case .CategoryPage:
+                            CategoryView(showing: $showing, category: $categoryPageTitle)
+                                .environment(\.managedObjectContext, dataController.container.viewContext)
+                    }
+                }
+                else
+                {
+                    VStack
+                    {
+                        Image(systemName: "lock.square")
+                            .resizable()
+                            .frame(maxWidth: 100.0, maxHeight: 100.0)
+                        Button("Retry")
+                        {
+                            authenticate()
+                        }
+                    }
                 }
             }
+            .onAppear(perform: authenticate)
         }
     }
+
+    func authenticate()
+    {
+        let context = LAContext()
+        var error: NSError?
+
+        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) 
+        {
+            let reason = "Unlock to view your budgets"
+
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) 
+            { success, authenticationError in
+                if success
+                {
+                    isUnlocked = true
+                }
+            }
+        } else 
+        {
+            // no biometrics
+        }
+    }
+
 }

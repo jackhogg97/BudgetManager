@@ -10,5 +10,4 @@ Backlog
 Phase 2
   - View all transactions
   - Set budget period, reset on date and save previous transactions
-  - Stretch - add FaceID authenticator
   - Delete single category
