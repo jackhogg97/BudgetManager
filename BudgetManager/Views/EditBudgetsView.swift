@@ -40,11 +40,11 @@ struct EditBudgetsView: View
                 HStack
                 {
                     TextField("Category Name", text: category.name)
-                    TextField("Budget", value: category.budget, format: .number).keyboardType(.numberPad)
+                    TextField("Budget", value: category.budget, format: .number).keyboardType(.numbersAndPunctuation)
 //                    ColorPicker("Color", selection: categoryEdit.color)
                 }
             }
-            Button(action: 
+            Button(action:
             {
                 self.categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
             })
