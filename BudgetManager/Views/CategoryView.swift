@@ -13,6 +13,7 @@ struct CategoryView: View
     @Binding var showing: Page
     @Binding var category: String
     
+    @Environment(\.managedObjectContext) var moc
     @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
     var body: some View 
@@ -49,6 +50,17 @@ struct CategoryView: View
                                 Text(String(format: "£%.2F", transaction.amount))
                             }
                         }
+                        .onDelete 
+                        {
+                            indexSet in
+                            if let index = indexSet.first 
+                            {
+                                let transactionToDelete = transactionsFromCategory[day]![index]
+                                moc.delete(transactionToDelete)
+                                try? moc.save()
+                            }
+
+                        }
                     }
                 }
             }
@@ -56,10 +68,6 @@ struct CategoryView: View
         }
     }
 
-    func getTransactionsFromCategory() -> [Transaction]
-    {
-        return self.transactions.filter { $0.category ?? "" == category }
-    }
     func getTransactionsKeyedByDay() -> [String : [FetchedResults<Transaction>.Element]]
     {
         let dateFormatter = DateFormatter()
