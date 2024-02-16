@@ -96,12 +96,12 @@ struct MonthlyView: View
     {
         if direction == .left && index == 0
         {
-            return .gray
+            return .black
         }
         if direction == .right && index == length - 1
         {
-            return .gray
+            return .black
         }
-        return .black
+        return .gray
     }
 }
