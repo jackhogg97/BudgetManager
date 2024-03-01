@@ -5,84 +5,84 @@
 //  Created by JACK HOGG on 08/11/2023.
 //
 
-import SwiftUI
 import LocalAuthentication
+import SwiftUI
 
-enum Page 
+enum Page
 {
-   case MonthlyView, AddTransactionPage, EditBudgetsPage, CategoryPage
+  case MonthlyView, AddTransactionPage, EditBudgetsPage, CategoryPage
 }
 
 @main
-struct BudgetManagerApp: App 
+struct BudgetManagerApp: App
 {
-    @State private var isUnlocked = false
-    @StateObject private var dataController = DataController()
-    @State var showing : Page = .MonthlyView
-    @State var categoryPageTitle: String = ""
+  @State private var isUnlocked = false
+  @StateObject private var dataController = DataController()
+  @State var showing: Page = .MonthlyView
+  @State var categoryPageTitle: String = ""
 
-    var body: some Scene 
+  var body: some Scene
+  {
+    WindowGroup
     {
-        WindowGroup
+      ZStack
+      {
+        if isUnlocked
         {
-            ZStack
+          switch showing
+          {
+            case .MonthlyView:
+              MonthlyView(showing: $showing, categoryPageTitle: $categoryPageTitle)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+            case .AddTransactionPage:
+              AddTransactionView(showing: $showing)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+            case .EditBudgetsPage:
+              EditBudgetsView(showing: $showing)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+            case .CategoryPage:
+              CategoryView(showing: $showing, category: $categoryPageTitle)
+                .environment(\.managedObjectContext, dataController.container.viewContext)
+          }
+        }
+        else
+        {
+          VStack
+          {
+            Image(systemName: "lock.square")
+              .resizable()
+              .frame(maxWidth: 100.0, maxHeight: 100.0)
+            Button("Retry")
             {
-                if isUnlocked
-                {
-                    switch showing
-                    {
-                        case .MonthlyView:
-                            MonthlyView(showing: $showing, categoryPageTitle: $categoryPageTitle)
-                                .environment(\.managedObjectContext, dataController.container.viewContext)
-                        case .AddTransactionPage:
-                            AddTransactionView(showing: $showing)
-                                .environment(\.managedObjectContext, dataController.container.viewContext)
-                        case .EditBudgetsPage:
-                            EditBudgetsView(showing: $showing)
-                                .environment(\.managedObjectContext, dataController.container.viewContext)
-                        case .CategoryPage:
-                            CategoryView(showing: $showing, category: $categoryPageTitle)
-                                .environment(\.managedObjectContext, dataController.container.viewContext)
-                    }
-                }
-                else
-                {
-                    VStack
-                    {
-                        Image(systemName: "lock.square")
-                            .resizable()
-                            .frame(maxWidth: 100.0, maxHeight: 100.0)
-                        Button("Retry")
-                        {
-                            authenticate()
-                        }
-                    }
-                }
+              authenticate()
             }
-            .onAppear(perform: authenticate)
+          }
         }
+      }
+      .onAppear(perform: authenticate)
     }
+  }
 
-    func authenticate()
+  func authenticate()
+  {
+    let context = LAContext()
+    var error: NSError?
+
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
     {
-        let context = LAContext()
-        var error: NSError?
+      let reason = "Unlock to view your budgets"
 
-        if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) 
+      context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason)
+      { success, _ in
+        if success
         {
-            let reason = "Unlock to view your budgets"
-
-            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) 
-            { success, authenticationError in
-                if success
-                {
-                    isUnlocked = true
-                }
-            }
-        } else 
-        {
-            // no biometrics
+          isUnlocked = true
         }
+      }
     }
-
+    else
+    {
+      // no biometrics
+    }
+  }
 }

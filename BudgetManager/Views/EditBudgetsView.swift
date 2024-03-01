@@ -7,111 +7,119 @@
 
 import SwiftUI
 
-struct EditBudgetsView: View 
+struct EditBudgetsView: View
 {
-    @Binding var showing: Page
+  @Binding var showing: Page
 
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
+  @Environment(\.managedObjectContext) var moc
+  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
 
-    @State private var categoriesToEdit: [NewCategory] = []
+  @State private var categoriesToEdit: [NewCategory] = []
 
-    var body: some View
+  var body: some View
+  {
+    VStack(alignment: .leading)
     {
-        VStack(alignment: .leading)
+      HStack
+      {
+        Spacer()
+        Button("Delete all")
         {
-            HStack
-            {
-                Spacer()
-                Button("Delete all")
-                {
-                    self.categories.forEach {
-                        self.moc.delete($0)
-                    }
-                    try? self.moc.save()
-                    self.showing = .MonthlyView
-                }
-                .foregroundStyle(.red)
-            }
-            Spacer()
-            ForEach($categoriesToEdit, id: \.id)
-            {
-                category in
-                HStack
-                {
-                    TextField("Category Name", text: category.name)
-                    TextField("Budget", value: category.budget, format: .number).keyboardType(.numbersAndPunctuation)
+          for category in categories
+          {
+            moc.delete(category)
+          }
+          try? moc.save()
+          showing = .MonthlyView
+        }
+        .foregroundStyle(.red)
+      }
+      Spacer()
+      ForEach($categoriesToEdit, id: \.id)
+      {
+        category in
+        HStack
+        {
+          TextField("Category Name", text: category.name)
+          TextField("Budget", value: category.budget, format: .number).keyboardType(.numbersAndPunctuation)
 //                    ColorPicker("Color", selection: categoryEdit.color)
-                }
-            }
-            Button(action:
-            {
-                self.categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
-            })
-            {
-                Image(systemName: "plus.circle")
-                    .resizable()
-                    .frame(width: 25.0, height: 25.0, alignment: .center)
-            }
-            .padding(.vertical)
-            Spacer()
-
-            HStack 
-            {
-                Button("Cancel") 
-                {
-                    self.showing = .MonthlyView
-                }
-                Spacer()
-                Button("Save") 
-                {
-                    for newCategory in self.categoriesToEdit {
-                        if let index = self.categories.firstIndex(where: { $0.id == newCategory.id }) {
-                            self.categories[index].id = newCategory.id
-                            self.categories[index].name = newCategory.name
-                            self.categories[index].budget = newCategory.budget
-                            self.categories[index].color = newCategory.color
-                        } else {
-                            let categoryToAdd = Category(context: moc)
-                            categoryToAdd.id = newCategory.id
-                            categoryToAdd.name = newCategory.name
-                            categoryToAdd.budget = newCategory.budget
-                            categoryToAdd.color = newCategory.color
-                        }
-                    }
-
-                    try? self.moc.save()
-
-                    self.showing = .MonthlyView
-                }
-            }
-            .padding(.vertical)
         }
-        .onAppear
+      }
+      Button(action:
         {
-            self.categoriesToEdit = self.categories.map { NewCategory(from: $0) }
+          categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
+        })
+      {
+        Image(systemName: "plus.circle")
+          .resizable()
+          .frame(width: 25.0, height: 25.0, alignment: .center)
+      }
+      .padding(.vertical)
+      Spacer()
+
+      HStack
+      {
+        Button("Cancel")
+        {
+          showing = .MonthlyView
         }
-        .padding(.horizontal)
+        Spacer()
+        Button("Save")
+        {
+          for newCategory in categoriesToEdit
+          {
+            if let index = categories.firstIndex(where: { $0.id == newCategory.id })
+            {
+              categories[index].id = newCategory.id
+              categories[index].name = newCategory.name
+              categories[index].budget = newCategory.budget
+              categories[index].color = newCategory.color
+            }
+            else
+            {
+              let categoryToAdd = Category(context: moc)
+              categoryToAdd.id = newCategory.id
+              categoryToAdd.name = newCategory.name
+              categoryToAdd.budget = newCategory.budget
+              categoryToAdd.color = newCategory.color
+            }
+          }
+
+          try? moc.save()
+
+          showing = .MonthlyView
+        }
+      }
+      .padding(.vertical)
     }
+    .onAppear
+    {
+      categoriesToEdit = categories.map { NewCategory(from: $0) }
+    }
+    .padding(.horizontal)
+  }
 }
 
-struct NewCategory {
-    var id: UUID
-    var name: String
-    var budget: Double
-    var color: Float
+struct NewCategory
+{
+  var id: UUID
+  var name: String
+  var budget: Double
+  var color: Float
 
-    init(from: Category) {
-        self.id = from.id ?? UUID()
-        self.name = from.wrappedName
-        self.budget = from.budget
-        self.color = from.color
-    }
+  init(from: Category)
+  {
+    id = from.id ?? UUID()
+    name = from.wrappedName
+    budget = from.budget
+    color = from.color
+  }
 
-    init(id: UUID, name: String, budget: Double, color: Float) {
-        self.id = id
-        self.name = name
-        self.budget = budget
-        self.color = color
-    }
+  init(id: UUID, name: String, budget: Double, color: Float)
+  {
+    self.id = id
+    self.name = name
+    self.budget = budget
+    self.color = color
+  }
 }

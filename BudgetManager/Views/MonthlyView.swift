@@ -5,103 +5,105 @@
 //  Created by JACK HOGG on 17/11/2023.
 //
 
+import CoreData
 import Foundation
 import SwiftUI
-import CoreData
 
 struct MonthlyView: View
 {
-    @Binding var showing: Page
+  @Binding var showing: Page
 
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @Environment(\.managedObjectContext) var moc
+  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
+  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
-    @Binding var categoryPageTitle: String
-    @State private var selectedTabIndex: Int = 0
+  @Binding var categoryPageTitle: String
+  @State private var selectedTabIndex: Int = 0
 
-    var body: some View
+  var body: some View
+  {
+    let transactionsPerMonth = getTransactionPerMonth()
+    let months = transactionsPerMonth.keys.sorted(by: >)
+
+    VStack
     {
-        let transactionsPerMonth = getTransactionPerMonth()
-        let months = transactionsPerMonth.keys.sorted(by: >)
+      HStack
+      {
+        Text("Budgets")
+          .font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
+        Spacer()
+        Button("Edit") { showing = .EditBudgetsPage }
+      }
+      .padding()
 
-        VStack
+      TabView(selection: $selectedTabIndex)
+      {
+        ForEach(months, id: \.self)
         {
+          month in
+          VStack
+          {
             HStack
             {
-                Text("Budgets")
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                Spacer()
-                Button("Edit") { self.showing = .EditBudgetsPage }
+              Image(systemName: "chevron.left").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .left))
+              Spacer()
+              Text(month).font(.title2)
+              Spacer()
+              Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
             }
-            .padding()
-
-            TabView(selection: self.$selectedTabIndex)
-            {
-                ForEach(months, id:\.self)
-                {
-                    month in
-                    VStack
-                    {
-                        HStack
-                        {
-                            Image(systemName: "chevron.left").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .left))
-                            Spacer()
-                            Text(month).font(.title2)
-                            Spacer()
-                            Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
-                        }
-                        .padding(.horizontal)
-                        BudgetView(showing: $showing, transactions: transactionsPerMonth[month] ?? [], categoryPageTitle: $categoryPageTitle)
-                    }
-                    .tag(months.firstIndex(of: month)!)
-                }
-            }
-            .tabViewStyle(.page)
-            .indexViewStyle(.page(backgroundDisplayMode: .interactive))
-            .onAppear
-            {
-                self.selectedTabIndex = months.count - 1
-            }
-
-            VStack(alignment: .center)
-            {
-                Button(action: { self.showing = .AddTransactionPage }, label:
-                {
-                    Image(systemName: "plus.circle")
-                        .resizable()
-                        .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                })
-            }
-            .padding(.vertical)
+            .padding(.horizontal)
+            BudgetView(showing: $showing, transactions: transactionsPerMonth[month] ?? [], categoryPageTitle: $categoryPageTitle)
+          }
+          .tag(months.firstIndex(of: month)!)
         }
-    }
+      }
+      .tabViewStyle(.page)
+      .indexViewStyle(.page(backgroundDisplayMode: .interactive))
+      .onAppear
+      {
+        selectedTabIndex = months.count - 1
+      }
 
-    func getTransactionPerMonth() -> Dictionary<String, [FetchedResults<Transaction>.Element]>
+      VStack(alignment: .center)
+      {
+        Button(action: { showing = .AddTransactionPage }, label:
+          {
+            Image(systemName: "plus.circle")
+              .resizable()
+              .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/ .center/*@END_MENU_TOKEN@*/)
+          })
+      }
+      .padding(.vertical)
+    }
+  }
+
+  func getTransactionPerMonth() -> [String: [FetchedResults<Transaction>.Element]]
+  {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "MMMM"
+    dateFormatter.locale = Locale(identifier: "en_GB")
+
+    return Dictionary(grouping: transactions)
+    { (element: Transaction) in
+      dateFormatter.string(from: element.date!)
+    }
+  }
+
+  enum ChevronDirection
+  {
+    case left, right
+  }
+
+  func calculateChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color
+  {
+    if direction == .left, index == 0
     {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM"
-        dateFormatter.locale = Locale(identifier: "en_GB")
-
-        return Dictionary(grouping: self.transactions) { (element: Transaction) in
-            return dateFormatter.string(from: element.date!)
-        }
+      return .black
     }
-
-    enum ChevronDirection
+    if direction == .right, index == length - 1
     {
-        case left, right
+      return .black
     }
-    func calculateChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color
-    {
-        if direction == .left && index == 0
-        {
-            return .black
-        }
-        if direction == .right && index == length - 1
-        {
-            return .black
-        }
-        return .gray
-    }
+    return .gray
+  }
 }

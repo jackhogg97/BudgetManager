@@ -5,21 +5,21 @@
 //  Created by JACK HOGG on 10/11/2023.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
-class DataController: ObservableObject 
+class DataController: ObservableObject
 {
-    let container = NSPersistentContainer(name: "DataModel");
+  let container = NSPersistentContainer(name: "DataModel")
 
-    init()
-    {
-        container.loadPersistentStores 
-        { description, error in
-            if let error = error 
-            {
-                print("Error loading Core Data: \(error.localizedDescription)")
-            }
-        }
+  init()
+  {
+    container.loadPersistentStores
+    { _, error in
+      if let error
+      {
+        print("Error loading Core Data: \(error.localizedDescription)")
+      }
     }
+  }
 }

@@ -7,80 +7,80 @@
 
 import SwiftUI
 
-struct CategoryView: View 
+struct CategoryView: View
 {
+  @Binding var showing: Page
+  @Binding var category: String
 
-    @Binding var showing: Page
-    @Binding var category: String
-    
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @Environment(\.managedObjectContext) var moc
+  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
-    var body: some View 
+  var body: some View
+  {
+    VStack(alignment: .leading)
     {
-        VStack(alignment: .leading)
+      HStack
+      {
+        Text(category).font(.title)
+        Spacer()
+        Button(action: { showing = .MonthlyView }, label:
+          {
+            Image(systemName: "multiply")
+              .resizable()
+              .frame(width: 20.0, height: 20.0, alignment: /*@START_MENU_TOKEN@*/ .center/*@END_MENU_TOKEN@*/)
+          })
+      }
+      .padding()
+      let transactionsFromCategory = getTransactionsKeyedByDay()
+      List
+      {
+        ForEach(transactionsFromCategory.keys.sorted(by: >), id: \.self)
         {
-            HStack
+          day in
+          Section(header: Text(day))
+          {
+            ForEach(transactionsFromCategory[day]!, id: \.self)
             {
-                Text(category).font(.title)
+              transaction in
+              HStack
+              {
+                Text(transaction.wrappedName)
                 Spacer()
-                Button(action: { self.showing = .MonthlyView }, label:
-                {
-                    Image(systemName: "multiply")
-                        .resizable()
-                        .frame(width: 20.0, height: 20.0, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                })
+                Text(String(format: "£%.2F", transaction.amount))
+              }
             }
-            .padding()
-            let transactionsFromCategory = getTransactionsKeyedByDay()
-            List
+            .onDelete
             {
-                ForEach(transactionsFromCategory.keys.sorted(by: >), id: \.self)
-                {
-                    day in
-                    Section(header: Text(day))
-                    {
-                        ForEach(transactionsFromCategory[day]!, id: \.self)
-                        {
-                            transaction in
-                            HStack
-                            {
-                                Text(transaction.wrappedName)
-                                Spacer()
-                                Text(String(format: "£%.2F", transaction.amount))
-                            }
-                        }
-                        .onDelete 
-                        {
-                            indexSet in
-                            if let index = indexSet.first 
-                            {
-                                let transactionToDelete = transactionsFromCategory[day]![index]
-                                moc.delete(transactionToDelete)
-                                try? moc.save()
-                            }
-                        }
-                    }
-                }
+              indexSet in
+              if let index = indexSet.first
+              {
+                let transactionToDelete = transactionsFromCategory[day]![index]
+                moc.delete(transactionToDelete)
+                try? moc.save()
+              }
             }
-            .listStyle(.plain)
+          }
         }
+      }
+      .listStyle(.plain)
     }
+  }
 
-    func getTransactionsKeyedByDay() -> [String : [FetchedResults<Transaction>.Element]]
-    {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd MMMM yyyy"
-        dateFormatter.locale = Locale(identifier: "en_GB")
+  func getTransactionsKeyedByDay() -> [String: [FetchedResults<Transaction>.Element]]
+  {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd MMMM yyyy"
+    dateFormatter.locale = Locale(identifier: "en_GB")
 
-        let transactionsFromCategory = self.transactions.filter { $0.category ?? "" == category }
-        return Dictionary(grouping: transactionsFromCategory) { (element: Transaction) in
-            return dateFormatter.string(from: element.date!)
-        }
+    let transactionsFromCategory = transactions.filter { $0.category ?? "" == category }
+    return Dictionary(grouping: transactionsFromCategory)
+    { (element: Transaction) in
+      dateFormatter.string(from: element.date!)
     }
+  }
 }
 
-#Preview 
+#Preview
 {
-    CategoryView(showing: .constant(.CategoryPage), category: .constant("Category Title"))
+  CategoryView(showing: .constant(.CategoryPage), category: .constant("Category Title"))
 }
