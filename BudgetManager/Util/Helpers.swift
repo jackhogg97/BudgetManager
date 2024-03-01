@@ -25,3 +25,10 @@ extension Transaction
     }
 
 }
+
+func numberFormatter() -> NumberFormatter
+{
+  let formatter = NumberFormatter()
+  formatter.zeroSymbol = ""
+  return formatter
+}

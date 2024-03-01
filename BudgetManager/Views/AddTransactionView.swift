@@ -56,9 +56,9 @@ struct AddTransactionView: View
                     HStack
                     {
                         Text("Amount")
-                        TextField("", value: $amount, format: .number)
+                        TextField("Amount", value: $amount, formatter: numberFormatter())
                             .multilineTextAlignment(.trailing)
-                            .keyboardType(.numbersAndPunctuation)
+                            .keyboardType(.decimalPad)
                     }
                     HStack
                     {
@@ -68,35 +68,55 @@ struct AddTransactionView: View
                 }
                 Section {
                     Button("Cancel") {
-                        self.showing = .MonthlyView
+                        returnToParentView()
                     }
                     Button("Add") {
-                        let newTransaction = Transaction(context: self.moc)
-                        newTransaction.id = UUID()
-                        newTransaction.name = $name.wrappedValue
-                        newTransaction.category = $category.wrappedValue
-                        newTransaction.date = $date.wrappedValue
-                        newTransaction.amount = $amount.wrappedValue
-                        newTransaction.notes = $notes.wrappedValue
-                        try? self.moc.save()
-
-                        self.showing = .MonthlyView
+                        addNewTransaction()
+                        returnToParentView()
                     }
+                    .disabled(isAddButtonDisabled())
                 }
                 Section {
-                    Button("Delete all transactions") {
-                        self.transactions.forEach {
-                            self.moc.delete($0)
-                        }
-                        try? self.moc.save()
-                        self.showing = .MonthlyView
+                    Button("Delete all transactions", role: .destructive) {
+                        deleteAllTransactions()
+                        returnToParentView()
                     }
-                    .foregroundStyle(.red)
+                    .disabled(true)
                 }
             }
         }
         .padding()
     }
+
+  private func returnToParentView()
+  {
+    self.showing = .MonthlyView
+  }
+
+  private func isAddButtonDisabled() -> Bool
+  {
+    return self.name == "" || self.category == nil || self.amount == 0.0
+  }
+
+  private func addNewTransaction()
+  {
+    let newTransaction = Transaction(context: self.moc)
+    newTransaction.id = UUID()
+    newTransaction.name = $name.wrappedValue
+    newTransaction.category = $category.wrappedValue
+    newTransaction.date = $date.wrappedValue
+    newTransaction.amount = $amount.wrappedValue
+    newTransaction.notes = $notes.wrappedValue
+    try? self.moc.save()
+  }
+
+  private func deleteAllTransactions()
+  {
+    self.transactions.forEach {
+      self.moc.delete($0)
+    }
+    try? self.moc.save()
+  }
 }
 
 #Preview {
