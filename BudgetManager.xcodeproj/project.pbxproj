@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31718F52B06B19F00A16B81 /* CategoryView.swift */; };
+		B31854C22BA45FAE00A28403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31854C12BA45FAE00A28403 /* Constants.swift */; };
 		B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */; };
 		B3244E252AFBE7C000CE5CD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */; };
 		B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */; };
@@ -23,6 +24,7 @@
 
 /* Begin PBXFileReference section */
 		B31718F52B06B19F00A16B81 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		B31854C12BA45FAE00A28403 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3244E1D2AFBE7BC00CE5CD3 /* BudgetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManagerApp.swift; sourceTree = "<group>"; };
 		B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -103,6 +105,7 @@
 				B3244E302AFBEAF700CE5CD3 /* Helpers.swift */,
 				B330AE482AFE3D2A00144798 /* ColorTransformer.swift */,
 				B330AE552AFE8B9500144798 /* DataController.swift */,
+				B31854C12BA45FAE00A28403 /* Constants.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -178,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */,
+				B31854C22BA45FAE00A28403 /* Constants.swift in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,

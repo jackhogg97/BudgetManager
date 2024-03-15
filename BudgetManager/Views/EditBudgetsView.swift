@@ -15,34 +15,23 @@ struct EditBudgetsView: View
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
 
   @State private var categoriesToEdit: [NewCategory] = []
+  @State private var startDate: Int = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
   var body: some View
   {
-    VStack(alignment: .leading)
+    Form
     {
-      HStack
+      Section("Budget start date")
       {
-        Spacer()
-        Button("Delete all")
-        {
-          for category in categories
-          {
-            moc.delete(category)
-          }
-          try? moc.save()
-          showing = .MonthlyView
-        }
-        .foregroundStyle(.red)
+        TextField("Start date", value: $startDate, format: .number).keyboardType(.numberPad)
       }
-      Spacer()
       ForEach($categoriesToEdit, id: \.id)
       {
         category in
         HStack
         {
           TextField("Category Name", text: category.name)
-          TextField("Budget", value: category.budget, format: .number).keyboardType(.numbersAndPunctuation)
-//                    ColorPicker("Color", selection: categoryEdit.color)
+          TextField("Budget", value: category.budget, format: .number).keyboardType(.decimalPad)
         }
       }
       Button(action:
@@ -84,6 +73,9 @@ struct EditBudgetsView: View
               categoryToAdd.color = newCategory.color
             }
           }
+
+          // TODO: validate date
+          UserDefaults.standard.setValue(startDate, forKey: K.Keys.PERIOD_DATE)
 
           try? moc.save()
 
