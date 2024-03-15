@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EditBudgetsView: View
 {
-  @Binding var showing: Page
+  @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
   @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
@@ -47,15 +47,8 @@ struct EditBudgetsView: View
           .frame(width: 25.0, height: 25.0, alignment: .center)
       }
       .padding(.vertical)
-      Spacer()
-
-      HStack
+      Section
       {
-        Button("Cancel")
-        {
-          showing = .MonthlyView
-        }
-        Spacer()
         Button("Save")
         {
           addOrEditCategory()
@@ -65,10 +58,9 @@ struct EditBudgetsView: View
 
           try? moc.save()
 
-          showing = .MonthlyView
+          presentationMode.wrappedValue.dismiss()
         }
       }
-      .padding(.vertical)
     }
     .onAppear
     {

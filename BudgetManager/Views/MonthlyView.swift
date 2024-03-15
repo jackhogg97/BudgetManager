@@ -27,36 +27,44 @@ struct MonthlyView: View
     let transactionsPerMonth = getTransactionsPerMonth()
     let months = transactionsPerMonth.keys.sorted(by: >)
 
-    VStack
+    NavigationStack
     {
-      HStack
+      VStack
       {
-        Text("Budgets")
-          .font(.title)
-        Spacer()
-        Button("Edit") { showing = .EditBudgetsPage }
-      }
-      .padding()
-
-      TabView(selection: $selectedTabIndex)
-      {
-        ForEach(months, id: \.self)
+        HStack
         {
-          month in
-          VStack
+          Text("Budgets")
+            .font(.largeTitle).bold()
+          Spacer()
+          NavigationLink
           {
-            HStack
-            {
-              Image(systemName: "chevron.left").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .left))
-              Spacer()
-              Text(month).font(.title2)
-              Spacer()
-              Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
-            }
-            .padding(.horizontal)
-            BudgetView(showing: $showing, transactions: transactionsPerMonth[month] ?? [], categoryPageTitle: $categoryPageTitle)
+            EditBudgetsView()
+          } label: {
+            Text("Edit")
           }
-          .tag(months.firstIndex(of: month)!)
+        }
+        .padding()
+        TabView(selection: $selectedTabIndex)
+        {
+          ForEach(months, id: \.self)
+          {
+            month in
+            VStack
+            {
+              HStack
+              {
+                Image(systemName: "chevron.left").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .left))
+                Spacer()
+                Text(month).font(.title2)
+                Spacer()
+                Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
+              }
+              .padding(.horizontal)
+              Spacer()
+              BudgetView(showing: $showing, transactions: transactionsPerMonth[month] ?? [], categoryPageTitle: categoryPageTitle, dateRange: month)
+            }
+            .tag(months.firstIndex(of: month)!)
+          }
         }
       }
       .tabViewStyle(.page)
@@ -65,7 +73,6 @@ struct MonthlyView: View
       {
         selectedTabIndex = months.count - 1
       }
-
       VStack(alignment: .center)
       {
         Button(action: { showing = .AddTransactionPage }, label:

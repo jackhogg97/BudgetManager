@@ -90,11 +90,11 @@
 		B330AE4E2AFE4DA200144798 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				B3648D082B0779DC0047981C /* MonthlyView.swift */,
 				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
 				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
-				B3648D082B0779DC0047981C /* MonthlyView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";

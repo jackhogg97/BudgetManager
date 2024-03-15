@@ -10,7 +10,7 @@ import SwiftUI
 
 enum Page
 {
-  case MonthlyView, AddTransactionPage, EditBudgetsPage, CategoryPage
+  case MonthlyView, AddTransactionPage
 }
 
 @main
@@ -36,12 +36,6 @@ struct BudgetManagerApp: App
                 .environment(\.managedObjectContext, dataController.container.viewContext)
             case .AddTransactionPage:
               AddTransactionView(showing: $showing)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-            case .EditBudgetsPage:
-              EditBudgetsView(showing: $showing)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-            case .CategoryPage:
-              CategoryView(showing: $showing, category: $categoryPageTitle)
                 .environment(\.managedObjectContext, dataController.container.viewContext)
           }
         }

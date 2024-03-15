@@ -14,11 +14,10 @@ struct BudgetView: View
 
   @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-//    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
   var transactions: [FetchedResults<Transaction>.Element]
-
-  @Binding var categoryPageTitle: String
+  var categoryPageTitle: String
+  var dateRange: String
 
   var body: some View
   {
@@ -51,40 +50,42 @@ struct BudgetView: View
           ForEach(categories, id: \.id)
           {
             category in
-            VStack(spacing: 0)
+            NavigationLink
             {
-              HStack
-              {
-                Text(category.name ?? "Unknown")
-                  .font(.caption)
-                  .bold()
-                  .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                formatBudget(category: category)
-                  .font(.caption2)
-                  .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
-              }
-              .padding(.horizontal)
-
-              let percentFilled = calculateRowWidth(category: category)
-              ZStack(alignment: .leading)
-              {
-                Rectangle()
-                  .cornerRadius(5)
-                  .padding(.vertical, 5)
-                  .frame(maxWidth: BAR_MAX_WIDTH, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
-                  .foregroundColor(.gray)
-                Rectangle()
-                  .cornerRadius(5)
-                  .padding(.vertical, 5)
-                  .frame(maxWidth: BAR_MAX_WIDTH * percentFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
-                  .foregroundColor(.blue)
-              }
-              .padding(.horizontal)
+              CategoryView(category: category.wrappedName, transactions: transactions, dateRange: dateRange)
             }
-            .onTapGesture
+            label:
             {
-              categoryPageTitle = category.wrappedName
-              showing = .CategoryPage
+              VStack(spacing: 0)
+              {
+                HStack
+                {
+                  Text(category.name ?? "Unknown")
+                    .font(.caption)
+                    .bold()
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                  formatBudget(category: category)
+                    .font(.caption2)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
+                }
+                .padding(.horizontal)
+
+                let percentFilled = calculateRowWidth(category: category)
+                ZStack(alignment: .leading)
+                {
+                  Rectangle()
+                    .cornerRadius(5)
+                    .padding(.vertical, 5)
+                    .frame(maxWidth: BAR_MAX_WIDTH, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
+                    .foregroundColor(.gray)
+                  Rectangle()
+                    .cornerRadius(5)
+                    .padding(.vertical, 5)
+                    .frame(maxWidth: BAR_MAX_WIDTH * percentFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
+                    .foregroundColor(.blue)
+                }
+                .padding(.horizontal)
+              }
             }
           }
         }

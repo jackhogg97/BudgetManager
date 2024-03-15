@@ -9,11 +9,11 @@ import SwiftUI
 
 struct CategoryView: View
 {
-  @Binding var showing: Page
-  @Binding var category: String
-
   @Environment(\.managedObjectContext) var moc
-  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+
+  var category: String
+  var transactions: [Transaction]
+  var dateRange: String
 
   var body: some View
   {
@@ -21,16 +21,11 @@ struct CategoryView: View
     {
       HStack
       {
-        Text(category).font(.title)
         Spacer()
-        Button(action: { showing = .MonthlyView }, label:
-          {
-            Image(systemName: "multiply")
-              .resizable()
-              .frame(width: 20.0, height: 20.0, alignment: /*@START_MENU_TOKEN@*/ .center/*@END_MENU_TOKEN@*/)
-          })
+        Text(category + ": " + dateRange).font(.title3)
+        Spacer()
       }
-      .padding()
+      Spacer()
       let transactionsFromCategory = getTransactionsKeyedByDay()
       List
       {
@@ -82,5 +77,5 @@ struct CategoryView: View
 
 #Preview
 {
-  CategoryView(showing: .constant(.CategoryPage), category: .constant("Category Title"))
+  CategoryView(category: "Category Title", transactions: [], dateRange: "15 January - 15 Febuary")
 }
