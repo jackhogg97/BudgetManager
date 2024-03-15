@@ -17,21 +17,23 @@ struct EditBudgetsView: View
   @State private var categoriesToEdit: [NewCategory] = []
   @State private var startDate: Int = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
+  @FocusState private var isKeyboardShowing: Bool
+
   var body: some View
   {
     Form
     {
       Section("Budget start date")
       {
-        TextField("Start date", value: $startDate, format: .number).keyboardType(.numberPad)
+        TextField("Start date", value: $startDate, format: .number).keyboardType(.numberPad).focused($isKeyboardShowing)
       }
       ForEach($categoriesToEdit, id: \.id)
       {
         category in
         HStack
         {
-          TextField("Category Name", text: category.name)
-          TextField("Budget", value: category.budget, format: .number).keyboardType(.decimalPad)
+          TextField("Category Name", text: category.name).focused($isKeyboardShowing)
+          TextField("Budget", value: category.budget, format: .number).keyboardType(.decimalPad).focused($isKeyboardShowing)
         }
       }
       Button(action:
@@ -87,6 +89,17 @@ struct EditBudgetsView: View
     .onAppear
     {
       categoriesToEdit = categories.map { NewCategory(from: $0) }
+    }
+    .toolbar
+    {
+      ToolbarItemGroup(placement: .keyboard)
+      {
+        Spacer()
+        Button("Done")
+        {
+          isKeyboardShowing = false
+        }
+      }
     }
     .padding(.horizontal)
   }
