@@ -20,9 +20,11 @@ struct MonthlyView: View
   @Binding var categoryPageTitle: String
   @State private var selectedTabIndex: Int = 0
 
+  private let periodDate = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
+
   var body: some View
   {
-    let transactionsPerMonth = getTransactionPerMonth()
+    let transactionsPerMonth = getTransactionsPerMonth()
     let months = transactionsPerMonth.keys.sorted(by: >)
 
     VStack
@@ -30,7 +32,7 @@ struct MonthlyView: View
       HStack
       {
         Text("Budgets")
-          .font(/*@START_MENU_TOKEN@*/ .title/*@END_MENU_TOKEN@*/)
+          .font(.title)
         Spacer()
         Button("Edit") { showing = .EditBudgetsPage }
       }
@@ -70,23 +72,43 @@ struct MonthlyView: View
           {
             Image(systemName: "plus.circle")
               .resizable()
-              .frame(width: 50.0, height: 50.0, alignment: /*@START_MENU_TOKEN@*/ .center/*@END_MENU_TOKEN@*/)
+              .frame(width: 50.0, height: 50.0, alignment: .center)
           })
       }
       .padding(.vertical)
     }
   }
 
-  func getTransactionPerMonth() -> [String: [FetchedResults<Transaction>.Element]]
+  func getTransactionsPerMonth() -> [String: [Transaction]]
   {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "MMMM"
-    dateFormatter.locale = Locale(identifier: "en_GB")
+    let months = Set(transactions.compactMap { $0.date!.setDay(day: periodDate) }).sorted()
+    let ranges: [[Date]] = months.map { month in [month, month.incrementMonth()] }
 
-    return Dictionary(grouping: transactions)
-    { (element: Transaction) in
-      dateFormatter.string(from: element.date!)
+    let formatter = DateFormatter()
+    formatter.dateFormat = "dd MMMM"
+
+    var objects: [String: [Transaction]] = [:]
+    for range in ranges
+    {
+      let key = formatter.string(from: range[0]) + " - " + formatter.string(from: range[1])
+      for transaction in transactions
+      {
+        if transaction.date! > range[0], transaction.date! < range[1]
+        {
+          if var transactionInMonth = objects[key]
+          {
+            transactionInMonth.append(transaction)
+            objects[key] = transactionInMonth
+          }
+          else
+          {
+            objects[key] = [transaction]
+          }
+        }
+      }
     }
+
+    return objects
   }
 
   enum ChevronDirection
