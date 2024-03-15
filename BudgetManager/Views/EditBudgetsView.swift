@@ -36,6 +36,7 @@ struct EditBudgetsView: View
           TextField("Budget", value: category.budget, format: .number).keyboardType(.decimalPad).focused($isKeyboardShowing)
         }
       }
+      .onDelete(perform: deleteCategory)
       Button(action:
         {
           categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
@@ -89,7 +90,7 @@ struct EditBudgetsView: View
 
   func addOrEditCategory()
   {
-    for newCategory in categoriesToEdit
+    for newCategory in categories
     {
       if let index = categories.firstIndex(where: { $0.id == newCategory.id })
       {
@@ -107,6 +108,24 @@ struct EditBudgetsView: View
         categoryToAdd.color = newCategory.color
       }
     }
+  }
+
+  func deleteCategory(at offsets: IndexSet)
+  {
+    for index in offsets
+    {
+      guard index < categories.count, index >= 0
+      else
+      {
+        let _ = categoriesToEdit.popLast()
+        return
+      }
+      let cat = categories[index]
+      print("attempting delete")
+      moc.delete(cat)
+    }
+
+    try? moc.save()
   }
 }
 
