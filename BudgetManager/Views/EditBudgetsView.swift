@@ -57,24 +57,7 @@ struct EditBudgetsView: View
         Spacer()
         Button("Save")
         {
-          for newCategory in categoriesToEdit
-          {
-            if let index = categories.firstIndex(where: { $0.id == newCategory.id })
-            {
-              categories[index].id = newCategory.id
-              categories[index].name = newCategory.name
-              categories[index].budget = newCategory.budget
-              categories[index].color = newCategory.color
-            }
-            else
-            {
-              let categoryToAdd = Category(context: moc)
-              categoryToAdd.id = newCategory.id
-              categoryToAdd.name = newCategory.name
-              categoryToAdd.budget = newCategory.budget
-              categoryToAdd.color = newCategory.color
-            }
-          }
+          addOrEditCategory()
 
           // TODO: validate date
           UserDefaults.standard.setValue(startDate, forKey: K.Keys.PERIOD_DATE)
@@ -102,6 +85,28 @@ struct EditBudgetsView: View
       }
     }
     .padding(.horizontal)
+  }
+
+  func addOrEditCategory()
+  {
+    for newCategory in categoriesToEdit
+    {
+      if let index = categories.firstIndex(where: { $0.id == newCategory.id })
+      {
+        categories[index].id = newCategory.id
+        categories[index].name = newCategory.name
+        categories[index].budget = newCategory.budget
+        categories[index].color = newCategory.color
+      }
+      else
+      {
+        let categoryToAdd = Category(context: moc)
+        categoryToAdd.id = newCategory.id
+        categoryToAdd.name = newCategory.name
+        categoryToAdd.budget = newCategory.budget
+        categoryToAdd.color = newCategory.color
+      }
+    }
   }
 }
 
