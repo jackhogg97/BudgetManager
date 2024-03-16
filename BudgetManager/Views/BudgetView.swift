@@ -18,6 +18,7 @@ struct BudgetView: View
 
   var body: some View
   {
+    let _ = calculateCurrentSpend()
     GeometryReader
     {
       _ in
@@ -86,10 +87,6 @@ struct BudgetView: View
             }.buttonStyle(.plain)
           }
         }
-      }
-      .onAppear
-      {
-        calculateCurrentSpend()
       }
     }
   }
