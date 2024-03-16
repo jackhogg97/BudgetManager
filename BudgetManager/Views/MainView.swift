@@ -21,8 +21,7 @@ struct MainView: View
 
   var body: some View
   {
-    let transactionsPerMonth = getTransactionsPerMonth()
-    let months = transactionsPerMonth.keys.sorted(by: >)
+    let (months, transactionsPerMonth) = getTransactionsPerMonth()
 
     NavigationStack
     {
@@ -87,15 +86,16 @@ struct MainView: View
     }
   }
 
-  func getTransactionsPerMonth() -> [String: [Transaction]]
+  func getTransactionsPerMonth() -> ([String], [String: [Transaction]])
   {
-    let months = Set(transactions.compactMap { $0.date!.setDay(day: periodDate) }).sorted()
+    let months = Set(transactions.compactMap { $0.date!.setDay(day: periodDate) }).sorted(by: <)
     let ranges: [[Date]] = months.map { month in [month, month.incrementMonth()] }
 
     let formatter = DateFormatter()
-    formatter.dateFormat = "dd MMMM"
+    formatter.dateFormat = "dd MMMM yy"
 
     var objects: [String: [Transaction]] = [:]
+    var keys: [String] = []
     for range in ranges
     {
       let key = formatter.string(from: range[0]) + " - " + formatter.string(from: range[1])
@@ -111,12 +111,13 @@ struct MainView: View
           else
           {
             objects[key] = [transaction]
+            keys.append(key)
           }
         }
       }
     }
 
-    return objects
+    return (keys, objects)
   }
 
   enum ChevronDirection
