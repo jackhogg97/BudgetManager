@@ -1,5 +1,5 @@
 //
-//  MonthlyView.swift
+//  MainView.swift
 //  BudgetManager
 //
 //  Created by JACK HOGG on 17/11/2023.
@@ -9,16 +9,13 @@ import CoreData
 import Foundation
 import SwiftUI
 
-struct MonthlyView: View
+struct MainView: View
 {
-  @Binding var showing: Page
-
-  @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
   @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
-  @Binding var categoryPageTitle: String
   @State private var selectedTabIndex: Int = 0
+  @State private var showingAddTransaction = false
 
   private let periodDate = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
@@ -61,7 +58,7 @@ struct MonthlyView: View
               }
               .padding(.horizontal)
               Spacer()
-              BudgetView(showing: $showing, transactions: transactionsPerMonth[month] ?? [], categoryPageTitle: categoryPageTitle, dateRange: month)
+              BudgetView(transactions: transactionsPerMonth[month] ?? [], dateRange: month)
             }
             .tag(months.firstIndex(of: month)!)
           }
@@ -75,12 +72,16 @@ struct MonthlyView: View
       }
       VStack(alignment: .center)
       {
-        Button(action: { showing = .AddTransactionPage }, label:
+        Button(action: { showingAddTransaction = true }, label:
           {
             Image(systemName: "plus.circle")
               .resizable()
               .frame(width: 50.0, height: 50.0, alignment: .center)
           })
+          .sheet(isPresented: $showingAddTransaction)
+          {
+            AddTransactionView(showing: $showingAddTransaction)
+          }
       }
       .padding(.vertical)
     }

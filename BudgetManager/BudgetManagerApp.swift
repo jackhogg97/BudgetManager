@@ -8,18 +8,11 @@
 import LocalAuthentication
 import SwiftUI
 
-enum Page
-{
-  case MonthlyView, AddTransactionPage
-}
-
 @main
 struct BudgetManagerApp: App
 {
   @State private var isUnlocked = false
   @StateObject private var dataController = DataController()
-  @State var showing: Page = .MonthlyView
-  @State var categoryPageTitle: String = ""
 
   var body: some Scene
   {
@@ -29,15 +22,8 @@ struct BudgetManagerApp: App
       {
         if isUnlocked
         {
-          switch showing
-          {
-            case .MonthlyView:
-              MonthlyView(showing: $showing, categoryPageTitle: $categoryPageTitle)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-            case .AddTransactionPage:
-              AddTransactionView(showing: $showing)
-                .environment(\.managedObjectContext, dataController.container.viewContext)
-          }
+          MainView()
+            .environment(\.managedObjectContext, dataController.container.viewContext)
         }
         else
         {

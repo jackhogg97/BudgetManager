@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AddTransactionView: View
 {
-  @Binding var showing: Page
+  @Binding var showing: Bool
 
   @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
@@ -30,90 +30,93 @@ struct AddTransactionView: View
 
   var body: some View
   {
-    VStack(alignment: .leading)
+    NavigationStack
     {
-      Text("Add transaction")
-        .font(.title)
-        .padding(.vertical)
-
-      Form
+      VStack(alignment: .leading)
       {
-        Section
+        Text("Add transaction")
+          .font(.title)
+          .padding(.vertical)
+
+        Form
         {
-          HStack
+          Section
           {
-            Text("Name")
-            TextField("Name", text: $name)
-              .multilineTextAlignment(.trailing)
-              .focused($fieldShowing, equals: .name)
-          }
-          HStack
-          {
-            Picker("Category", selection: $category)
+            HStack
             {
-              ForEach(categories, id: \.name)
+              Text("Name")
+              TextField("Name", text: $name)
+                .multilineTextAlignment(.trailing)
+                .focused($fieldShowing, equals: .name)
+            }
+            HStack
+            {
+              Picker("Category", selection: $category)
               {
-                Text($0.name!).tag($0.name)
+                ForEach(categories, id: \.name)
+                {
+                  Text($0.name!).tag($0.name)
+                }
               }
             }
+            HStack
+            {
+              DatePicker("Date", selection: $date)
+            }
+            HStack
+            {
+              Text("Amount")
+              TextField("Amount", value: $amount, formatter: numberFormatter())
+                .multilineTextAlignment(.trailing)
+                .keyboardType(.decimalPad)
+                .focused($fieldShowing, equals: .amount)
+            }
+            HStack
+            {
+              TextField("Notes", text: $notes)
+                .frame(height: 150, alignment: .topLeading)
+                .focused($fieldShowing, equals: .notes)
+            }
           }
-          HStack
+          Section
           {
-            DatePicker("Date", selection: $date)
+            Button("Cancel")
+            {
+              returnToParentView()
+            }
+            Button("Add")
+            {
+              addNewTransaction()
+              returnToParentView()
+            }
+            .disabled(isAddButtonDisabled())
           }
-          HStack
+          Section
           {
-            Text("Amount")
-            TextField("Amount", value: $amount, formatter: numberFormatter())
-              .multilineTextAlignment(.trailing)
-              .keyboardType(.decimalPad)
-              .focused($fieldShowing, equals: .amount)
-          }
-          HStack
-          {
-            TextField("Notes", text: $notes)
-              .frame(height: 150, alignment: .topLeading)
-              .focused($fieldShowing, equals: .notes)
+            Button("Delete all transactions", role: .destructive)
+            {
+              deleteAllTransactions()
+              returnToParentView()
+            }
+            .disabled(true)
           }
         }
-        Section
+        .toolbar
         {
-          Button("Cancel")
+          ToolbarItemGroup(placement: .keyboard)
           {
-            returnToParentView()
+            Spacer()
+            Button("Done", action: doneClicked)
           }
-          Button("Add")
-          {
-            addNewTransaction()
-            returnToParentView()
-          }
-          .disabled(isAddButtonDisabled())
-        }
-        Section
-        {
-          Button("Delete all transactions", role: .destructive)
-          {
-            deleteAllTransactions()
-            returnToParentView()
-          }
-          .disabled(true)
         }
       }
-      .toolbar
-      {
-        ToolbarItemGroup(placement: .keyboard)
-        {
-          Spacer()
-          Button("Done", action: doneClicked)
-        }
-      }
+      .padding()
     }
-    .padding()
   }
 
   private func returnToParentView()
   {
-    showing = .MonthlyView
+    showing = false
   }
 
   private func isAddButtonDisabled() -> Bool
@@ -156,5 +159,5 @@ struct AddTransactionView: View
 
 #Preview
 {
-  AddTransactionView(showing: .constant(.AddTransactionPage))
+  AddTransactionView(showing: .constant(true))
 }

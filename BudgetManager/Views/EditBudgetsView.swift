@@ -10,8 +10,8 @@ import SwiftUI
 struct EditBudgetsView: View
 {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-
   @Environment(\.managedObjectContext) var moc
+
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
 
   @State private var categoriesToEdit: [NewCategory] = []

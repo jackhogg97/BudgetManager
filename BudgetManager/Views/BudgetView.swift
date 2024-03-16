@@ -10,13 +10,10 @@ import SwiftUI
 
 struct BudgetView: View
 {
-  @Binding var showing: Page
-
   @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
 
   var transactions: [FetchedResults<Transaction>.Element]
-  var categoryPageTitle: String
   var dateRange: String
 
   var body: some View
