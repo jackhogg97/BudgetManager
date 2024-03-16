@@ -26,10 +26,10 @@ struct CategoryView: View
         Spacer()
       }
       Spacer()
-      let transactionsFromCategory = getTransactionsKeyedByDay()
+      let (days, transactionsFromCategory) = getTransactionsKeyedByDay()
       List
       {
-        ForEach(transactionsFromCategory.keys.sorted(by: >), id: \.self)
+        ForEach(days, id: \.self)
         {
           day in
           Section(header: Text(day))
@@ -61,17 +61,26 @@ struct CategoryView: View
     }
   }
 
-  func getTransactionsKeyedByDay() -> [String: [FetchedResults<Transaction>.Element]]
+  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]])
   {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd MMMM yyyy"
     dateFormatter.locale = Locale(identifier: "en_GB")
 
+    var dates: [String] = []
     let transactionsFromCategory = transactions.filter { $0.category ?? "" == category }
-    return Dictionary(grouping: transactionsFromCategory)
+    let sortedTransactions = transactionsFromCategory.sorted(by: { $0.date! > $1.date! })
+    let transactionByDate = Dictionary(grouping: sortedTransactions)
     { (element: Transaction) in
-      dateFormatter.string(from: element.date!)
+      let dateStr = dateFormatter.string(from: element.date!)
+      if !dates.contains(dateStr)
+      {
+        dates.append(dateStr)
+      }
+      return dateFormatter.string(from: element.date!)
     }
+
+    return (dates, transactionByDate)
   }
 }
 
