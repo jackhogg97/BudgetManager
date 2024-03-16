@@ -21,6 +21,13 @@ struct AddTransactionView: View
   @State private var amount: Double = 0.0
   @State private var notes: String = ""
 
+  enum FieldShowing
+  {
+    case name, amount, notes
+  }
+
+  @FocusState private var fieldShowing: FieldShowing?
+
   var body: some View
   {
     VStack(alignment: .leading)
@@ -38,6 +45,7 @@ struct AddTransactionView: View
             Text("Name")
             TextField("Name", text: $name)
               .multilineTextAlignment(.trailing)
+              .focused($fieldShowing, equals: .name)
           }
           HStack
           {
@@ -59,11 +67,13 @@ struct AddTransactionView: View
             TextField("Amount", value: $amount, formatter: numberFormatter())
               .multilineTextAlignment(.trailing)
               .keyboardType(.decimalPad)
+              .focused($fieldShowing, equals: .amount)
           }
           HStack
           {
             TextField("Notes", text: $notes)
               .frame(height: 150, alignment: .topLeading)
+              .focused($fieldShowing, equals: .notes)
           }
         }
         Section
@@ -87,6 +97,14 @@ struct AddTransactionView: View
             returnToParentView()
           }
           .disabled(true)
+        }
+      }
+      .toolbar
+      {
+        ToolbarItemGroup(placement: .keyboard)
+        {
+          Spacer()
+          Button("Done", action: doneClicked)
         }
       }
     }
@@ -122,6 +140,17 @@ struct AddTransactionView: View
       moc.delete(transaction)
     }
     try? moc.save()
+  }
+
+  private func doneClicked()
+  {
+    switch fieldShowing
+    {
+      case .name:
+        fieldShowing = .amount
+      default:
+        fieldShowing = nil
+    }
   }
 }
 
