@@ -10,8 +10,9 @@ import SwiftUI
 
 struct BudgetView: View
 {
-  @Environment(\.managedObjectContext) var moc
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
+
+  @Binding var showingDifference: Bool
 
   var transactions: [FetchedResults<Transaction>.Element]
   var dateRange: String
@@ -38,7 +39,7 @@ struct BudgetView: View
           HStack
           {
             Spacer()
-            getTotalSpentBudgetLabel().bold()
+            getTotalLabel()
           }
           .padding()
         }
@@ -62,7 +63,7 @@ struct BudgetView: View
                     .font(.caption)
                     .bold()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                  getSpentBudgetLabel(spend: category.currentSpend, budget: category.budget)
+                  getCategoryLabel(category: category)
                     .font(.caption2)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
                 }
@@ -91,6 +92,18 @@ struct BudgetView: View
     }
   }
 
+  func getTotalLabel() -> Text
+  {
+    showingDifference ? getTotalDifferenceLabel() : getTotalSpentBudgetLabel()
+  }
+
+  func getCategoryLabel(category: Category) -> Text
+  {
+    showingDifference ?
+      getDifferenceLabel(spend: category.currentSpend, budget: category.budget) :
+      getSpentBudgetLabel(spend: category.currentSpend, budget: category.budget)
+  }
+
   func getTotalSpentBudgetLabel() -> Text
   {
     let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
@@ -110,6 +123,22 @@ struct BudgetView: View
     }
 
     return current + Text(String(format: " / £%.2F", budget))
+  }
+
+  func getTotalDifferenceLabel() -> Text
+  {
+    let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
+    let totalBudget = categories.reduce(0) { $0 + $1.budget }
+
+    return getDifferenceLabel(spend: totalCurrentSpend, budget: totalBudget)
+  }
+
+  func getDifferenceLabel(spend: Double, budget: Double) -> Text
+  {
+    let difference = budget - spend
+    let color: Color = difference < 0.0 ? .red : .green
+
+    return Text(String(format: "£%.2F", difference)).foregroundColor(color)
   }
 
   func getRowWidth(category: Category) -> Double

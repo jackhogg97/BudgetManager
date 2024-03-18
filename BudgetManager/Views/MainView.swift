@@ -16,6 +16,7 @@ struct MainView: View
 
   @State private var selectedTabIndex: Int = 0
   @State private var showingAddTransaction = false
+  @State private var showingDifference = false
 
   private let periodDate = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
@@ -32,6 +33,11 @@ struct MainView: View
           Text("Budgets")
             .font(.largeTitle).bold()
           Spacer()
+          // Using empty string here as the string is added to the icon
+          Button("", systemImage: displayIcon())
+          {
+            showingDifference.toggle()
+          }
         }
         .padding()
         TabView(selection: $selectedTabIndex)
@@ -51,7 +57,7 @@ struct MainView: View
               }
               .padding(.horizontal)
               Spacer()
-              BudgetView(transactions: transactionsPerMonth[month] ?? [], dateRange: month)
+              BudgetView(showingDifference: $showingDifference, transactions: transactionsPerMonth[month] ?? [], dateRange: month)
             }
             .tag(months.firstIndex(of: month)!)
           }
@@ -140,5 +146,10 @@ struct MainView: View
       return .black
     }
     return .gray
+  }
+
+  func displayIcon() -> String
+  {
+    showingDifference ? "plus.forwardslash.minus" : "divide"
   }
 }
