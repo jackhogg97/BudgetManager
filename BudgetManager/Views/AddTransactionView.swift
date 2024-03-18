@@ -57,6 +57,15 @@ struct AddTransactionView: View
                 {
                   Text($0.name!).tag($0.name)
                 }
+                // Dividers are not rendered in Picker
+                Divider().tag(nil as String?)
+              }
+              .onAppear
+              {
+                if category == nil
+                {
+                  category = categories.first?.name
+                }
               }
             }
             HStack
