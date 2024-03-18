@@ -32,12 +32,6 @@ struct MainView: View
           Text("Budgets")
             .font(.largeTitle).bold()
           Spacer()
-          NavigationLink
-          {
-            EditBudgetsView()
-          } label: {
-            Text("Edit")
-          }
         }
         .padding()
         TabView(selection: $selectedTabIndex)
@@ -64,25 +58,35 @@ struct MainView: View
         }
       }
       .tabViewStyle(.page)
-      .indexViewStyle(.page(backgroundDisplayMode: .interactive))
       .onAppear
       {
         selectedTabIndex = months.count - 1
       }
-      VStack(alignment: .center)
+      .toolbar
       {
-        Button(action: { showingAddTransaction = true }, label:
+        ToolbarItemGroup(placement: .bottomBar)
+        {
+          Spacer()
+          Button("Recurring transactions", systemImage: "repeat") {}
+          Spacer()
+          Spacer()
+          Button("Add transaction", systemImage: "plus", action: { showingAddTransaction = true })
+            .buttonStyle(BorderedButtonStyle())
+            .sheet(isPresented: $showingAddTransaction)
+            {
+              AddTransactionView(showing: $showingAddTransaction)
+            }
+          Spacer()
+          Spacer()
+          NavigationLink
           {
-            Image(systemName: "plus.circle")
-              .resizable()
-              .frame(width: 50.0, height: 50.0, alignment: .center)
-          })
-          .sheet(isPresented: $showingAddTransaction)
-          {
-            AddTransactionView(showing: $showingAddTransaction)
+            EditBudgetsView()
+          } label: {
+            Image(systemName: "slider.horizontal.3")
           }
+          Spacer()
+        }
       }
-      .padding(.vertical)
     }
   }
 
