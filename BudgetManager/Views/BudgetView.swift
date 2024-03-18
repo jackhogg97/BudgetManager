@@ -38,7 +38,7 @@ struct BudgetView: View
           HStack
           {
             Spacer()
-            calculateTotal().bold()
+            getTotalSpentBudgetLabel().bold()
           }
           .padding()
         }
@@ -62,13 +62,13 @@ struct BudgetView: View
                     .font(.caption)
                     .bold()
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                  formatBudget(category: category)
+                  getSpentBudgetLabel(spend: category.currentSpend, budget: category.budget)
                     .font(.caption2)
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
                 }
                 .padding(.horizontal)
 
-                let percentFilled = calculateRowWidth(category: category)
+                let percentFilled = getRowWidth(category: category)
                 ZStack(alignment: .leading)
                 {
                   Rectangle()
@@ -91,23 +91,28 @@ struct BudgetView: View
     }
   }
 
-  // TODO: Refactor functions
-  func formatBudget(category: Category) -> Text
+  func getTotalSpentBudgetLabel() -> Text
   {
-    let current = Text(String(format: "£%.2F", category.currentSpend))
+    let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
+    let totalBudget = categories.reduce(0) { $0 + $1.budget }
 
-    if category.currentSpend > category.budget
-    {
-      return current.foregroundColor(.red) +
-        Text(String(format: " / £%.2F", category.budget))
-    }
-    else
-    {
-      return current + Text(String(format: " / £%.2F", category.budget))
-    }
+    return getSpentBudgetLabel(spend: totalCurrentSpend, budget: totalBudget)
   }
 
-  func calculateRowWidth(category: Category) -> Double
+  func getSpentBudgetLabel(spend: Double, budget: Double) -> Text
+  {
+    let current = Text(String(format: "£%.2F", spend))
+
+    if spend > budget
+    {
+      return current.foregroundColor(.red) +
+        Text(String(format: " / £%.2F", budget))
+    }
+
+    return current + Text(String(format: " / £%.2F", budget))
+  }
+
+  func getRowWidth(category: Category) -> Double
   {
     category.currentSpend / category.budget
   }
@@ -124,23 +129,6 @@ struct BudgetView: View
       {
         categories[index].currentSpend += transaction.amount
       }
-    }
-  }
-
-  func calculateTotal() -> Text
-  {
-    let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
-    let totalBudget = categories.reduce(0) { $0 + $1.budget }
-    let current = Text(String(format: "£%.2F", totalCurrentSpend))
-
-    if totalCurrentSpend > totalBudget
-    {
-      return current.foregroundColor(.red) +
-        Text(String(format: " / £%.2F", totalBudget))
-    }
-    else
-    {
-      return current + Text(String(format: " / £%.2F", totalBudget))
     }
   }
 }
