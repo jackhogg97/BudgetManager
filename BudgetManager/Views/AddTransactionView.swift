@@ -7,98 +7,157 @@
 
 import SwiftUI
 
-struct AddTransactionView: View 
+struct AddTransactionView: View
 {
-    @Binding var showing: Page
+  @Binding var showing: Bool
 
-    @Environment(\.managedObjectContext) var moc
-    @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
-    @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @Environment(\.managedObjectContext) var moc
+  @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
+  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
-    @State private var name: String = ""
-    @State private var category: String?
-    @State private var date: Date = Date()
-    @State private var amount: Double = 0.0
-    @State private var notes: String = ""
+  @State private var name: String = ""
+  @State private var category: String?
+  @State private var date: Date = .init()
+  @State private var amount: Double = 0.0
+  @State private var notes: String = ""
 
-    var body: some View
+  enum FieldShowing
+  {
+    case name, amount, notes
+  }
+
+  @FocusState private var fieldShowing: FieldShowing?
+
+  var body: some View
+  {
+    NavigationStack
     {
-        VStack(alignment: .leading) 
+      VStack(alignment: .leading)
+      {
+        Text("Add transaction")
+          .font(.title)
+          .padding(.vertical)
+
+        Form
         {
-            Text("Add transaction")
-                .font(.title)
-                .padding(.vertical)
-
-            Form 
+          Section
+          {
+            HStack
             {
-                Section 
-                {
-                    HStack
-                    {
-                        Text("Name")
-                        TextField("Name", text: $name)
-                            .multilineTextAlignment(.trailing)
-                    }
-                    HStack
-                    {
-                        Picker("Category", selection: $category)
-                        {
-                            ForEach(self.categories, id: \.name)
-                            {
-                                Text($0.name!).tag($0.name)
-                            }
-                        }
-                    }
-                    HStack
-                    {
-                        DatePicker("Date", selection: $date)
-                    }
-                    HStack
-                    {
-                        Text("Amount")
-                        TextField("", value: $amount, format: .number)
-                            .multilineTextAlignment(.trailing)
-                            .keyboardType(.numbersAndPunctuation)
-                    }
-                    HStack
-                    {
-                        TextField("Notes", text: $notes)
-                            .frame(height: 150, alignment: .topLeading)
-                    }
-                }
-                Section {
-                    Button("Cancel") {
-                        self.showing = .MonthlyView
-                    }
-                    Button("Add") {
-                        let newTransaction = Transaction(context: self.moc)
-                        newTransaction.id = UUID()
-                        newTransaction.name = $name.wrappedValue
-                        newTransaction.category = $category.wrappedValue
-                        newTransaction.date = $date.wrappedValue
-                        newTransaction.amount = $amount.wrappedValue
-                        newTransaction.notes = $notes.wrappedValue
-                        try? self.moc.save()
-
-                        self.showing = .MonthlyView
-                    }
-                }
-                Section {
-                    Button("Delete all transactions") {
-                        self.transactions.forEach {
-                            self.moc.delete($0)
-                        }
-                        try? self.moc.save()
-                        self.showing = .MonthlyView
-                    }
-                    .foregroundStyle(.red)
-                }
+              Text("Name")
+              TextField("Name", text: $name)
+                .multilineTextAlignment(.trailing)
+                .focused($fieldShowing, equals: .name)
             }
+            HStack
+            {
+              Picker("Category", selection: $category)
+              {
+                ForEach(categories, id: \.name)
+                {
+                  Text($0.name!).tag($0.name)
+                }
+              }
+            }
+            HStack
+            {
+              DatePicker("Date", selection: $date)
+            }
+            HStack
+            {
+              Text("Amount")
+              TextField("Amount", value: $amount, formatter: numberFormatter())
+                .multilineTextAlignment(.trailing)
+                .keyboardType(.decimalPad)
+                .focused($fieldShowing, equals: .amount)
+            }
+            HStack
+            {
+              TextField("Notes", text: $notes)
+                .frame(height: 150, alignment: .topLeading)
+                .focused($fieldShowing, equals: .notes)
+            }
+          }
+          Section
+          {
+            Button("Cancel")
+            {
+              returnToParentView()
+            }
+            Button("Add")
+            {
+              addNewTransaction()
+              returnToParentView()
+            }
+            .disabled(isAddButtonDisabled())
+          }
+          Section
+          {
+            Button("Delete all transactions", role: .destructive)
+            {
+              deleteAllTransactions()
+              returnToParentView()
+            }
+            .disabled(true)
+          }
         }
-        .padding()
+        .toolbar
+        {
+          ToolbarItemGroup(placement: .keyboard)
+          {
+            Spacer()
+            Button("Done", action: doneClicked)
+          }
+        }
+      }
+      .padding()
     }
+  }
+
+  private func returnToParentView()
+  {
+    showing = false
+  }
+
+  private func isAddButtonDisabled() -> Bool
+  {
+    name == "" || category == nil || amount == 0.0
+  }
+
+  private func addNewTransaction()
+  {
+    let newTransaction = Transaction(context: moc)
+    newTransaction.id = UUID()
+    newTransaction.name = $name.wrappedValue
+    newTransaction.category = $category.wrappedValue
+    newTransaction.date = $date.wrappedValue
+    newTransaction.amount = $amount.wrappedValue
+    newTransaction.notes = $notes.wrappedValue
+    try? moc.save()
+  }
+
+  private func deleteAllTransactions()
+  {
+    for transaction in transactions
+    {
+      moc.delete(transaction)
+    }
+    try? moc.save()
+  }
+
+  private func doneClicked()
+  {
+    switch fieldShowing
+    {
+      case .name:
+        fieldShowing = .amount
+      default:
+        fieldShowing = nil
+    }
+  }
 }
 
-#Preview {
-    AddTransactionView(showing: .constant(.AddTransactionPage))
+#Preview
+{
+  AddTransactionView(showing: .constant(true))
 }

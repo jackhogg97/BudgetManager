@@ -8,24 +8,24 @@
 import Foundation
 import SwiftUI
 
-class ColorTransformer 
+enum ColorTransformer
 {
-    static func toComponents(color: Color) -> [CGFloat]
+  static func toComponents(color: Color) -> [CGFloat]
+  {
+    if let components = UIColor(color).cgColor.components
     {
-        if let components = UIColor(color).cgColor.components {
-            return components
-        }
-        // Return default blue
-        return [0.0, 0.4784314036369324, 0.9999999403953552, 1.0]
+      return components
     }
+    // Return default blue
+    return [0.0, 0.4784314036369324, 0.9999999403953552, 1.0]
+  }
 
-    static func toColor(components: [CGFloat]) -> Color
-    {
-        return Color(.sRGB,
-                     red: components[0],
-                     green: components[1],
-                     blue: components[2],
-                     opacity: components[3]
-        )
-    }
+  static func toColor(components: [CGFloat]) -> Color
+  {
+    Color(.sRGB,
+          red: components[0],
+          green: components[1],
+          blue: components[2],
+          opacity: components[3])
+  }
 }
