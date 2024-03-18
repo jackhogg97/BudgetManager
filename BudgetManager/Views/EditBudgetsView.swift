@@ -82,39 +82,39 @@ struct EditBudgetsView: View
 
   func addOrEditCategory()
   {
-    for newCategory in categories
+    for cat in categoriesToEdit
     {
-      if let index = categories.firstIndex(where: { $0.id == newCategory.id })
+      if let index = categories.firstIndex(where: { $0.id == cat.id })
       {
-        categories[index].id = newCategory.id
-        categories[index].name = newCategory.name
-        categories[index].budget = newCategory.budget
-        categories[index].color = newCategory.color
+        categories[index].id = cat.id
+        categories[index].name = cat.name
+        categories[index].budget = cat.budget
+        categories[index].color = cat.color
       }
       else
       {
-        let categoryToAdd = Category(context: moc)
-        categoryToAdd.id = newCategory.id
-        categoryToAdd.name = newCategory.name
-        categoryToAdd.budget = newCategory.budget
-        categoryToAdd.color = newCategory.color
+        if cat.name != ""
+        {
+          let categoryToAdd = Category(context: moc)
+          categoryToAdd.id = cat.id
+          categoryToAdd.name = cat.name
+          categoryToAdd.budget = cat.budget
+          categoryToAdd.color = cat.color
+        }
       }
     }
   }
 
+  // Deleting a category without saving will still delete
   func deleteCategory(at offsets: IndexSet)
   {
     for index in offsets
     {
-      guard index < categories.count, index >= 0
-      else
+      categoriesToEdit.remove(at: index)
+      if index < categories.count, index >= 0
       {
-        let _ = categoriesToEdit.popLast()
-        return
+        moc.delete(categories[index])
       }
-      let cat = categories[index]
-      print("attempting delete")
-      moc.delete(cat)
     }
 
     try? moc.save()
