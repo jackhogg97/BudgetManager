@@ -17,48 +17,10 @@ struct CategoryView: View
 
   var body: some View
   {
-    VStack(alignment: .leading)
-    {
-      HStack
-      {
-        Spacer()
-        Text(category + ": " + dateRange).font(.title3)
-        Spacer()
-      }
-      Spacer()
-      let (days, transactionsFromCategory) = getTransactionsKeyedByDay()
-      List
-      {
-        ForEach(days, id: \.self)
-        {
-          day in
-          Section(header: Text(day))
-          {
-            ForEach(transactionsFromCategory[day]!, id: \.self)
-            {
-              transaction in
-              HStack
-              {
-                Text(transaction.wrappedName)
-                Spacer()
-                Text(String(format: "£%.2F", transaction.amount))
-              }
-            }
-            .onDelete
-            {
-              indexSet in
-              if let index = indexSet.first
-              {
-                let transactionToDelete = transactionsFromCategory[day]![index]
-                moc.delete(transactionToDelete)
-                try? moc.save()
-              }
-            }
-          }
-        }
-      }
-      .listStyle(.plain)
-    }
+    let (days, transactions) = getTransactionsKeyedByDay()
+    let title = category + ": " + dateRange
+
+    TransactionsView(days: days, transactions: transactions, title: title)
   }
 
   func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]])
