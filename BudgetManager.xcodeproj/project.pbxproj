@@ -20,6 +20,7 @@
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
 		B3648D092B0779DC0047981C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3648D082B0779DC0047981C /* MainView.swift */; };
+		B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367AF942C35DA4000CD5C48 /* DateRangeView.swift */; };
 		B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37CF6732C297F2000A10802 /* TransactionsView.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		B3648D082B0779DC0047981C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		B367AF942C35DA4000CD5C48 /* DateRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeView.swift; sourceTree = "<group>"; };
 		B37CF6732C297F2000A10802 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +99,7 @@
 				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
+				B367AF942C35DA4000CD5C48 /* DateRangeView.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
 			);
 			path = Views;
@@ -195,6 +198,7 @@
 				B31854C22BA45FAE00A28403 /* Constants.swift in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
+				B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
 				B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */,
 				B3648D092B0779DC0047981C /* MainView.swift in Sources */,

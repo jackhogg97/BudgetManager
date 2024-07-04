@@ -49,9 +49,23 @@ struct MainView: View
             {
               HStack
               {
-                Image(systemName: "chevron.left").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .left))
+                Image(systemName: "chevron.left")
+                  .foregroundStyle(calculateChevronColor(
+                    index: selectedTabIndex,
+                    length: months.count,
+                    direction: .left
+                  )
+                  )
                 Spacer()
-                Text(month).font(.title2)
+                NavigationLink
+                {
+                  DateRangeView(
+                    transactions: transactionsPerMonth[month] ?? [],
+                    dateRange: month
+                  )
+                } label: {
+                  Text(month).font(.title2).foregroundStyle(.foreground)
+                }
                 Spacer()
                 Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
               }
