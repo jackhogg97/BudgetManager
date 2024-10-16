@@ -15,6 +15,8 @@ struct TransactionsView: View
   var (days, transactions): ([String], [String: [FetchedResults<Transaction>.Element]])
   var title: String
 
+  @State private var showingEditTransaction = false
+
   var body: some View
   {
     VStack(alignment: .leading)
@@ -33,24 +35,31 @@ struct TransactionsView: View
           day in
           Section(header: Text(day))
           {
-            ForEach(transactions[day]!, id: \.self)
+            ForEach(Array(transactions[day]!.enumerated()), id: \.offset)
             {
-              transaction in
+              index, transaction in
               HStack
               {
                 Text(transaction.wrappedName)
                 Spacer()
                 Text(String(format: "£%.2F", transaction.amount))
               }
-            }
-            .onDelete
-            {
-              indexSet in
-              if let index = indexSet.first
+              .swipeActions(allowsFullSwipe: false)
               {
-                let transactionToDelete = transactions[day]![index]
-                moc.delete(transactionToDelete)
-                try? moc.save()
+                Button
+                {
+                  showingEditTransaction.toggle()
+                } label: {
+                  Label("Edit", systemImage: "pencil")
+                }
+                Button(role: .destructive)
+                {
+                  let transactionToDelete = transactions[day]![index]
+                  moc.delete(transactionToDelete)
+                  try? moc.save()
+                } label: {
+                  Label("Delete", systemImage: "trash.fill")
+                }
               }
             }
           }
