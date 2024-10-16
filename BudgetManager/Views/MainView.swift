@@ -92,10 +92,6 @@ struct MainView: View
           Spacer()
           Button("Add transaction", systemImage: "plus", action: { showingAddTransaction = true })
             .buttonStyle(BorderedButtonStyle())
-            .sheet(isPresented: $showingAddTransaction)
-            {
-              EditTransactionView(transaction: TransactionModel())
-            }
           Spacer()
           Spacer()
           NavigationLink
@@ -106,6 +102,10 @@ struct MainView: View
           }
           Spacer()
         }
+      }
+      .sheet(isPresented: $showingAddTransaction)
+      {
+        EditTransactionView(transaction: TransactionModel())
       }
     }
   }

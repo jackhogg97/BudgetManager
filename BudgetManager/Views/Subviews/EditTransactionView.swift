@@ -26,88 +26,85 @@ struct EditTransactionView: View
 
   var body: some View
   {
-    NavigationStack
+    VStack(alignment: .leading)
     {
-      VStack(alignment: .leading)
-      {
-        Text("Add transaction")
-          .font(.title)
-          .padding(.vertical)
+      Text("Add transaction")
+        .font(.title)
+        .padding(.vertical)
 
-        Form
+      Form
+      {
+        Section
         {
-          Section
+          HStack
           {
-            HStack
+            Text("Name")
+            TextField("Name", text: $transaction.name)
+              .multilineTextAlignment(.trailing)
+              .focused($fieldShowing, equals: .name)
+          }
+          HStack
+          {
+            Picker("Category", selection: $transaction.category)
             {
-              Text("Name")
-              TextField("Name", text: $transaction.name)
-                .multilineTextAlignment(.trailing)
-                .focused($fieldShowing, equals: .name)
-            }
-            HStack
-            {
-              Picker("Category", selection: $transaction.category)
+              ForEach(categories, id: \.name)
               {
-                ForEach(categories, id: \.name)
-                {
-                  Text($0.name!).tag($0.name)
-                }
-                // Dividers are not rendered in Picker
-                Divider().tag(nil as String?)
+                Text($0.name!).tag($0.name)
               }
-              .onAppear
+              // Dividers are not rendered in Picker
+              Divider().tag(nil as String?)
+            }
+            .onAppear
+            {
+              if transaction.category == nil
               {
-                if transaction.category == nil
-                {
-                  transaction.category = categories.first?.name
-                }
+                transaction.category = categories.first?.name
               }
-            }
-            HStack
-            {
-              DatePicker("Date", selection: $transaction.date)
-            }
-            HStack
-            {
-              Text("Amount")
-              TextField("Amount", value: $transaction.amount, formatter: numberFormatter())
-                .multilineTextAlignment(.trailing)
-                .keyboardType(.decimalPad)
-                .focused($fieldShowing, equals: .amount)
-            }
-            HStack
-            {
-              TextField("Notes", text: $transaction.notes)
-                .frame(height: 150, alignment: .topLeading)
-                .focused($fieldShowing, equals: .notes)
             }
           }
-          Section
+          HStack
           {
-            Button("Cancel")
-            {
-              dismiss()
-            }
-            Button("Add")
-            {
-              addOrEditTransaction()
-              dismiss()
-            }
-            .disabled(isAddButtonDisabled())
+            DatePicker("Date", selection: $transaction.date)
+          }
+          HStack
+          {
+            Text("Amount")
+            TextField("Amount", value: $transaction.amount, formatter: numberFormatter())
+              .multilineTextAlignment(.trailing)
+              .keyboardType(.decimalPad)
+              .focused($fieldShowing, equals: .amount)
+          }
+          HStack
+          {
+            TextField("Notes", text: $transaction.notes)
+              .frame(height: 150, alignment: .topLeading)
+              .focused($fieldShowing, equals: .notes)
           }
         }
-        .toolbar
+        Section
         {
-          ToolbarItemGroup(placement: .keyboard)
+          Button("Cancel")
           {
-            Spacer()
-            Button("Done", action: doneClicked)
+            dismiss()
           }
+          Button("Add")
+          {
+            addOrEditTransaction()
+            dismiss()
+          }
+          .disabled(isAddButtonDisabled())
         }
       }
-      .padding()
+      .toolbar
+      {
+        ToolbarItemGroup(placement: .keyboard)
+        {
+          Spacer()
+          Button("Done", action: doneClicked)
+        }
+      }
     }
+    .padding()
   }
 
   private func isAddButtonDisabled() -> Bool
