@@ -14,7 +14,7 @@ struct EditBudgetsView: View
 
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
 
-  @State private var categoriesToEdit: [NewCategory] = []
+  @State private var categoriesToEdit: [CategoryModel] = []
   @State private var startDate: Int = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
   @FocusState private var isKeyboardShowing: Bool
@@ -39,7 +39,7 @@ struct EditBudgetsView: View
       .onDelete(perform: deleteCategory)
       Button(action:
         {
-          categoriesToEdit.append(NewCategory(id: UUID(), name: "", budget: 0, color: 0))
+          categoriesToEdit.append(CategoryModel(id: UUID(), name: "", budget: 0, color: 0))
         })
       {
         Image(systemName: "plus.circle")
@@ -64,7 +64,7 @@ struct EditBudgetsView: View
     }
     .onAppear
     {
-      categoriesToEdit = categories.map { NewCategory(from: $0) }
+      categoriesToEdit = categories.map { CategoryModel(from: $0) }
     }
     .toolbar
     {
@@ -118,29 +118,5 @@ struct EditBudgetsView: View
     }
 
     try? moc.save()
-  }
-}
-
-struct NewCategory
-{
-  var id: UUID
-  var name: String
-  var budget: Double
-  var color: Float
-
-  init(from: Category)
-  {
-    id = from.id ?? UUID()
-    name = from.wrappedName
-    budget = from.budget
-    color = from.color
-  }
-
-  init(id: UUID, name: String, budget: Double, color: Float)
-  {
-    self.id = id
-    self.name = name
-    self.budget = budget
-    self.color = color
   }
 }
