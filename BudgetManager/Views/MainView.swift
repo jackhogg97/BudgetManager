@@ -94,7 +94,7 @@ struct MainView: View
             .buttonStyle(BorderedButtonStyle())
             .sheet(isPresented: $showingAddTransaction)
             {
-              AddTransactionView(showing: $showingAddTransaction)
+              EditTransactionView(transaction: TransactionModel())
             }
           Spacer()
           Spacer()

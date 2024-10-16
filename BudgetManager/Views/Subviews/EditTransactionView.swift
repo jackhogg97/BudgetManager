@@ -1,25 +1,21 @@
 //
-//  AddTransactionView.swift
+//  EditTransactionView.swift
 //  BudgetManager
 //
-//  Created by JACK HOGG on 08/11/2023.
+//  Created by Jack on 15/10/2024.
 //
 
 import SwiftUI
 
-struct AddTransactionView: View
+struct EditTransactionView: View
 {
-  @Binding var showing: Bool
+  @Environment(\.dismiss) var dismiss
 
-  @Environment(\.managedObjectContext) var moc
-  @FetchRequest(sortDescriptors: []) var categories: FetchedResults<Category>
-  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @Environment(\.managedObjectContext) private var moc
+  @FetchRequest(sortDescriptors: []) private var categories: FetchedResults<Category>
+  @FetchRequest(sortDescriptors: []) private var transactions: FetchedResults<Transaction>
 
-  @State private var name: String = ""
-  @State private var category: String?
-  @State private var date: Date = .init()
-  @State private var amount: Double = 0.0
-  @State private var notes: String = ""
+  @State var transaction: TransactionModel
 
   enum FieldShowing
   {
@@ -45,13 +41,13 @@ struct AddTransactionView: View
             HStack
             {
               Text("Name")
-              TextField("Name", text: $name)
+              TextField("Name", text: $transaction.name)
                 .multilineTextAlignment(.trailing)
                 .focused($fieldShowing, equals: .name)
             }
             HStack
             {
-              Picker("Category", selection: $category)
+              Picker("Category", selection: $transaction.category)
               {
                 ForEach(categories, id: \.name)
                 {
@@ -62,27 +58,27 @@ struct AddTransactionView: View
               }
               .onAppear
               {
-                if category == nil
+                if transaction.category == nil
                 {
-                  category = categories.first?.name
+                  transaction.category = categories.first?.name
                 }
               }
             }
             HStack
             {
-              DatePicker("Date", selection: $date)
+              DatePicker("Date", selection: $transaction.date)
             }
             HStack
             {
               Text("Amount")
-              TextField("Amount", value: $amount, formatter: numberFormatter())
+              TextField("Amount", value: $transaction.amount, formatter: numberFormatter())
                 .multilineTextAlignment(.trailing)
                 .keyboardType(.decimalPad)
                 .focused($fieldShowing, equals: .amount)
             }
             HStack
             {
-              TextField("Notes", text: $notes)
+              TextField("Notes", text: $transaction.notes)
                 .frame(height: 150, alignment: .topLeading)
                 .focused($fieldShowing, equals: .notes)
             }
@@ -91,23 +87,14 @@ struct AddTransactionView: View
           {
             Button("Cancel")
             {
-              returnToParentView()
+              dismiss()
             }
             Button("Add")
             {
-              addNewTransaction()
-              returnToParentView()
+              addOrEditTransaction()
+              dismiss()
             }
             .disabled(isAddButtonDisabled())
-          }
-          Section
-          {
-            Button("Delete all transactions", role: .destructive)
-            {
-              deleteAllTransactions()
-              returnToParentView()
-            }
-            .disabled(true)
           }
         }
         .toolbar
@@ -123,33 +110,30 @@ struct AddTransactionView: View
     }
   }
 
-  private func returnToParentView()
-  {
-    showing = false
-  }
-
   private func isAddButtonDisabled() -> Bool
   {
-    name == "" || category == nil || amount == 0.0
+    transaction.name == "" || transaction.category == nil || transaction.amount == 0.0
   }
 
-  private func addNewTransaction()
+  private func addOrEditTransaction()
   {
-    let newTransaction = Transaction(context: moc)
-    newTransaction.id = UUID()
-    newTransaction.name = $name.wrappedValue
-    newTransaction.category = $category.wrappedValue
-    newTransaction.date = $date.wrappedValue
-    newTransaction.amount = $amount.wrappedValue
-    newTransaction.notes = $notes.wrappedValue
-    try? moc.save()
-  }
-
-  private func deleteAllTransactions()
-  {
-    for transaction in transactions
+    if let currentTransaction = transactions.first(where: { $0.id == transaction.id })
     {
-      moc.delete(transaction)
+      currentTransaction.name = transaction.name
+      currentTransaction.category = transaction.category
+      currentTransaction.date = transaction.date
+      currentTransaction.amount = transaction.amount
+      currentTransaction.notes = transaction.notes
+    }
+    else
+    {
+      let newTransaction = Transaction(context: moc)
+      newTransaction.id = UUID()
+      newTransaction.name = transaction.name
+      newTransaction.category = transaction.category
+      newTransaction.date = transaction.date
+      newTransaction.amount = transaction.amount
+      newTransaction.notes = transaction.notes
     }
     try? moc.save()
   }
@@ -168,5 +152,5 @@ struct AddTransactionView: View
 
 #Preview
 {
-  AddTransactionView(showing: .constant(true))
+  EditTransactionView(transaction: TransactionModel())
 }

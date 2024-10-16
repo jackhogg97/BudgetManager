@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B30A94732CBEE78400592A10 /* EditTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30A94722CBEE78400592A10 /* EditTransactionView.swift */; };
+		B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30A94742CBEED7B00592A10 /* TransactionModel.swift */; };
 		B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31718F52B06B19F00A16B81 /* CategoryView.swift */; };
 		B31854C22BA45FAE00A28403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31854C12BA45FAE00A28403 /* Constants.swift */; };
 		B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */; };
@@ -14,7 +16,6 @@
 		B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */; };
 		B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */; };
 		B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E302AFBEAF700CE5CD3 /* Helpers.swift */; };
-		B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */; };
 		B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE482AFE3D2A00144798 /* ColorTransformer.swift */; };
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
@@ -25,6 +26,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B30A94722CBEE78400592A10 /* EditTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTransactionView.swift; sourceTree = "<group>"; };
+		B30A94742CBEED7B00592A10 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
 		B31718F52B06B19F00A16B81 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		B31854C12BA45FAE00A28403 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3244E1D2AFBE7BC00CE5CD3 /* BudgetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -33,7 +36,6 @@
 		B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
 		B3244E302AFBEAF700CE5CD3 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
-		B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionView.swift; sourceTree = "<group>"; };
 		B330AE482AFE3D2A00144798 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
@@ -54,6 +56,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B30A94762CBF832500592A10 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B30A94742CBEED7B00592A10 /* TransactionModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		B3244E142AFBE7BC00CE5CD3 = {
 			isa = PBXGroup;
 			children = (
@@ -76,6 +86,7 @@
 				B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */,
 				B330AE4E2AFE4DA200144798 /* Views */,
 				B330AE4F2AFE4DDE00144798 /* Util */,
+				B30A94762CBF832500592A10 /* Model */,
 				B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */,
 				B3244E262AFBE7C000CE5CD3 /* Preview Content */,
 				B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */,
@@ -96,7 +107,6 @@
 			children = (
 				B3648D082B0779DC0047981C /* MainView.swift */,
 				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
-				B3244E322AFC36E900CE5CD3 /* AddTransactionView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
 				B367AF942C35DA4000CD5C48 /* DateRangeView.swift */,
@@ -120,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				B37CF6732C297F2000A10802 /* TransactionsView.swift */,
+				B30A94722CBEE78400592A10 /* EditTransactionView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -203,10 +214,11 @@
 				B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */,
 				B3648D092B0779DC0047981C /* MainView.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
+				B30A94732CBEE78400592A10 /* EditTransactionView.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */,
-				B3244E332AFC36E900CE5CD3 /* AddTransactionView.swift in Sources */,
 				B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */,
 				B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */,
+				B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
