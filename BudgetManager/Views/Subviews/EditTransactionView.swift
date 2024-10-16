@@ -95,13 +95,14 @@ struct EditTransactionView: View
           .disabled(isAddButtonDisabled())
         }
       }
-      .toolbar
+    }
+    // Doesn't show in sheet inside nav link
+    .toolbar
+    {
+      ToolbarItemGroup(placement: .keyboard)
       {
-        ToolbarItemGroup(placement: .keyboard)
-        {
-          Spacer()
-          Button("Done", action: doneClicked)
-        }
+        Spacer()
+        Button("Done", action: doneClicked)
       }
     }
     .padding()

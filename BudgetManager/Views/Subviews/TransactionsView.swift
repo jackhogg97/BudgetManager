@@ -61,6 +61,10 @@ struct TransactionsView: View
                   Label("Delete", systemImage: "trash.fill")
                 }
               }
+              .sheet(isPresented: $showingEditTransaction)
+              {
+                EditTransactionView(transaction: TransactionModel(from: transaction))
+              }
             }
           }
         }
