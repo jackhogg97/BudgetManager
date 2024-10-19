@@ -11,8 +11,10 @@ import SwiftUI
 
 struct MainView: View
 {
-  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @Environment(\.managedObjectContext) private var moc
+
+  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) private var categories: FetchedResults<Category>
+  @FetchRequest(sortDescriptors: []) private var transactions: FetchedResults<Transaction>
 
   @State private var selectedTabIndex: Int = 0
   @State private var showingAddTransaction = false
@@ -87,7 +89,12 @@ struct MainView: View
         ToolbarItemGroup(placement: .bottomBar)
         {
           Spacer()
-          Button("Recurring transactions", systemImage: "repeat") {}
+          NavigationLink
+          {
+            RecurringTransactions()
+          } label: {
+            Image(systemName: "repeat")
+          }
           Spacer()
           Spacer()
           Button("Add transaction", systemImage: "plus", action: { showingAddTransaction = true })
@@ -105,7 +112,7 @@ struct MainView: View
       }
       .sheet(isPresented: $showingAddTransaction)
       {
-        EditTransactionView(transaction: TransactionModel())
+        EditTransactionView(transaction: TransactionModel(), saveTransaction: addNewTransaction)
       }
     }
   }
@@ -165,5 +172,18 @@ struct MainView: View
   func displayIcon() -> String
   {
     showingDifference ? "plus.forwardslash.minus" : "divide"
+  }
+
+  func addNewTransaction(transaction: TransactionModel)
+  {
+    let newTransaction = Transaction(context: moc)
+    newTransaction.id = UUID()
+    newTransaction.name = transaction.name
+    newTransaction.category = transaction.category
+    newTransaction.date = transaction.date
+    newTransaction.amount = transaction.amount
+    newTransaction.notes = transaction.notes
+
+    try? moc.save()
   }
 }

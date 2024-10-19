@@ -9,15 +9,15 @@ import SwiftUI
 
 struct EditTransactionView: View
 {
-  @Environment(\.dismiss) var dismiss
+  @Environment(\.dismiss) private var dismiss
+  @State var transaction: TransactionModel
+  var saveTransaction: (_ transaction: TransactionModel) -> Void
 
   @Environment(\.managedObjectContext) private var moc
   @FetchRequest(sortDescriptors: []) private var categories: FetchedResults<Category>
   @FetchRequest(sortDescriptors: []) private var transactions: FetchedResults<Transaction>
 
-  @State var transaction: TransactionModel
-
-  enum FieldShowing
+  private enum FieldShowing
   {
     case name, amount, notes
   }
@@ -148,7 +148,7 @@ struct EditTransactionView: View
   }
 }
 
-#Preview
-{
-  EditTransactionView(transaction: TransactionModel())
-}
+// #Preview
+// {
+////  EditTransactionView(transaction: TransactionModel(), saveTransaction:mock)
+// }

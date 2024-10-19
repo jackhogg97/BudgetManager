@@ -63,13 +63,27 @@ struct TransactionsView: View
               }
               .sheet(isPresented: $showingEditTransaction)
               {
-                EditTransactionView(transaction: TransactionModel(from: transaction))
+                EditTransactionView(transaction: TransactionModel(from: transaction), saveTransaction: <#(TransactionModel) -> ()#>)
               }
             }
           }
         }
       }
       .listStyle(.plain)
+    }
+  }
+
+  func editTransaction(transaction: TransactionModel)
+  {
+    if let currentTransaction = transactions.first(where: { $0.id == transaction.id })
+    {
+      currentTransaction.name = transaction.name
+      currentTransaction.category = transaction.category
+      currentTransaction.date = transaction.date
+      currentTransaction.amount = transaction.amount
+      currentTransaction.notes = transaction.notes
+
+      try? moc.save()
     }
   }
 }
