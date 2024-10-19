@@ -15,7 +15,7 @@
 		B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */; };
 		B3244E252AFBE7C000CE5CD3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */; };
 		B3244E282AFBE7C000CE5CD3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */; };
-		B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */; };
+		B3244E2F2AFBE94B00CE5CD3 /* MonthlySpendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */; };
 		B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E302AFBEAF700CE5CD3 /* Helpers.swift */; };
 		B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE482AFE3D2A00144798 /* ColorTransformer.swift */; };
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
@@ -36,7 +36,7 @@
 		B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetManagerApp.swift; sourceTree = "<group>"; };
 		B3244E242AFBE7C000CE5CD3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B3244E272AFBE7C000CE5CD3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BudgetView.swift; sourceTree = "<group>"; };
+		B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlySpendView.swift; sourceTree = "<group>"; };
 		B3244E302AFBEAF700CE5CD3 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		B330AE482AFE3D2A00144798 /* ColorTransformer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorTransformer.swift; sourceTree = "<group>"; };
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				B3648D082B0779DC0047981C /* MainView.swift */,
-				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
+				B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
 			);
@@ -210,7 +210,7 @@
 			files = (
 				B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */,
 				B31854C22BA45FAE00A28403 /* Constants.swift in Sources */,
-				B3244E2F2AFBE94B00CE5CD3 /* BudgetView.swift in Sources */,
+				B3244E2F2AFBE94B00CE5CD3 /* MonthlySpendView.swift in Sources */,
 				B330AE492AFE3D2A00144798 /* ColorTransformer.swift in Sources */,
 				B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,

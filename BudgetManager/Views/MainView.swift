@@ -65,7 +65,7 @@ struct MainView: View
               }
               .padding(.horizontal)
               Spacer()
-              BudgetView(transactions: transactionsPerMonth[month] ?? [], dateRange: month)
+              MonthlySpendView(transactions: transactionsPerMonth[month] ?? [], dateRange: month)
             }
             .tag(months.firstIndex(of: month)!)
           }

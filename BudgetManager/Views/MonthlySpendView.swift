@@ -1,5 +1,5 @@
 //
-//  BudgetView.swift
+//  MonthlySpendView.swift
 //  BudgetManager
 //
 //  Created by JACK HOGG on 08/11/2023.
@@ -8,7 +8,7 @@
 import CoreData
 import SwiftUI
 
-struct BudgetView: View
+struct MonthlySpendView: View
 {
   let BAR_MAX_WIDTH = 360.0
   let BAR_MAX_HEIGHT = 35.0
@@ -170,7 +170,7 @@ struct BudgetView: View
 
 #Preview
 {
-  BudgetView(
+  MonthlySpendView(
     transactions: [],
     dateRange: "15th January - 15th Feburary"
   )
