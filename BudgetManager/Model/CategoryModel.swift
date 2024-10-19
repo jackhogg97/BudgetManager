@@ -6,23 +6,24 @@
 //
 
 import Foundation
+import SwiftUI
 
-struct CategoryModel
+struct CategoryModel: Identifiable
 {
   var id: UUID
   var name: String
   var budget: Double
-  var color: Float
+  var color: Color
 
-  init(from: Category)
+  init(from category: Category)
   {
-    id = from.id ?? UUID()
-    name = from.wrappedName
-    budget = from.budget
-    color = from.color
+    id = category.id ?? UUID()
+    name = category.wrappedName
+    budget = category.budget
+    color = Color(hex: category.cat_color ?? "") ?? .blue
   }
 
-  init(id: UUID, name: String, budget: Double, color: Float)
+  init(id: UUID, name: String, budget: Double, color: Color)
   {
     self.id = id
     self.name = name
