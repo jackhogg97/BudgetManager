@@ -10,6 +10,10 @@ import SwiftUI
 
 struct BudgetView: View
 {
+  let BAR_MAX_WIDTH = 360.0
+  let BAR_MAX_HEIGHT = 35.0
+  let BAR_IDEAL_HEIGHT = 35.0
+
   @Binding var showingDifference: Bool
 
   var transactions: [FetchedResults<Transaction>.Element]
@@ -23,11 +27,6 @@ struct BudgetView: View
     GeometryReader
     {
       _ in
-
-      let BAR_MAX_WIDTH = 360.0
-      let BAR_MAX_HEIGHT = 35.0
-      let BAR_IDEAL_HEIGHT = 35.0
-
       VStack(alignment: .center, spacing: 0)
       {
         if categories.isEmpty
@@ -72,16 +71,8 @@ struct BudgetView: View
                 let percentFilled = getRowWidth(category: category)
                 ZStack(alignment: .leading)
                 {
-                  Rectangle()
-                    .cornerRadius(5)
-                    .padding(.vertical, 5)
-                    .frame(maxWidth: BAR_MAX_WIDTH, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
-                    .foregroundColor(.gray)
-                  Rectangle()
-                    .cornerRadius(5)
-                    .padding(.vertical, 5)
-                    .frame(maxWidth: BAR_MAX_WIDTH * percentFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
-                    .foregroundColor(.blue)
+                  bar()
+                  bar(percentageFilled: percentFilled, colour: .blue)
                 }
                 .padding(.horizontal)
               }
@@ -90,6 +81,15 @@ struct BudgetView: View
         }
       }
     }
+  }
+
+  func bar(percentageFilled: Double = 1.0, colour: Color = .gray) -> some View
+  {
+    Rectangle()
+      .cornerRadius(5)
+      .padding(.vertical, 5)
+      .frame(maxWidth: BAR_MAX_WIDTH * percentageFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
+      .foregroundColor(colour)
   }
 
   func getTotalLabel() -> Text
