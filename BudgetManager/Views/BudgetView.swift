@@ -14,7 +14,7 @@ struct BudgetView: View
   let BAR_MAX_HEIGHT = 35.0
   let BAR_IDEAL_HEIGHT = 35.0
 
-  @Binding var showingDifference: Bool
+  @State private var showingDifference: Bool = UserDefaults.standard.bool(forKey: K.Keys.SHOWING_DIFFERENCE)
 
   var transactions: [FetchedResults<Transaction>.Element]
   var dateRange: String
@@ -38,7 +38,13 @@ struct BudgetView: View
           HStack
           {
             Spacer()
-            getTotalLabel()
+            Button
+            {
+              showingDifference.toggle()
+              UserDefaults.standard.set(showingDifference, forKey: K.Keys.SHOWING_DIFFERENCE)
+            } label: {
+              getTotalLabel()
+            }.buttonStyle(.plain)
           }
           .padding()
         }
@@ -165,7 +171,6 @@ struct BudgetView: View
 #Preview
 {
   BudgetView(
-    showingDifference: .constant(true),
     transactions: [],
     dateRange: "15th January - 15th Feburary"
   )
