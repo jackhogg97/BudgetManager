@@ -111,8 +111,6 @@
 				B3648D082B0779DC0047981C /* MainView.swift */,
 				B3244E2E2AFBE94B00CE5CD3 /* BudgetView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
-				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
-				B367AF942C35DA4000CD5C48 /* DateRangeView.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
 			);
 			path = Views;
@@ -132,6 +130,8 @@
 		B37CF6722C297F0000A10802 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
+				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
+				B367AF942C35DA4000CD5C48 /* DateRangeView.swift */,
 				B37CF6732C297F2000A10802 /* TransactionsView.swift */,
 				B30A94722CBEE78400592A10 /* EditTransactionView.swift */,
 			);
