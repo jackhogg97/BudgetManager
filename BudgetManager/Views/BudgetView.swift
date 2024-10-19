@@ -10,12 +10,12 @@ import SwiftUI
 
 struct BudgetView: View
 {
-  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-
   @Binding var showingDifference: Bool
 
   var transactions: [FetchedResults<Transaction>.Element]
   var dateRange: String
+
+  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) private var categories: FetchedResults<Category>
 
   var body: some View
   {
@@ -160,4 +160,13 @@ struct BudgetView: View
       }
     }
   }
+}
+
+#Preview
+{
+  BudgetView(
+    showingDifference: .constant(true),
+    transactions: [],
+    dateRange: "15th January - 15th Feburary"
+  )
 }
