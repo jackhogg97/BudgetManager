@@ -21,15 +21,9 @@ struct MainView: View {
   var body: some View {
     NavigationStack {
       VStack {
-        HStack {
-          Text("Budgets")
-            .font(.largeTitle).bold()
-          Spacer()
-        }
-        .padding()
-        tabview
+        Title
+        Tabview
       }
-      .tabViewStyle(.page)
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
           MainToolbar()
@@ -38,7 +32,16 @@ struct MainView: View {
     }
   }
 
-  var tabview: some View {
+  var Title: some View {
+    HStack {
+      Text("Budgets")
+        .font(.largeTitle).bold()
+      Spacer()
+    }
+    .padding()
+  }
+
+  var Tabview: some View {
     TabView(selection: $vm.selectedTabIndex) {
       ForEach(vm.dataByMonth, id: \.id) {
         month in
@@ -70,5 +73,6 @@ struct MainView: View {
         .tag(vm.dataByMonth.firstIndex(of: month)!)
       }
     }
+    .tabViewStyle(.page)
   }
 }
