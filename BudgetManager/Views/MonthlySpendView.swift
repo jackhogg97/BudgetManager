@@ -49,42 +49,47 @@ struct MonthlySpendView: View
           .padding()
         }
         Spacer()
-        ScrollView
-        {
-          ForEach(categories, id: \.id)
-          {
-            category in
-            NavigationLink
-            {
-              CategoryView(category: category.wrappedName, transactions: transactions, dateRange: dateRange)
-            }
-            label:
-            {
-              VStack(spacing: 0)
-              {
-                HStack
-                {
-                  Text(category.name ?? "Unknown")
-                    .font(.caption)
-                    .bold()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                  getCategoryLabel(category: category)
-                    .font(.caption2)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
-                }
-                .padding(.horizontal)
+        CategoryBars
+      }
+    }
+  }
 
-                let percentFilled = getRowWidth(category: category)
-                ZStack(alignment: .leading)
-                {
-                  bar()
-                  bar(percentageFilled: percentFilled, colour: .blue)
-                }
-                .padding(.horizontal)
-              }
-            }.buttonStyle(.plain)
-          }
+  var CategoryBars: some View
+  {
+    ScrollView
+    {
+      ForEach(categories, id: \.id)
+      {
+        category in
+        NavigationLink
+        {
+          CategoryView(category: category.wrappedName, transactions: transactions, dateRange: dateRange)
         }
+        label:
+        {
+          VStack(spacing: 0)
+          {
+            HStack
+            {
+              Text(category.name ?? "Unknown")
+                .font(.caption)
+                .bold()
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+              getCategoryLabel(category: category)
+                .font(.caption2)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .trailing)
+            }
+            .padding(.horizontal)
+
+            let percentFilled = getRowWidth(category: category)
+            ZStack(alignment: .leading)
+            {
+              bar()
+              bar(percentageFilled: percentFilled, colour: Color(hex: category.cat_color ?? "") ?? .blue)
+            }
+            .padding(.horizontal)
+          }
+        }.buttonStyle(.plain)
       }
     }
   }

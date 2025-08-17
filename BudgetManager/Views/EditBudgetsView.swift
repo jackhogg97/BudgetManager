@@ -99,8 +99,6 @@ struct EditBudgetsView: View
     .sheet(item: $selectedCategory)
     {
       category in
-      let _ = print("Changing colour for " + category.name)
-      let _ = print(" current colour is " + category.color.description)
       ColourPickerView(
         selected: Binding(
           get: { category.color },
