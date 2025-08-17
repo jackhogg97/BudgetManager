@@ -47,13 +47,7 @@ struct MainView: View {
         month in
         VStack {
           HStack {
-            Image(systemName: "chevron.left")
-              .foregroundStyle(vm.getChevronColor(
-                index: vm.selectedTabIndex,
-                length: vm.dataByMonth.count,
-                direction: .left
-              )
-              )
+            Image(systemName: "chevron.left").foregroundStyle(vm.getChevronColor(direction: .left))
             Spacer()
             NavigationLink {
               DateRangeView(
@@ -64,7 +58,7 @@ struct MainView: View {
               Text(month.label).font(.title2).foregroundStyle(.white)
             }
             Spacer()
-            Image(systemName: "chevron.right").foregroundStyle(vm.getChevronColor(index: vm.selectedTabIndex, length: vm.dataByMonth.count, direction: .right))
+            Image(systemName: "chevron.right").foregroundStyle(vm.getChevronColor(direction: .right))
           }
           .padding(.horizontal)
           Spacer()

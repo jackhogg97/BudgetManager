@@ -39,11 +39,11 @@ final class MainViewModel: ObservableObject {
     selectedTabIndex = getLastestMonthIndex()
   }
 
-  func getChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color {
-    if direction == .left, index == 0 {
+  func getChevronColor(direction: ChevronDirection) -> Color {
+    if direction == .left, selectedTabIndex == 0 {
       return .black
     }
-    if direction == .right, index == length - 1 {
+    if direction == .right, selectedTabIndex == dataByMonth.count - 1 {
       return .black
     }
     return .gray
