@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct TransactionsView: View
-{
+struct TransactionsView: View {
   @Environment(\.managedObjectContext) var moc
 
   // Swift does not have an ordered dictionary
@@ -18,43 +17,32 @@ struct TransactionsView: View
   @State private var showingEditTransaction = false
   @State private var selectedTransaction: Transaction?
 
-  var body: some View
-  {
-    VStack(alignment: .leading)
-    {
-      HStack
-      {
+  var body: some View {
+    VStack(alignment: .leading) {
+      HStack {
         Spacer()
         Text(title).font(.title3)
         Spacer()
       }
       Spacer()
-      List
-      {
-        ForEach(days, id: \.self)
-        {
+      List {
+        ForEach(days, id: \.self) {
           day in
-          Section(header: Text(day))
-          {
-            ForEach(Array(transactions[day]!.enumerated()), id: \.offset)
-            {
+          Section(header: Text(day)) {
+            ForEach(Array(transactions[day]!.enumerated()), id: \.offset) {
               index, transaction in
-              HStack
-              {
+              HStack {
                 Text(transaction.wrappedName)
                 Spacer()
                 Text(String(format: "£%.2F", transaction.amount))
               }
-              .swipeActions(allowsFullSwipe: false)
-              {
-                Button
-                {
+              .swipeActions(allowsFullSwipe: false) {
+                Button {
                   selectedTransaction = transaction
                 } label: {
                   Label("Edit", systemImage: "pencil")
                 }
-                Button(role: .destructive)
-                {
+                Button(role: .destructive) {
                   let transactionToDelete = transactions[day]![index]
                   moc.delete(transactionToDelete)
                   try? moc.save()
@@ -67,8 +55,7 @@ struct TransactionsView: View
         }
       }
       .listStyle(.plain)
-      .sheet(item: $selectedTransaction)
-      {
+      .sheet(item: $selectedTransaction) {
         transaction in
         EditTransactionView(transaction: TransactionModel(from: transaction))
       }
@@ -76,7 +63,6 @@ struct TransactionsView: View
   }
 }
 
-#Preview
-{
+#Preview {
   TransactionsView(days: [], transactions: [:], title: "Example")
 }

@@ -7,24 +7,21 @@
 
 import SwiftUI
 
-struct CategoryView: View
-{
+struct CategoryView: View {
   @Environment(\.managedObjectContext) var moc
 
   var category: String
   var transactions: [Transaction]
   var dateRange: String
 
-  var body: some View
-  {
+  var body: some View {
     let (days, transactions) = getTransactionsKeyedByDay()
     let title = category + ": " + dateRange
 
     TransactionsView(days: days, transactions: transactions, title: title)
   }
 
-  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]])
-  {
+  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]]) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd MMMM yyyy"
     dateFormatter.locale = Locale(identifier: "en_GB")
@@ -32,11 +29,9 @@ struct CategoryView: View
     var dates: [String] = []
     let transactionsFromCategory = transactions.filter { $0.category ?? "" == category }
     let sortedTransactions = transactionsFromCategory.sorted(by: { $0.date! > $1.date! })
-    let transactionByDate = Dictionary(grouping: sortedTransactions)
-    { (element: Transaction) in
+    let transactionByDate = Dictionary(grouping: sortedTransactions) { (element: Transaction) in
       let dateStr = dateFormatter.string(from: element.date!)
-      if !dates.contains(dateStr)
-      {
+      if !dates.contains(dateStr) {
         dates.append(dateStr)
       }
       return dateFormatter.string(from: element.date!)
@@ -46,7 +41,6 @@ struct CategoryView: View
   }
 }
 
-#Preview
-{
+#Preview {
   CategoryView(category: "Category Title", transactions: [], dateRange: "15 January - 15 Febuary")
 }

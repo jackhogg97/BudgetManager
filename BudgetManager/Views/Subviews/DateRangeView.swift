@@ -7,13 +7,11 @@
 
 import SwiftUI
 
-struct DateRangeView: View
-{
+struct DateRangeView: View {
   var transactions: [Transaction]
   var dateRange: String
 
-  var body: some View
-  {
+  var body: some View {
     let (days, transactions) = getTransactionsKeyedByDay()
 
     TransactionsView(
@@ -24,19 +22,16 @@ struct DateRangeView: View
   }
 
   // TODO: Refactor this and CategoryView functions
-  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]])
-  {
+  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]]) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd MMMM yyyy"
     dateFormatter.locale = Locale(identifier: "en_GB")
 
     var dates: [String] = []
     let sortedTransactions = transactions.sorted(by: { $0.date! > $1.date! })
-    let transactionByDate = Dictionary(grouping: sortedTransactions)
-    { (element: Transaction) in
+    let transactionByDate = Dictionary(grouping: sortedTransactions) { (element: Transaction) in
       let dateStr = dateFormatter.string(from: element.date!)
-      if !dates.contains(dateStr)
-      {
+      if !dates.contains(dateStr) {
         dates.append(dateStr)
       }
       return dateFormatter.string(from: element.date!)
@@ -46,7 +41,6 @@ struct DateRangeView: View
   }
 }
 
-#Preview
-{
+#Preview {
   DateRangeView(transactions: [], dateRange: "15 January - 15 Febuary")
 }

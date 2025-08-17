@@ -7,23 +7,18 @@
 
 import SwiftUI
 
-struct ColourPickerView: View
-{
+struct ColourPickerView: View {
   @Environment(\.dismiss) var dismiss
   @Binding var selected: Color
   var save: () -> Void = {}
 
   private let colours = K.Colours.CATEGORIES.chunked(into: 4)
 
-  var body: some View
-  {
-    VStack
-    {
-      HStack
-      {
+  var body: some View {
+    VStack {
+      HStack {
         Spacer()
-        Button("Done")
-        {
+        Button("Done") {
           save()
           dismiss()
         }
@@ -31,13 +26,10 @@ struct ColourPickerView: View
       Spacer()
       Text("Select colour for category").font(.title3)
       Spacer()
-      ForEach(colours, id: \.self)
-      {
+      ForEach(colours, id: \.self) {
         row in
-        HStack
-        {
-          ForEach(row, id: \.self)
-          {
+        HStack {
+          ForEach(row, id: \.self) {
             colour in
             colourButton(colour: colour)
           }
@@ -48,13 +40,10 @@ struct ColourPickerView: View
     .padding()
   }
 
-  func colourButton(colour: Color) -> some View
-  {
-    Button
-    {
+  func colourButton(colour: Color) -> some View {
+    Button {
       selected = colour
-    } label:
-    {
+    } label: {
 //      let border = colour == selected ? 4.0 : 1.0
       let border = 1.0
       Circle()
@@ -66,7 +55,6 @@ struct ColourPickerView: View
   }
 }
 
-#Preview
-{
+#Preview {
   ColourPickerView(selected: .constant(.blue))
 }

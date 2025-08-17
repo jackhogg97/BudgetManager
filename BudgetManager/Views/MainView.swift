@@ -9,8 +9,7 @@ import CoreData
 import Foundation
 import SwiftUI
 
-struct MainView: View
-{
+struct MainView: View {
   @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
   @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
 
@@ -19,30 +18,22 @@ struct MainView: View
 
   private let periodDate = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
-  var body: some View
-  {
+  var body: some View {
     let (months, transactionsPerMonth) = getTransactionsPerMonth()
 
-    NavigationStack
-    {
-      VStack
-      {
-        HStack
-        {
+    NavigationStack {
+      VStack {
+        HStack {
           Text("Budgets")
             .font(.largeTitle).bold()
           Spacer()
         }
         .padding()
-        TabView(selection: $selectedTabIndex)
-        {
-          ForEach(months, id: \.self)
-          {
+        TabView(selection: $selectedTabIndex) {
+          ForEach(months, id: \.self) {
             month in
-            VStack
-            {
-              HStack
-              {
+            VStack {
+              HStack {
                 Image(systemName: "chevron.left")
                   .foregroundStyle(calculateChevronColor(
                     index: selectedTabIndex,
@@ -51,8 +42,7 @@ struct MainView: View
                   )
                   )
                 Spacer()
-                NavigationLink
-                {
+                NavigationLink {
                   DateRangeView(
                     transactions: transactionsPerMonth[month] ?? [],
                     dateRange: month
@@ -72,14 +62,11 @@ struct MainView: View
         }
       }
       .tabViewStyle(.page)
-      .onAppear
-      {
+      .onAppear {
         selectedTabIndex = months.count - 1
       }
-      .toolbar
-      {
-        ToolbarItemGroup(placement: .bottomBar)
-        {
+      .toolbar {
+        ToolbarItemGroup(placement: .bottomBar) {
           Spacer()
           Button("Recurring transactions", systemImage: "repeat") {}
           Spacer()
@@ -88,8 +75,7 @@ struct MainView: View
             .buttonStyle(BorderedButtonStyle())
           Spacer()
           Spacer()
-          NavigationLink
-          {
+          NavigationLink {
             EditBudgetsView()
           } label: {
             Image(systemName: "slider.horizontal.3")
@@ -97,15 +83,13 @@ struct MainView: View
           Spacer()
         }
       }
-      .sheet(isPresented: $showingAddTransaction)
-      {
+      .sheet(isPresented: $showingAddTransaction) {
         EditTransactionView(transaction: TransactionModel())
       }
     }
   }
 
-  func getTransactionsPerMonth() -> ([String], [String: [Transaction]])
-  {
+  func getTransactionsPerMonth() -> ([String], [String: [Transaction]]) {
     let months = Set(transactions.compactMap { $0.date!.setDay(day: periodDate) }).sorted(by: <)
     let ranges: [[Date]] = months.map { month in [month, month.incrementMonth()] }
 
@@ -114,20 +98,14 @@ struct MainView: View
 
     var objects: [String: [Transaction]] = [:]
     var keys: [String] = []
-    for range in ranges
-    {
+    for range in ranges {
       let key = formatter.string(from: range[0]) + " - " + formatter.string(from: range[1])
-      for transaction in transactions
-      {
-        if transaction.date! > range[0], transaction.date! < range[1]
-        {
-          if var transactionInMonth = objects[key]
-          {
+      for transaction in transactions {
+        if transaction.date! > range[0], transaction.date! < range[1] {
+          if var transactionInMonth = objects[key] {
             transactionInMonth.append(transaction)
             objects[key] = transactionInMonth
-          }
-          else
-          {
+          } else {
             objects[key] = [transaction]
             keys.append(key)
           }
@@ -138,19 +116,15 @@ struct MainView: View
     return (keys, objects)
   }
 
-  enum ChevronDirection
-  {
+  enum ChevronDirection {
     case left, right
   }
 
-  func calculateChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color
-  {
-    if direction == .left, index == 0
-    {
+  func calculateChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color {
+    if direction == .left, index == 0 {
       return .black
     }
-    if direction == .right, index == length - 1
-    {
+    if direction == .right, index == length - 1 {
       return .black
     }
     return .gray

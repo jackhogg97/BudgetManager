@@ -9,31 +9,22 @@ import LocalAuthentication
 import SwiftUI
 
 @main
-struct BudgetManagerApp: App
-{
+struct BudgetManagerApp: App {
   @State private var isUnlocked = false
   @StateObject private var dataController = DataController()
 
-  var body: some Scene
-  {
-    WindowGroup
-    {
-      ZStack
-      {
-        if isUnlocked
-        {
+  var body: some Scene {
+    WindowGroup {
+      ZStack {
+        if isUnlocked {
           MainView()
             .environment(\.managedObjectContext, dataController.container.viewContext)
-        }
-        else
-        {
-          VStack
-          {
+        } else {
+          VStack {
             Image(systemName: "lock.square")
               .resizable()
               .frame(maxWidth: 100.0, maxHeight: 100.0)
-            Button("Retry")
-            {
+            Button("Retry") {
               authenticate()
             }
           }
@@ -43,25 +34,19 @@ struct BudgetManagerApp: App
     }
   }
 
-  func authenticate()
-  {
+  func authenticate() {
     let context = LAContext()
     var error: NSError?
 
-    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error)
-    {
+    if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) {
       let reason = "Unlock to view your budgets"
 
-      context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason)
-      { success, _ in
-        if success
-        {
+      context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason) { success, _ in
+        if success {
           isUnlocked = true
         }
       }
-    }
-    else
-    {
+    } else {
       // no biometrics
     }
   }

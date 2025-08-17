@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-struct EditBudgetsView: View
-{
+struct EditBudgetsView: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
   @Environment(\.managedObjectContext) var moc
 
@@ -20,24 +19,17 @@ struct EditBudgetsView: View
 
   @FocusState private var isKeyboardShowing: Bool
 
-  var body: some View
-  {
-    Form
-    {
-      Section("Budget start date")
-      {
+  var body: some View {
+    Form {
+      Section("Budget start date") {
         TextField("Start date", value: $startDate, format: .number).keyboardType(.numberPad).focused($isKeyboardShowing)
       }
-      ForEach($categoriesToEdit, id: \.id)
-      {
+      ForEach($categoriesToEdit, id: \.id) {
         category in
-        HStack
-        {
-          Button
-          {
+        HStack {
+          Button {
             selectedCategory = category.wrappedValue
-          } label:
-          {
+          } label: {
             Circle()
               .stroke(Color.primary, lineWidth: 1.0)
               .fill(category.color.wrappedValue)
@@ -47,28 +39,23 @@ struct EditBudgetsView: View
           Spacer()
           TextField("Category Name", text: category.name).focused($isKeyboardShowing)
           Spacer()
-          HStack
-          {
+          HStack {
             Text("£")
             TextField("Budget", value: category.budget, format: .number).keyboardType(.decimalPad).focused($isKeyboardShowing)
           }
         }
       }
       .onDelete(perform: deleteCategory)
-      Button(action:
-        {
-          categoriesToEdit.append(CategoryModel(id: UUID(), name: "", budget: 0, color: .blue))
-        })
-      {
+      Button(action: {
+        categoriesToEdit.append(CategoryModel(id: UUID(), name: "", budget: 0, color: .blue))
+      }) {
         Image(systemName: "plus.circle")
           .resizable()
           .frame(width: 25.0, height: 25.0, alignment: .center)
       }
       .padding(.vertical)
-      Section
-      {
-        Button("Save")
-        {
+      Section {
+        Button("Save") {
           addOrEditCategory()
 
           // TODO: validate date
@@ -80,38 +67,31 @@ struct EditBudgetsView: View
         }
       }
     }
-    .onAppear
-    {
+    .onAppear {
       categoriesToEdit = categories.map { CategoryModel(from: $0) }
     }
-    .toolbar
-    {
-      ToolbarItemGroup(placement: .keyboard)
-      {
+    .toolbar {
+      ToolbarItemGroup(placement: .keyboard) {
         Spacer()
-        Button("Done")
-        {
+        Button("Done") {
           isKeyboardShowing = false
         }
       }
     }
     .padding(.horizontal)
-    .sheet(item: $selectedCategory)
-    {
+    .sheet(item: $selectedCategory) {
       category in
       ColourPickerView(
         selected: Binding(
           get: { category.color },
           set: { newColor in
-            if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id })
-            {
+            if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id }) {
               categoriesToEdit[index].color = newColor
             }
           }
         ),
         save: {
-          if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id })
-          {
+          if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id }) {
             categories[index].cat_color = categoriesToEdit[index].color.toHex()
           }
         }
@@ -121,21 +101,15 @@ struct EditBudgetsView: View
   }
 
   // TODO: Use callback
-  func addOrEditCategory()
-  {
-    for cat in categoriesToEdit
-    {
-      if let index = categories.firstIndex(where: { $0.id == cat.id })
-      {
+  func addOrEditCategory() {
+    for cat in categoriesToEdit {
+      if let index = categories.firstIndex(where: { $0.id == cat.id }) {
         categories[index].id = cat.id
         categories[index].name = cat.name
         categories[index].budget = cat.budget
         categories[index].cat_color = cat.color.toHex()
-      }
-      else
-      {
-        if cat.name != ""
-        {
+      } else {
+        if cat.name != "" {
           let categoryToAdd = Category(context: moc)
           categoryToAdd.id = cat.id
           categoryToAdd.name = cat.name
@@ -147,13 +121,10 @@ struct EditBudgetsView: View
   }
 
   // Deleting a category without saving will still delete
-  func deleteCategory(at offsets: IndexSet)
-  {
-    for index in offsets
-    {
+  func deleteCategory(at offsets: IndexSet) {
+    for index in offsets {
       categoriesToEdit.remove(at: index)
-      if index < categories.count, index >= 0
-      {
+      if index < categories.count, index >= 0 {
         moc.delete(categories[index])
       }
     }

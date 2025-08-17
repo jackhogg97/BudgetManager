@@ -7,8 +7,7 @@
 
 import Foundation
 
-struct TransactionModel
-{
+struct TransactionModel {
   var id: UUID = .init()
   var name: String = ""
   var category: String?
@@ -18,8 +17,7 @@ struct TransactionModel
 
   init() {}
 
-  init(from transaction: Transaction)
-  {
+  init(from transaction: Transaction) {
     id = transaction.id ?? UUID()
     name = transaction.wrappedName
     category = transaction.category
