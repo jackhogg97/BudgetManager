@@ -19,8 +19,6 @@ struct MainView: View {
   }
 
   var body: some View {
-    let (months, transactionsPerMonth) = vm.getTransactionsPerMonth()
-
     NavigationStack {
       VStack {
         HStack {
@@ -29,41 +27,11 @@ struct MainView: View {
           Spacer()
         }
         .padding()
-        TabView(selection: $vm.selectedTabIndex) {
-          ForEach(months, id: \.self) {
-            month in
-            VStack {
-              HStack {
-                Image(systemName: "chevron.left")
-                  .foregroundStyle(vm.calculateChevronColor(
-                    index: vm.selectedTabIndex,
-                    length: months.count,
-                    direction: .left
-                  )
-                  )
-                Spacer()
-                NavigationLink {
-                  DateRangeView(
-                    transactions: transactionsPerMonth[month] ?? [],
-                    dateRange: month
-                  )
-                } label: {
-                  Text(month).font(.title2).foregroundStyle(.white)
-                }
-                Spacer()
-                Image(systemName: "chevron.right").foregroundStyle(vm.calculateChevronColor(index: vm.selectedTabIndex, length: months.count, direction: .right))
-              }
-              .padding(.horizontal)
-              Spacer()
-              MonthlySpendView(transactions: transactionsPerMonth[month] ?? [], dateRange: month)
-            }
-            .tag(months.firstIndex(of: month)!)
-          }
-        }
+        tabview
       }
       .tabViewStyle(.page)
       .onAppear {
-        vm.selectedTabIndex = months.count - 1
+        vm.selectedTabIndex = $vm.dataByMonth.count - 1 // Open at latest month
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
@@ -85,6 +53,40 @@ struct MainView: View {
       }
       .sheet(isPresented: $vm.showingAddTransaction) {
         EditTransactionView(transaction: TransactionModel())
+      }
+    }
+  }
+
+  var tabview: some View {
+    TabView(selection: $vm.selectedTabIndex) {
+      ForEach(vm.dataByMonth, id: \.id) {
+        month in
+        VStack {
+          HStack {
+            Image(systemName: "chevron.left")
+              .foregroundStyle(vm.getChevronColor(
+                index: vm.selectedTabIndex,
+                length: vm.dataByMonth.count,
+                direction: .left
+              )
+              )
+            Spacer()
+            NavigationLink {
+              DateRangeView(
+                transactions: month.transactions,
+                dateRange: month.label
+              )
+            } label: {
+              Text(month.label).font(.title2).foregroundStyle(.white)
+            }
+            Spacer()
+            Image(systemName: "chevron.right").foregroundStyle(vm.getChevronColor(index: vm.selectedTabIndex, length: vm.dataByMonth.count, direction: .right))
+          }
+          .padding(.horizontal)
+          Spacer()
+          MonthlySpendView(transactions: month.transactions, dateRange: month.label)
+        }
+        .tag(vm.dataByMonth.firstIndex(of: month)!)
       }
     }
   }

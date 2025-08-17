@@ -13,7 +13,7 @@ protocol CategoryRepository {
 }
 
 protocol TransactionRepository {
-  func fetchTransactions() -> [Transaction]
+  func fetch() -> [Transaction]
   func save(_ transaction: Transaction)
 }
 
@@ -51,7 +51,7 @@ class CoreDataTransactionRepository: TransactionRepository {
     self.context = context
   }
 
-  func fetchTransactions() -> [Transaction] {
+  func fetch() -> [Transaction] {
     let request = Transaction.fetchRequest()
     do {
       return try context.fetch(request)
