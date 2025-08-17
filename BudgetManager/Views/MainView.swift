@@ -10,16 +10,16 @@ import Foundation
 import SwiftUI
 
 struct MainView: View {
-  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
-  @FetchRequest(sortDescriptors: []) var transactions: FetchedResults<Transaction>
+  @StateObject private var vm: MainViewModel
 
-  @State private var selectedTabIndex: Int = 0
-  @State private var showingAddTransaction = false
-
-  private let periodDate = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
+  init(moc: NSManagedObjectContext) {
+    let categoryRepo = CoreDataCategoryRepository(context: moc)
+    let transactionRepo = CoreDataTransactionRepository(context: moc)
+    _vm = StateObject(wrappedValue: MainViewModel(categoryRepo: categoryRepo, transactionRepo: transactionRepo))
+  }
 
   var body: some View {
-    let (months, transactionsPerMonth) = getTransactionsPerMonth()
+    let (months, transactionsPerMonth) = vm.getTransactionsPerMonth()
 
     NavigationStack {
       VStack {
@@ -29,14 +29,14 @@ struct MainView: View {
           Spacer()
         }
         .padding()
-        TabView(selection: $selectedTabIndex) {
+        TabView(selection: $vm.selectedTabIndex) {
           ForEach(months, id: \.self) {
             month in
             VStack {
               HStack {
                 Image(systemName: "chevron.left")
-                  .foregroundStyle(calculateChevronColor(
-                    index: selectedTabIndex,
+                  .foregroundStyle(vm.calculateChevronColor(
+                    index: vm.selectedTabIndex,
                     length: months.count,
                     direction: .left
                   )
@@ -51,7 +51,7 @@ struct MainView: View {
                   Text(month).font(.title2).foregroundStyle(.white)
                 }
                 Spacer()
-                Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
+                Image(systemName: "chevron.right").foregroundStyle(vm.calculateChevronColor(index: vm.selectedTabIndex, length: months.count, direction: .right))
               }
               .padding(.horizontal)
               Spacer()
@@ -63,7 +63,7 @@ struct MainView: View {
       }
       .tabViewStyle(.page)
       .onAppear {
-        selectedTabIndex = months.count - 1
+        vm.selectedTabIndex = months.count - 1
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
@@ -71,7 +71,7 @@ struct MainView: View {
           Button("Recurring transactions", systemImage: "repeat") {}
           Spacer()
           Spacer()
-          Button("Add transaction", systemImage: "plus", action: { showingAddTransaction = true })
+          Button("Add transaction", systemImage: "plus", action: { vm.showingAddTransaction = true })
             .buttonStyle(BorderedButtonStyle())
           Spacer()
           Spacer()
@@ -83,50 +83,9 @@ struct MainView: View {
           Spacer()
         }
       }
-      .sheet(isPresented: $showingAddTransaction) {
+      .sheet(isPresented: $vm.showingAddTransaction) {
         EditTransactionView(transaction: TransactionModel())
       }
     }
-  }
-
-  func getTransactionsPerMonth() -> ([String], [String: [Transaction]]) {
-    let months = Set(transactions.compactMap { $0.date!.setDay(day: periodDate) }).sorted(by: <)
-    let ranges: [[Date]] = months.map { month in [month, month.incrementMonth()] }
-
-    let formatter = DateFormatter()
-    formatter.dateFormat = "dd MMMM yy"
-
-    var objects: [String: [Transaction]] = [:]
-    var keys: [String] = []
-    for range in ranges {
-      let key = formatter.string(from: range[0]) + " - " + formatter.string(from: range[1])
-      for transaction in transactions {
-        if transaction.date! > range[0], transaction.date! < range[1] {
-          if var transactionInMonth = objects[key] {
-            transactionInMonth.append(transaction)
-            objects[key] = transactionInMonth
-          } else {
-            objects[key] = [transaction]
-            keys.append(key)
-          }
-        }
-      }
-    }
-
-    return (keys, objects)
-  }
-
-  enum ChevronDirection {
-    case left, right
-  }
-
-  func calculateChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color {
-    if direction == .left, index == 0 {
-      return .black
-    }
-    if direction == .right, index == length - 1 {
-      return .black
-    }
-    return .gray
   }
 }

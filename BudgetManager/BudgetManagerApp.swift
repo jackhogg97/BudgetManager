@@ -17,7 +17,7 @@ struct BudgetManagerApp: App {
     WindowGroup {
       ZStack {
         if isUnlocked {
-          MainView()
+          MainView(moc: dataController.container.viewContext)
             .environment(\.managedObjectContext, dataController.container.viewContext)
         } else {
           VStack {

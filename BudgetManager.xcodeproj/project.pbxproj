@@ -24,6 +24,8 @@
 		B3648D092B0779DC0047981C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3648D082B0779DC0047981C /* MainView.swift */; };
 		B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367AF942C35DA4000CD5C48 /* DateRangeView.swift */; };
 		B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37CF6732C297F2000A10802 /* TransactionsView.swift */; };
+		B3FBE0012E521AD700FEBE74 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */; };
+		B3FBE0032E52245000FEBE74 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0022E52244C00FEBE74 /* CoreData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,8 @@
 		B3648D082B0779DC0047981C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B367AF942C35DA4000CD5C48 /* DateRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeView.swift; sourceTree = "<group>"; };
 		B37CF6732C297F2000A10802 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		B3FBE0022E52244C00FEBE74 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +113,7 @@
 			isa = PBXGroup;
 			children = (
 				B3648D082B0779DC0047981C /* MainView.swift */,
+				B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */,
 				B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
@@ -119,6 +124,7 @@
 		B330AE4F2AFE4DDE00144798 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				B3FBE0022E52244C00FEBE74 /* CoreData.swift */,
 				B3244E302AFBEAF700CE5CD3 /* Helpers.swift */,
 				B330AE552AFE8B9500144798 /* DataController.swift */,
 				B31854C12BA45FAE00A28403 /* Constants.swift */,
@@ -211,6 +217,7 @@
 				B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */,
 				B32AEA6E2CC508D00034CE38 /* ColourPickerView.swift in Sources */,
 				B31854C22BA45FAE00A28403 /* Constants.swift in Sources */,
+				B3FBE0032E52245000FEBE74 /* CoreData.swift in Sources */,
 				B3244E2F2AFBE94B00CE5CD3 /* MonthlySpendView.swift in Sources */,
 				B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
@@ -223,6 +230,7 @@
 				B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */,
 				B30A94782CBF85E300592A10 /* CategoryModel.swift in Sources */,
 				B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */,
+				B3FBE0012E521AD700FEBE74 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
