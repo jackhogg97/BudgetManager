@@ -16,6 +16,7 @@ struct TransactionsView: View
   var title: String
 
   @State private var showingEditTransaction = false
+  @State private var selectedTransaction: Transaction?
 
   var body: some View
   {
@@ -48,7 +49,7 @@ struct TransactionsView: View
               {
                 Button
                 {
-                  showingEditTransaction.toggle()
+                  selectedTransaction = transaction
                 } label: {
                   Label("Edit", systemImage: "pencil")
                 }
@@ -61,15 +62,16 @@ struct TransactionsView: View
                   Label("Delete", systemImage: "trash.fill")
                 }
               }
-              .sheet(isPresented: $showingEditTransaction)
-              {
-                EditTransactionView(transaction: TransactionModel(from: transaction))
-              }
             }
           }
         }
       }
       .listStyle(.plain)
+      .sheet(item: $selectedTransaction)
+      {
+        transaction in
+        EditTransactionView(transaction: TransactionModel(from: transaction))
+      }
     }
   }
 }

@@ -87,7 +87,7 @@ struct EditTransactionView: View
           {
             dismiss()
           }
-          Button("Add")
+          Button("Save")
           {
             addOrEditTransaction()
             dismiss()
