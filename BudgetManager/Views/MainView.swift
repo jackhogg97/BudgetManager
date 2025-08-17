@@ -58,7 +58,7 @@ struct MainView: View
                     dateRange: month
                   )
                 } label: {
-                  Text(month).font(.title2).foregroundStyle(.foreground)
+                  Text(month).font(.title2).foregroundStyle(.white)
                 }
                 Spacer()
                 Image(systemName: "chevron.right").foregroundStyle(calculateChevronColor(index: selectedTabIndex, length: months.count, direction: .right))
