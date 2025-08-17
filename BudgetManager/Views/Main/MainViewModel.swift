@@ -29,6 +29,9 @@ final class MainViewModel: ObservableObject {
   @Published var categories: [Category]
   @Published var transactions: [Transaction]
 
+  var canGoLeft: Bool { selectedTabIndex > 0 }
+  var canGoRight: Bool { selectedTabIndex < dataByMonth.count - 1 }
+
   private let dateFormatter = DateFormatter()
 
   init(categoryRepo: CategoryRepository, transactionRepo: TransactionRepository) {
@@ -39,14 +42,14 @@ final class MainViewModel: ObservableObject {
     selectedTabIndex = getLastestMonthIndex()
   }
 
-  func getChevronColor(direction: ChevronDirection) -> Color {
-    if direction == .left, selectedTabIndex == 0 {
-      return .black
-    }
-    if direction == .right, selectedTabIndex == dataByMonth.count - 1 {
-      return .black
-    }
-    return .gray
+  func goLeft() {
+    guard canGoLeft else { return }
+    selectedTabIndex -= 1
+  }
+
+  func goRight() {
+    guard canGoRight else { return }
+    selectedTabIndex += 1
   }
 
   private func getDataByMonth() -> [MonthData] {
