@@ -25,7 +25,6 @@ final class MainViewModel: ObservableObject {
   let PERIOD_START_DATE = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
   @Published var selectedTabIndex: Int = 0
-  @Published var showingAddTransaction = false
   @Published var dataByMonth: [MonthData] = []
   @Published var categories: [Category]
   @Published var transactions: [Transaction]

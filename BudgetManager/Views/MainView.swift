@@ -35,24 +35,8 @@ struct MainView: View {
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
-          Spacer()
-          Button("Recurring transactions", systemImage: "repeat") {}
-          Spacer()
-          Spacer()
-          Button("Add transaction", systemImage: "plus", action: { vm.showingAddTransaction = true })
-            .buttonStyle(BorderedButtonStyle())
-          Spacer()
-          Spacer()
-          NavigationLink {
-            EditBudgetsView()
-          } label: {
-            Image(systemName: "slider.horizontal.3")
-          }
-          Spacer()
+          MainToolbar()
         }
-      }
-      .sheet(isPresented: $vm.showingAddTransaction) {
-        EditTransactionView(transaction: TransactionModel())
       }
     }
   }
