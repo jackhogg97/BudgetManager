@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,10 +22,8 @@
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
-		B3648D092B0779DC0047981C /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3648D082B0779DC0047981C /* MainView.swift */; };
 		B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367AF942C35DA4000CD5C48 /* DateRangeView.swift */; };
 		B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37CF6732C297F2000A10802 /* TransactionsView.swift */; };
-		B3FBE0012E521AD700FEBE74 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */; };
 		B3FBE0032E52245000FEBE74 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0022E52244C00FEBE74 /* CoreData.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,12 +44,14 @@
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
-		B3648D082B0779DC0047981C /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		B367AF942C35DA4000CD5C48 /* DateRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeView.swift; sourceTree = "<group>"; };
 		B37CF6732C297F2000A10802 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
-		B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		B3FBE0022E52244C00FEBE74 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		B3206C562E525EE8003BCDF4 /* Main */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Main; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		B3244E1A2AFBE7BC00CE5CD3 /* Frameworks */ = {
@@ -114,8 +114,7 @@
 		B330AE4E2AFE4DA200144798 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				B3648D082B0779DC0047981C /* MainView.swift */,
-				B3FBE0002E521AD300FEBE74 /* MainViewModel.swift */,
+				B3206C562E525EE8003BCDF4 /* Main */,
 				B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
@@ -161,6 +160,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				B3206C562E525EE8003BCDF4 /* Main */,
 			);
 			name = BudgetManager;
 			productName = BudgetManager;
@@ -226,7 +228,6 @@
 				B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
 				B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */,
-				B3648D092B0779DC0047981C /* MainView.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B30A94732CBEE78400592A10 /* EditTransactionView.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */,
@@ -234,7 +235,6 @@
 				B31718F62B06B19F00A16B81 /* CategoryView.swift in Sources */,
 				B30A94782CBF85E300592A10 /* CategoryModel.swift in Sources */,
 				B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */,
-				B3FBE0012E521AD700FEBE74 /* MainViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
