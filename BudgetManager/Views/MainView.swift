@@ -30,9 +30,6 @@ struct MainView: View {
         tabview
       }
       .tabViewStyle(.page)
-      .onAppear {
-        vm.selectedTabIndex = $vm.dataByMonth.count - 1 // Open at latest month
-      }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
           MainToolbar()

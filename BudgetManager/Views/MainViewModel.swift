@@ -36,6 +36,7 @@ final class MainViewModel: ObservableObject {
     categories = categoryRepo.fetchCategories()
     transactions = transactionRepo.fetch()
     dataByMonth = getDataByMonth()
+    selectedTabIndex = getLastestMonthIndex()
   }
 
   func getChevronColor(index: Int, length: Int, direction: ChevronDirection) -> Color {
@@ -57,5 +58,9 @@ final class MainViewModel: ObservableObject {
       let transactionsThisMonth = self.transactions.filter { $0.date! > range.start && $0.date! < range.end }
       return MonthData(label: label, startDate: range.start, endDate: range.end, transactions: transactionsThisMonth)
     }
+  }
+
+  private func getLastestMonthIndex() -> Int {
+    dataByMonth.count - 1
   }
 }
