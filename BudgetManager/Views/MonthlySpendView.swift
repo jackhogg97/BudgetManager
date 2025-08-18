@@ -50,7 +50,7 @@ struct MonthlySpendView: View {
       ForEach(categories, id: \.id) {
         category in
         NavigationLink {
-          CategoryView(category: category.wrappedName, transactions: transactions, dateRange: dateRange)
+          CategoryView(category: category.wrappedName, transactions: transactions, dateRangeLabel: dateRange)
         }
         label: {
           VStack(spacing: 0) {

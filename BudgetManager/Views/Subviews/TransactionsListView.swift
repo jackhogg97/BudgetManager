@@ -1,5 +1,5 @@
 //
-//  TransactionsView.swift
+//  TransactionsListView.swift
 //  BudgetManager
 //
 //  Created by Jack on 24/06/2024.
@@ -11,7 +11,7 @@ struct TransactionsListView: View {
   @Environment(\.managedObjectContext) var moc
 
   // Swift does not have an ordered dictionary
-  var (days, transactions): ([String], [String: [FetchedResults<Transaction>.Element]])
+  var (days, transactionsByDay): ([String], [String: [Transaction]])
   var title: String
 
   @State private var showingEditTransaction = false
@@ -29,7 +29,7 @@ struct TransactionsListView: View {
         ForEach(days, id: \.self) {
           day in
           Section(header: Text(day)) {
-            ForEach(Array(transactions[day]!.enumerated()), id: \.offset) {
+            ForEach(Array(transactionsByDay[day]!.enumerated()), id: \.offset) {
               index, transaction in
               HStack {
                 Text(transaction.wrappedName)
@@ -43,7 +43,7 @@ struct TransactionsListView: View {
                   Label("Edit", systemImage: "pencil")
                 }
                 Button(role: .destructive) {
-                  let transactionToDelete = transactions[day]![index]
+                  let transactionToDelete = transactionsByDay[day]![index]
                   moc.delete(transactionToDelete)
                   try? moc.save()
                 } label: {
@@ -64,5 +64,5 @@ struct TransactionsListView: View {
 }
 
 #Preview {
-  TransactionsListView(days: [], transactions: [:], title: "Example")
+  TransactionsListView(days: [], transactionsByDay: [:], title: "Example")
 }

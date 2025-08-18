@@ -56,7 +56,7 @@ struct MainView: View {
             NavigationLink {
               DateRangeView(
                 transactions: month.transactions,
-                dateRange: month.label
+                dateRangeLabel: month.label
               )
             } label: {
               Text(month.label).font(.title2).foregroundStyle(.white)

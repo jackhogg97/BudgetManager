@@ -8,39 +8,17 @@
 import SwiftUI
 
 struct DateRangeView: View {
-  var transactions: [Transaction]
-  var dateRange: String
+  @StateObject var vm: TransactionsByDayViewModel
 
-  var body: some View {
-    let (days, transactions) = getTransactionsKeyedByDay()
-
-    TransactionsListView(
-      days: days,
-      transactions: transactions,
-      title: dateRange
-    )
+  init(transactions: [Transaction], dateRangeLabel: String) {
+    _vm = StateObject(wrappedValue: TransactionsByDayViewModel(dateRangeLabel: dateRangeLabel, transactions: transactions))
   }
 
-  // TODO: Refactor this and CategoryView functions
-  func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]]) {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "dd MMMM yyyy"
-    dateFormatter.locale = Locale(identifier: "en_GB")
-
-    var dates: [String] = []
-    let sortedTransactions = transactions.sorted(by: { $0.date! > $1.date! })
-    let transactionByDate = Dictionary(grouping: sortedTransactions) { (element: Transaction) in
-      let dateStr = dateFormatter.string(from: element.date!)
-      if !dates.contains(dateStr) {
-        dates.append(dateStr)
-      }
-      return dateFormatter.string(from: element.date!)
-    }
-
-    return (dates, transactionByDate)
+  var body: some View {
+    TransactionsListView(days: vm.days, transactionsByDay: vm.transactionByDay, title: vm.dateRangeLabel)
   }
 }
 
 #Preview {
-  DateRangeView(transactions: [], dateRange: "15 January - 15 Febuary")
+  DateRangeView(transactions: [], dateRangeLabel: "15 January - 15 Febuary")
 }
