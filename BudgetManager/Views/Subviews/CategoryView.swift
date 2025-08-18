@@ -18,7 +18,7 @@ struct CategoryView: View {
     let (days, transactions) = getTransactionsKeyedByDay()
     let title = category + ": " + dateRange
 
-    TransactionsView(days: days, transactions: transactions, title: title)
+    TransactionsListView(days: days, transactions: transactions, title: title)
   }
 
   func getTransactionsKeyedByDay() -> ([String], [String: [FetchedResults<Transaction>.Element]]) {

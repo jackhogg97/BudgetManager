@@ -14,7 +14,7 @@ struct DateRangeView: View {
   var body: some View {
     let (days, transactions) = getTransactionsKeyedByDay()
 
-    TransactionsView(
+    TransactionsListView(
       days: days,
       transactions: transactions,
       title: dateRange

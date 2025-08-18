@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TransactionsView: View {
+struct TransactionsListView: View {
   @Environment(\.managedObjectContext) var moc
 
   // Swift does not have an ordered dictionary
@@ -64,5 +64,5 @@ struct TransactionsView: View {
 }
 
 #Preview {
-  TransactionsView(days: [], transactions: [:], title: "Example")
+  TransactionsListView(days: [], transactions: [:], title: "Example")
 }

@@ -23,7 +23,7 @@
 		B330AE542AFE8A0C00144798 /* DataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B330AE522AFE8A0C00144798 /* DataModel.xcdatamodeld */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
 		B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B367AF942C35DA4000CD5C48 /* DateRangeView.swift */; };
-		B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37CF6732C297F2000A10802 /* TransactionsView.swift */; };
+		B37CF6742C297F2000A10802 /* TransactionsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B37CF6732C297F2000A10802 /* TransactionsListView.swift */; };
 		B3FBE0032E52245000FEBE74 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0022E52244C00FEBE74 /* CoreData.swift */; };
 /* End PBXBuildFile section */
 
@@ -45,7 +45,7 @@
 		B330AE532AFE8A0C00144798 /* DataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = DataModel.xcdatamodel; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
 		B367AF942C35DA4000CD5C48 /* DateRangeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateRangeView.swift; sourceTree = "<group>"; };
-		B37CF6732C297F2000A10802 /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		B37CF6732C297F2000A10802 /* TransactionsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsListView.swift; sourceTree = "<group>"; };
 		B3FBE0022E52244C00FEBE74 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,7 +139,7 @@
 				B3206C542E52526D003BCDF4 /* MainToolbar.swift */,
 				B31718F52B06B19F00A16B81 /* CategoryView.swift */,
 				B367AF942C35DA4000CD5C48 /* DateRangeView.swift */,
-				B37CF6732C297F2000A10802 /* TransactionsView.swift */,
+				B37CF6732C297F2000A10802 /* TransactionsListView.swift */,
 				B30A94722CBEE78400592A10 /* EditTransactionView.swift */,
 				B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */,
 			);
@@ -227,7 +227,7 @@
 				B3244E2F2AFBE94B00CE5CD3 /* MonthlySpendView.swift in Sources */,
 				B367AF952C35DA4000CD5C48 /* DateRangeView.swift in Sources */,
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
-				B37CF6742C297F2000A10802 /* TransactionsView.swift in Sources */,
+				B37CF6742C297F2000A10802 /* TransactionsListView.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B30A94732CBEE78400592A10 /* EditTransactionView.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */,
