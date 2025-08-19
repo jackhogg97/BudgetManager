@@ -20,8 +20,8 @@ struct TransactionsListView: View {
       ForEach(vm.days, id: \.self) {
         day in
         Section(header: Text(day)) {
-          ForEach(Array(vm.transactionsByDay[day]!.enumerated()), id: \.offset) {
-            _, transaction in
+          ForEach(vm.transactionsByDay[day]!) {
+            transaction in
             HStack {
               Text(transaction.wrappedName)
               Spacer()
