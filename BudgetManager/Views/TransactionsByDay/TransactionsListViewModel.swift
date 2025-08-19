@@ -11,15 +11,13 @@ import Foundation
 @Observable
 final class TransactionsListViewModel {
   var moc: NSManagedObjectContext
-  var title: String
   var days: [String] = []
   var transactionsByDay: [String: [Transaction]] = [:]
 
   var selectedTransaction: Transaction?
 
-  init(moc: NSManagedObjectContext, title: String, days: [String], transactionsByDay: [String: [Transaction]]) {
+  init(moc: NSManagedObjectContext, days: [String], transactionsByDay: [String: [Transaction]]) {
     self.moc = moc
-    self.title = title
     self.days = days
     self.transactionsByDay = transactionsByDay
   }

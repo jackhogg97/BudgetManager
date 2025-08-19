@@ -16,7 +16,11 @@ struct TransactionsByDayCategoryView: View {
   }
 
   var body: some View {
-    TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay, title: "\(String(describing: vm.category ?? "Unknown")): \(vm.dateRangeLabel)")
+    VStack(alignment: .leading) {
+      Text(vm.category ?? "Unknown category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
+      Text(vm.dateRangeLabel).font(.caption).frame(maxWidth: .infinity, alignment: .center)
+      TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay)
+    }
   }
 }
 

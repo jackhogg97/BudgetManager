@@ -16,7 +16,10 @@ struct TransactionsByDayMonthView: View {
   }
 
   var body: some View {
-    TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay, title: vm.dateRangeLabel)
+    VStack(alignment: .leading) {
+      Text(vm.dateRangeLabel).font(.title3).frame(maxWidth: .infinity, alignment: .center)
+      TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay)
+    }
   }
 }
 
