@@ -54,7 +54,7 @@ struct MainView: View {
             }
             Spacer()
             NavigationLink {
-              DateRangeView(
+              TransactionsByDayMonthView(
                 transactions: month.transactions,
                 dateRangeLabel: month.label
               )

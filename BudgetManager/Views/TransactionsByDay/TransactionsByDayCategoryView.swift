@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CategoryView: View {
+struct TransactionsByDayCategoryView: View {
   @StateObject var vm: TransactionsByDayViewModel
 
   init(category: String, transactions: [Transaction], dateRangeLabel: String) {
@@ -20,5 +20,5 @@ struct CategoryView: View {
 }
 
 #Preview {
-  CategoryView(category: "Category Title", transactions: [], dateRangeLabel: "15 January - 15 Febuary")
+  TransactionsByDayCategoryView(category: "Category Title", transactions: [], dateRangeLabel: "15 January - 15 Febuary")
 }
