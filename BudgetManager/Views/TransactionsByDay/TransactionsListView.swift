@@ -5,49 +5,41 @@
 //  Created by Jack on 24/06/2024.
 //
 
+import CoreData
 import SwiftUI
 
 struct TransactionsListView: View {
-  @Environment(\.managedObjectContext) var moc
+  @State private var vm: TransactionsListViewModel
 
-  // Swift does not have an ordered dictionary
-  var (days, transactionsByDay): ([String], [String: [Transaction]])
-  var title: String
-
-  @State private var showingEditTransaction = false
-  @State private var selectedTransaction: Transaction?
+  init(moc: NSManagedObjectContext, days: [String], transactionsByDay: [String: [Transaction]], title: String) {
+    _vm = State(wrappedValue: TransactionsListViewModel(moc: moc, title: title, days: days, transactionsByDay: transactionsByDay))
+  }
 
   var body: some View {
     VStack(alignment: .leading) {
       HStack {
         Spacer()
-        Text(title).font(.title3)
+        Text(vm.title).font(.title3)
         Spacer()
       }
       Spacer()
       List {
-        ForEach(days, id: \.self) {
+        ForEach(vm.days, id: \.self) {
           day in
           Section(header: Text(day)) {
-            ForEach(Array(transactionsByDay[day]!.enumerated()), id: \.offset) {
-              index, transaction in
+            ForEach(Array(vm.transactionsByDay[day]!.enumerated()), id: \.offset) {
+              _, transaction in
               HStack {
                 Text(transaction.wrappedName)
                 Spacer()
                 Text(String(format: "£%.2F", transaction.amount))
               }
               .swipeActions(allowsFullSwipe: false) {
-                Button {
-                  selectedTransaction = transaction
-                } label: {
-                  Label("Edit", systemImage: "pencil")
+                Button("Edit", systemImage: "pencil") {
+                  vm.selectedTransaction = transaction
                 }
-                Button(role: .destructive) {
-                  let transactionToDelete = transactionsByDay[day]![index]
-                  moc.delete(transactionToDelete)
-                  try? moc.save()
-                } label: {
-                  Label("Delete", systemImage: "trash.fill")
+                Button("Delete", systemImage: "trash.fill", role: .destructive) {
+                  vm.deleteTransaction(transaction)
                 }
               }
             }
@@ -55,7 +47,7 @@ struct TransactionsListView: View {
         }
       }
       .listStyle(.plain)
-      .sheet(item: $selectedTransaction) {
+      .sheet(item: $vm.selectedTransaction) {
         transaction in
         EditTransactionView(transaction: TransactionModel(from: transaction))
       }
@@ -64,5 +56,5 @@ struct TransactionsListView: View {
 }
 
 #Preview {
-  TransactionsListView(days: [], transactionsByDay: [:], title: "Example")
+//  TransactionsListView(days: [], transactionsByDay: [:], title: "Example")
 }

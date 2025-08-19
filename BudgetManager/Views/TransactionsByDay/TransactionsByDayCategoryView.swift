@@ -1,5 +1,5 @@
 //
-//  CategoryView.swift
+//  TransactionsByDayCategoryView.swift
 //  BudgetManager
 //
 //  Created by JACK HOGG on 16/11/2023.
@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct TransactionsByDayCategoryView: View {
+  @Environment(\.managedObjectContext) var moc
   @StateObject var vm: TransactionsByDayViewModel
 
   init(category: String, transactions: [Transaction], dateRangeLabel: String) {
@@ -15,7 +16,7 @@ struct TransactionsByDayCategoryView: View {
   }
 
   var body: some View {
-    TransactionsListView(days: vm.days, transactionsByDay: vm.transactionByDay, title: "\(String(describing: vm.category ?? "Unknown")): \(vm.dateRangeLabel)")
+    TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay, title: "\(String(describing: vm.category ?? "Unknown")): \(vm.dateRangeLabel)")
   }
 }
 
