@@ -43,8 +43,8 @@ struct MainView: View {
 
   var Tabview: some View {
     TabView(selection: $vm.selectedTabIndex) {
-      ForEach(vm.dataByMonth, id: \.id) {
-        month in
+      ForEach(Array(vm.dataByMonth.enumerated()), id: \.offset) {
+        index, month in
         VStack {
           HStack {
             if vm.canGoLeft {
@@ -72,9 +72,10 @@ struct MainView: View {
           Spacer()
           MonthlySpendView(transactions: month.transactions, dateRange: month.label)
         }
-        .tag(vm.dataByMonth.firstIndex(of: month)!)
+        .tag(index)
       }
     }
     .tabViewStyle(.page)
+    .animation(.easeInOut, value: vm.selectedTabIndex)
   }
 }
