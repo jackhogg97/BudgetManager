@@ -33,14 +33,14 @@ final class TransactionsByDayViewModel: ObservableObject {
 
     let filtered = filterTransactionsByCategory(transactions: transactions, category: category)
 
-    let sorted = filtered.sorted(by: { $0.date! > $1.date! })
+    let sorted = filtered.sorted(by: { $0.date > $1.date })
 
     let transactionByDate = Dictionary(grouping: sorted) { (element: Transaction) in
-      let dateStr = dateFormatter.string(from: element.date!)
+      let dateStr = dateFormatter.string(from: element.date)
       if !dates.contains(dateStr) {
         dates.append(dateStr)
       }
-      return dateFormatter.string(from: element.date!)
+      return dateFormatter.string(from: element.date)
     }
 
     return (dates, transactionByDate)

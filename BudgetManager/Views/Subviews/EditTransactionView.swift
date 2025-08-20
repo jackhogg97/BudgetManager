@@ -5,14 +5,15 @@
 //  Created by Jack on 15/10/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct EditTransactionView: View {
   @Environment(\.dismiss) var dismiss
+  @Environment(\.modelContext) private var context
 
-  @Environment(\.managedObjectContext) private var moc
-  @FetchRequest(sortDescriptors: []) private var categories: FetchedResults<Category>
-  @FetchRequest(sortDescriptors: []) private var transactions: FetchedResults<Transaction>
+  @Query() private var categories: [Category]
+  @Query() private var transactions: [Transaction]
 
   @State var transaction: TransactionModel
 
@@ -27,7 +28,7 @@ struct EditTransactionView: View {
       Text("Add transaction")
         .font(.title)
         .padding(.vertical)
-
+      
       Form {
         Section {
           HStack {
@@ -39,7 +40,7 @@ struct EditTransactionView: View {
           HStack {
             Picker("Category", selection: $transaction.category) {
               ForEach(categories, id: \.name) {
-                Text($0.name!).tag($0.name)
+                Text($0.name).tag($0.name)
               }
               // Dividers are not rendered in Picker
               Divider().tag(nil as String?)
@@ -77,15 +78,15 @@ struct EditTransactionView: View {
           .disabled(isAddButtonDisabled())
         }
       }
-    }
-    // Doesn't show in sheet inside nav link
-    .toolbar {
-      ToolbarItemGroup(placement: .keyboard) {
-        Spacer()
-        Button("Done", action: doneClicked)
+      // Doesn't show in sheet inside nav link
+      .toolbar {
+        ToolbarItemGroup(placement: .keyboard) {
+          Spacer()
+          Button("Done", action: doneClicked)
+        }
       }
+      .padding()
     }
-    .padding()
   }
 
   private func isAddButtonDisabled() -> Bool {
@@ -95,20 +96,22 @@ struct EditTransactionView: View {
   private func addOrEditTransaction() {
     if let currentTransaction = transactions.first(where: { $0.id == transaction.id }) {
       currentTransaction.name = transaction.name
-      currentTransaction.category = transaction.category
+      currentTransaction.category = transaction.category ?? ""
       currentTransaction.date = transaction.date
       currentTransaction.amount = transaction.amount
       currentTransaction.notes = transaction.notes
     } else {
-      let newTransaction = Transaction(context: moc)
-      newTransaction.id = UUID()
-      newTransaction.name = transaction.name
-      newTransaction.category = transaction.category
-      newTransaction.date = transaction.date
-      newTransaction.amount = transaction.amount
-      newTransaction.notes = transaction.notes
+//      let newTransaction = Transaction(context: moc)
+      let newTransaction = Transaction(
+        name: transaction.name,
+        category: transaction.category ?? "",
+        amount: transaction.amount,
+        date: transaction.date,
+        notes: transaction.notes
+      )
+      context.insert(newTransaction)
     }
-    try? moc.save()
+    try? context.save()
   }
 
   private func doneClicked() {

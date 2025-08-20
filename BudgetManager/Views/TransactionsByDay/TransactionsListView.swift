@@ -6,13 +6,14 @@
 //
 
 import CoreData
+import SwiftData
 import SwiftUI
 
 struct TransactionsListView: View {
   @State private var vm: TransactionsListViewModel
 
-  init(moc: NSManagedObjectContext, days: [String], transactionsByDay: [String: [Transaction]]) {
-    _vm = State(wrappedValue: TransactionsListViewModel(moc: moc, days: days, transactionsByDay: transactionsByDay))
+  init(context: ModelContext, days: [String], transactionsByDay: [String: [Transaction]]) {
+    _vm = State(wrappedValue: TransactionsListViewModel(context: context, days: days, transactionsByDay: transactionsByDay))
   }
 
   var body: some View {
@@ -23,7 +24,7 @@ struct TransactionsListView: View {
           ForEach(vm.transactionsByDay[day]!) {
             transaction in
             HStack {
-              Text(transaction.wrappedName)
+              Text(transaction.name)
               Spacer()
               Text(String(format: "£%.2F", transaction.amount))
             }

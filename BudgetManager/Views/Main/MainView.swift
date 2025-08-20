@@ -5,17 +5,17 @@
 //  Created by JACK HOGG on 17/11/2023.
 //
 
-import CoreData
 import Foundation
+import SwiftData
 import SwiftUI
 
 struct MainView: View {
+  @Environment(\.modelContext) private var modelContext
   @StateObject private var vm: MainViewModel
 
-  init(moc: NSManagedObjectContext) {
-    let categoryRepo = CoreDataCategoryRepository(context: moc)
-    let transactionRepo = CoreDataTransactionRepository(context: moc)
-    _vm = StateObject(wrappedValue: MainViewModel(categoryRepo: categoryRepo, transactionRepo: transactionRepo))
+  init(context: ModelContext) {
+    let dataRepo = SwiftDataRepository(context: context)
+    _vm = StateObject(wrappedValue: MainViewModel(dataRepo: dataRepo))
   }
 
   var body: some View {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TransactionsByDayCategoryView: View {
-  @Environment(\.managedObjectContext) var moc
+  @Environment(\.modelContext) var context
   @StateObject var vm: TransactionsByDayViewModel
 
   init(category: String, transactions: [Transaction], dateRangeLabel: String) {
@@ -19,7 +19,7 @@ struct TransactionsByDayCategoryView: View {
     VStack(alignment: .leading) {
       Text(vm.category ?? "Unknown category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
       Text(vm.dateRangeLabel).font(.caption).frame(maxWidth: .infinity, alignment: .center)
-      TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay)
+      TransactionsListView(context: context, days: vm.days, transactionsByDay: vm.transactionByDay)
     }
   }
 }

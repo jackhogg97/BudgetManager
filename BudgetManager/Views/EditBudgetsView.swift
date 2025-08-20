@@ -5,13 +5,14 @@
 //  Created by JACK HOGG on 10/11/2023.
 //
 
+import SwiftData
 import SwiftUI
 
 struct EditBudgetsView: View {
   @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-  @Environment(\.managedObjectContext) var moc
+  @Environment(\.modelContext) var context
 
-  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) var categories: FetchedResults<Category>
+  @Query(FetchDescriptor(sortBy: [SortDescriptor<Category>(\.budget, order: .reverse)])) var categories: [Category]
 
   @State private var categoriesToEdit: [CategoryModel] = []
   @State private var startDate: Int = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
@@ -61,7 +62,7 @@ struct EditBudgetsView: View {
           // TODO: validate date
           UserDefaults.standard.setValue(startDate, forKey: K.Keys.PERIOD_DATE)
 
-          try? moc.save()
+          try? context.save()
 
           presentationMode.wrappedValue.dismiss()
         }
@@ -92,7 +93,7 @@ struct EditBudgetsView: View {
         ),
         save: {
           if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id }) {
-            categories[index].cat_color = categoriesToEdit[index].color.toHex()
+            categories[index].cat_color = categoriesToEdit[index].color.toHex() ?? "#0000FF"
           }
         }
       )
@@ -107,14 +108,11 @@ struct EditBudgetsView: View {
         categories[index].id = cat.id
         categories[index].name = cat.name
         categories[index].budget = cat.budget
-        categories[index].cat_color = cat.color.toHex()
+        categories[index].cat_color = cat.color.toHex() ?? "#0000FF"
       } else {
         if cat.name != "" {
-          let categoryToAdd = Category(context: moc)
-          categoryToAdd.id = cat.id
-          categoryToAdd.name = cat.name
-          categoryToAdd.budget = cat.budget
-          categoryToAdd.cat_color = cat.color.toHex()
+          let categoryToAdd = Category(id: cat.id, name: cat.name, budget: cat.budget, colorHex: cat.color.toHex() ?? "#0000FF")
+          context.insert(categoryToAdd)
         }
       }
     }
@@ -125,10 +123,10 @@ struct EditBudgetsView: View {
     for index in offsets {
       categoriesToEdit.remove(at: index)
       if index < categories.count, index >= 0 {
-        moc.delete(categories[index])
+        context.delete(categories[index])
       }
     }
 
-    try? moc.save()
+    try? context.save()
   }
 }

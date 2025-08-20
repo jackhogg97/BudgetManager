@@ -34,10 +34,10 @@ final class MainViewModel: ObservableObject {
 
   private let dateFormatter = DateFormatter()
 
-  init(categoryRepo: CategoryRepository, transactionRepo: TransactionRepository) {
+  init(dataRepo: SwiftDataRepository) {
     dateFormatter.dateFormat = "dd MMMM yy"
-    categories = categoryRepo.fetchCategories()
-    transactions = transactionRepo.fetch()
+    categories = dataRepo.fetch(Category.self, sort: [SortDescriptor(\.budget, order: .reverse)])
+    transactions = dataRepo.fetch(Transaction.self)
     dataByMonth = getDataByMonth()
     selectedTabIndex = getLastestMonthIndex()
   }
@@ -53,12 +53,12 @@ final class MainViewModel: ObservableObject {
   }
 
   private func getDataByMonth() -> [MonthData] {
-    let months = Set(transactions.compactMap { $0.date!.setDay(day: PERIOD_START_DATE) }).sorted(by: <)
+    let months = Set(transactions.compactMap { $0.date.setDay(day: PERIOD_START_DATE) }).sorted(by: <)
     let ranges: [(start: Date, end: Date)] = months.map { ($0, $0.incrementMonth()) }
 
     return ranges.map { range in
       let label = self.dateFormatter.string(from: range.start) + " - " + self.dateFormatter.string(from: range.end)
-      let transactionsThisMonth = self.transactions.filter { $0.date! > range.start && $0.date! < range.end }
+      let transactionsThisMonth = self.transactions.filter { $0.date > range.start && $0.date < range.end }
       return MonthData(label: label, startDate: range.start, endDate: range.end, transactions: transactionsThisMonth)
     }
   }

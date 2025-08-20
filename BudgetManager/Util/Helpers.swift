@@ -7,18 +7,6 @@
 
 import SwiftUI
 
-public extension Category {
-  var wrappedName: String {
-    name ?? "unknown"
-  }
-}
-
-public extension Transaction {
-  var wrappedName: String {
-    name ?? "unknown"
-  }
-}
-
 public extension Date {
   func setDay(day: Int) -> Date {
     let year = Calendar.current.component(.year, from: self)

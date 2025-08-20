@@ -15,10 +15,10 @@ struct CategoryModel: Identifiable {
   var color: Color
 
   init(from category: Category) {
-    id = category.id ?? UUID()
-    name = category.wrappedName
+    id = category.id
+    name = category.name
     budget = category.budget
-    color = Color(hex: category.cat_color ?? "") ?? .blue
+    color = Color(hex: category.cat_color) ?? .blue
   }
 
   init(id: UUID, name: String, budget: Double, color: Color) {

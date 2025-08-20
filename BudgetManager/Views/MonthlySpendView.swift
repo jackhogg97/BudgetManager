@@ -5,7 +5,7 @@
 //  Created by JACK HOGG on 08/11/2023.
 //
 
-import CoreData
+import SwiftData
 import SwiftUI
 
 struct MonthlySpendView: View {
@@ -15,10 +15,9 @@ struct MonthlySpendView: View {
 
   @State private var showingDifference: Bool = UserDefaults.standard.bool(forKey: K.Keys.SHOWING_DIFFERENCE)
 
-  var transactions: [FetchedResults<Transaction>.Element]
+  var transactions: [Transaction]
   var dateRange: String
-
-  @FetchRequest(sortDescriptors: [SortDescriptor(\.budget, order: .reverse)]) private var categories: FetchedResults<Category>
+  @Query(sort: [SortDescriptor<Category>(\.budget, order: .reverse)]) private var categories: [Category]
 
   var body: some View {
     let _ = calculateCurrentSpend()
@@ -50,12 +49,12 @@ struct MonthlySpendView: View {
       ForEach(categories, id: \.id) {
         category in
         NavigationLink {
-          TransactionsByDayCategoryView(category: category.wrappedName, transactions: transactions, dateRangeLabel: dateRange)
+          TransactionsByDayCategoryView(category: category.name, transactions: transactions, dateRangeLabel: dateRange)
         }
         label: {
           VStack(spacing: 0) {
             HStack {
-              Text(category.name ?? "Unknown")
+              Text(category.name)
                 .font(.caption)
                 .bold()
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
@@ -68,7 +67,7 @@ struct MonthlySpendView: View {
             let percentFilled = getRowWidth(category: category)
             ZStack(alignment: .leading) {
               bar()
-              bar(percentageFilled: percentFilled, colour: Color(hex: category.cat_color ?? "") ?? .blue)
+              bar(percentageFilled: percentFilled, colour: Color(hex: category.cat_color) ?? .blue)
             }
             .padding(.horizontal)
           }

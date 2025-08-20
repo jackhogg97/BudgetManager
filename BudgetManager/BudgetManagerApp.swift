@@ -10,15 +10,14 @@ import SwiftUI
 
 @main
 struct BudgetManagerApp: App {
+  @Environment(\.modelContext) var context
   @State private var isUnlocked = false
-  @StateObject private var dataController = DataController()
 
   var body: some Scene {
     WindowGroup {
       ZStack {
         if isUnlocked {
-          MainView(moc: dataController.container.viewContext)
-            .environment(\.managedObjectContext, dataController.container.viewContext)
+          MainView(context: context)
         } else {
           VStack {
             Image(systemName: "lock.square")

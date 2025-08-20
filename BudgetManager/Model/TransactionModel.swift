@@ -18,10 +18,10 @@ struct TransactionModel {
   init() {}
 
   init(from transaction: Transaction) {
-    id = transaction.id ?? UUID()
-    name = transaction.wrappedName
+    id = transaction.id
+    name = transaction.name
     category = transaction.category
-    date = transaction.date ?? .init()
+    date = transaction.date
     amount = transaction.amount
     notes = transaction.notes ?? ""
   }

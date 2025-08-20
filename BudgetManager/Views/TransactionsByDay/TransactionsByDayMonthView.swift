@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TransactionsByDayMonthView: View {
-  @Environment(\.managedObjectContext) var moc
+  @Environment(\.modelContext) var context
   @StateObject var vm: TransactionsByDayViewModel
 
   init(transactions: [Transaction], dateRangeLabel: String) {
@@ -18,7 +18,7 @@ struct TransactionsByDayMonthView: View {
   var body: some View {
     VStack(alignment: .leading) {
       Text(vm.dateRangeLabel).font(.title3).frame(maxWidth: .infinity, alignment: .center)
-      TransactionsListView(moc: moc, days: vm.days, transactionsByDay: vm.transactionByDay)
+      TransactionsListView(context: context, days: vm.days, transactionsByDay: vm.transactionByDay)
     }
   }
 }
