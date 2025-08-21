@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct MainToolbar: View {
+  @Environment(\.modelContext) var context
   @State var showingAddTransaction: Bool = false
 
   var body: some View {
@@ -22,7 +23,7 @@ struct MainToolbar: View {
         EditTransactionView(transaction: TransactionModel())
       }
       Spacer()
-      NavigationLink { EditBudgetsView() } label: {
+      NavigationLink { EditBudgetsView(context) } label: {
         Image(systemName: "slider.horizontal.3")
       }
       Spacer()

@@ -22,6 +22,7 @@
 		B32AEA6E2CC508D00034CE38 /* ColourPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */; };
 		B330AE4D2AFE4D3700144798 /* EditBudgetsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
+		B35B4CF02E5641A2004A660C /* EditBudgetsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4CEF2E56418B004A660C /* EditBudgetsViewModel.swift */; };
 		B3FBE0032E52245000FEBE74 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0022E52244C00FEBE74 /* DataRepository.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +43,7 @@
 		B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourPickerView.swift; sourceTree = "<group>"; };
 		B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsView.swift; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		B35B4CEF2E56418B004A660C /* EditBudgetsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditBudgetsViewModel.swift; sourceTree = "<group>"; };
 		B3FBE0022E52244C00FEBE74 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,6 +118,7 @@
 				B3206C642E54B122003BCDF4 /* TransactionsByDay */,
 				B3244E2E2AFBE94B00CE5CD3 /* MonthlySpendView.swift */,
 				B330AE4C2AFE4D3700144798 /* EditBudgetsView.swift */,
+				B35B4CEF2E56418B004A660C /* EditBudgetsViewModel.swift */,
 				B37CF6722C297F0000A10802 /* Subviews */,
 			);
 			path = Views;
@@ -217,6 +220,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B3206C782E54DA52003BCDF4 /* Category.swift in Sources */,
+				B35B4CF02E5641A2004A660C /* EditBudgetsViewModel.swift in Sources */,
 				B3206C792E54DA52003BCDF4 /* Transaction.swift in Sources */,
 				B32AEA6E2CC508D00034CE38 /* ColourPickerView.swift in Sources */,
 				B3206C552E52527A003BCDF4 /* MainToolbar.swift in Sources */,

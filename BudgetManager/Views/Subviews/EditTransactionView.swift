@@ -28,7 +28,7 @@ struct EditTransactionView: View {
       Text("Add transaction")
         .font(.title)
         .padding(.vertical)
-      
+
       Form {
         Section {
           HStack {

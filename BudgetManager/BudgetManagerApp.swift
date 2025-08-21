@@ -18,6 +18,7 @@ struct BudgetManagerApp: App {
       ZStack {
         if isUnlocked {
           MainView(context: context)
+            .modelContainer(for: Category.self)
         } else {
           VStack {
             Image(systemName: "lock.square")
