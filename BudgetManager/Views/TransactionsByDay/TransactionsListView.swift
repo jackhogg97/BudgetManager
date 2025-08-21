@@ -10,6 +10,7 @@ import SwiftData
 import SwiftUI
 
 struct TransactionsListView: View {
+  @Environment(\.modelContext) var context
   @State private var vm: TransactionsListViewModel
 
   init(context: ModelContext, days: [String], transactionsByDay: [String: [Transaction]]) {
@@ -43,7 +44,7 @@ struct TransactionsListView: View {
     .listStyle(.plain)
     .sheet(item: $vm.selectedTransaction) {
       transaction in
-      EditTransactionView(transaction: TransactionModel(from: transaction))
+      EditTransactionView(context, transaction: transaction)
     }
   }
 }

@@ -20,9 +20,9 @@ struct TransactionModel {
   init(from transaction: Transaction) {
     id = transaction.id
     name = transaction.name
-    category = transaction.category
+    category = transaction.categoryName
     date = transaction.date
     amount = transaction.amount
-    notes = transaction.notes ?? ""
+    notes = transaction.notes
   }
 }

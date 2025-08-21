@@ -51,6 +51,6 @@ final class TransactionsByDayViewModel: ObservableObject {
       return transactions
     }
 
-    return transactions.filter { $0.category == category }
+    return transactions.filter { $0.categoryName == category }
   }
 }

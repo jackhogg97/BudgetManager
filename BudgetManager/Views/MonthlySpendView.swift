@@ -135,7 +135,7 @@ struct MonthlySpendView: View {
       category.currentSpend = 0
     }
     for transaction in transactions {
-      if let index = categories.firstIndex(where: { $0.name == transaction.category }) {
+      if let index = categories.firstIndex(where: { $0.name == transaction.categoryName }) {
         categories[index].currentSpend += transaction.amount
       }
     }

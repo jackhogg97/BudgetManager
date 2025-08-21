@@ -13,17 +13,29 @@ import SwiftData
 class Transaction {
   var id: UUID
   var name: String
-  var category: String
+  var categoryName: String
   var amount: Double
   var date: Date
-  var notes: String?
-
-  init(name: String, category: String, amount: Double, date: Date, notes: String?) {
+  var notes: String
+  var category: Category?
+  
+  init(name: String, category: Category?, amount: Double, date: Date, notes: String? = nil) {
     id = UUID()
     self.name = name
+    self.categoryName = ""
     self.category = category
     self.amount = amount
     self.date = date
-    self.notes = notes
+    self.notes = notes ?? ""
+  }
+  
+  init(_ name: String, category: Category, amount: Double, date: Date) {
+    id = UUID()
+    self.name = name
+    self.categoryName = ""
+    self.category = category
+    self.amount = amount
+    self.date = date
+    self.notes = ""
   }
 }

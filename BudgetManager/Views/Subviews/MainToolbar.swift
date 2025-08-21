@@ -20,7 +20,7 @@ struct MainToolbar: View {
         showingAddTransaction = true
       }
       .sheet(isPresented: $showingAddTransaction) {
-        EditTransactionView(transaction: TransactionModel())
+        EditTransactionView(context, transaction: nil)
       }
       Spacer()
       NavigationLink { EditBudgetsView(context) } label: {
