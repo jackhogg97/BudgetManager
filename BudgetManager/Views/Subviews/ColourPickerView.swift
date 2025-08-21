@@ -10,7 +10,7 @@ import SwiftUI
 struct ColourPickerView: View {
   @Environment(\.dismiss) var dismiss
   @Binding var selected: Color
-  var save: () -> Void = {}
+  var save: (_ color: Color) -> Void = { _ in }
 
   private let colours = K.Colours.CATEGORIES.chunked(into: 4)
 
@@ -19,7 +19,7 @@ struct ColourPickerView: View {
       HStack {
         Spacer()
         Button("Done") {
-          save()
+          save(selected)
           dismiss()
         }
       }

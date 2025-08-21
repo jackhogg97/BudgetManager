@@ -46,23 +46,23 @@ struct EditBudgetsView: View {
       .onDelete(perform: vm.deleteCategory)
       Button("Add category", action: vm.addCategory)
         .sheet(item: $vm.selectedCategory) {
-          _ in
-          //      ColourPickerView(
-          //        selected: Binding(
-          //          get: { Color(hex: category.cat_color) ?? .blue },
-          //          set: { newColor in
-          //            if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id }) {
-          //              categoriesToEdit[index].color = newColor
-          //            }
-          //          }
-          //        ),
-          //        save: {
-          //          if let index = categoriesToEdit.firstIndex(where: { $0.id == category.id }) {
-          //            categories[index].cat_color = categoriesToEdit[index].color.toHex() ?? "#0000FF"
-          //          }
-          //        }
-          //      )
-          //      .presentationDetents([.medium])
+          category in
+          ColourPickerView(
+            selected: Binding(
+              get: { Color(hex: category.cat_color) ?? .blue },
+              set: { newColor in
+                if let category = vm.categories.first(where: { $0.id == category.id }) {
+                  category.cat_color = newColor.toHex() ?? "#0000FF"
+                }
+              }
+            ),
+            save: { color in
+              if let category = vm.categories.first(where: { $0.id == category.id }) {
+                category.cat_color = color.toHex() ?? "#0000FF"
+              }
+            }
+          )
+          .presentationDetents([.medium])
         }
     }
     .onDisappear(perform: vm.save)
