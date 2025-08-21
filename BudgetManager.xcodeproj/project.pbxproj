@@ -20,6 +20,7 @@
 		B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E302AFBEAF700CE5CD3 /* Helpers.swift */; };
 		B32AEA6E2CC508D00034CE38 /* ColourPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */; };
 		B330AE562AFE8B9500144798 /* DataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B330AE552AFE8B9500144798 /* DataController.swift */; };
+		B35B4CFC2E57E1B7004A660C /* PreviewContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35B4CFB2E57E19E004A660C /* PreviewContext.swift */; };
 		B3FBE0032E52245000FEBE74 /* DataRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3FBE0022E52244C00FEBE74 /* DataRepository.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +39,7 @@
 		B3244E302AFBEAF700CE5CD3 /* Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Helpers.swift; sourceTree = "<group>"; };
 		B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColourPickerView.swift; sourceTree = "<group>"; };
 		B330AE552AFE8B9500144798 /* DataController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataController.swift; sourceTree = "<group>"; };
+		B35B4CFB2E57E19E004A660C /* PreviewContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewContext.swift; sourceTree = "<group>"; };
 		B3FBE0022E52244C00FEBE74 /* DataRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -123,6 +125,7 @@
 		B330AE4F2AFE4DDE00144798 /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				B35B4CFB2E57E19E004A660C /* PreviewContext.swift */,
 				B3FBE0022E52244C00FEBE74 /* DataRepository.swift */,
 				B3244E302AFBEAF700CE5CD3 /* Helpers.swift */,
 				B330AE552AFE8B9500144798 /* DataController.swift */,
@@ -227,6 +230,7 @@
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */,
 				B30A94782CBF85E300592A10 /* CategoryModel.swift in Sources */,
+				B35B4CFC2E57E1B7004A660C /* PreviewContext.swift in Sources */,
 				B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

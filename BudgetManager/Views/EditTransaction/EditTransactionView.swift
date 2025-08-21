@@ -11,14 +11,15 @@ import SwiftUI
 struct EditTransactionView: View {
   @Environment(\.dismiss) var dismiss
   @Environment(\.modelContext) private var context
-  
+
   enum FieldShowing {
     case name, amount, notes
   }
+
   @FocusState private var fieldShowing: FieldShowing?
-  
+
   @State var vm: EditTransactionViewModel
-  
+
   init(_ context: ModelContext, transaction: Transaction?) {
     let repo = SwiftDataRepository(context: context)
     _vm = State(wrappedValue: EditTransactionViewModel(context, repo: repo, transaction: transaction))
@@ -93,6 +94,18 @@ struct EditTransactionView: View {
   }
 }
 
-//#Preview {
-//  EditTransactionView(transaction: TransactionModel())
-//}
+#Preview {
+  let container = PreviewContext.GetContainer()
+  let context = container.mainContext
+
+  let groceries = Category("Groceries", budget: 500, colorHex: "#FF0000")
+  context.insert(groceries)
+
+  return EditTransactionView(context, transaction: Transaction(
+    "Big shop",
+    category: groceries,
+    amount: 100,
+    date: Date()
+  ))
+  .modelContainer(container)
+}

@@ -18,24 +18,24 @@ class Transaction {
   var date: Date
   var notes: String
   var category: Category?
-  
+
   init(name: String, category: Category?, amount: Double, date: Date, notes: String? = nil) {
     id = UUID()
     self.name = name
-    self.categoryName = ""
+    categoryName = ""
     self.category = category
     self.amount = amount
     self.date = date
     self.notes = notes ?? ""
   }
-  
+
   init(_ name: String, category: Category, amount: Double, date: Date) {
     id = UUID()
     self.name = name
-    self.categoryName = ""
+    categoryName = ""
     self.category = category
     self.amount = amount
     self.date = date
-    self.notes = ""
+    notes = ""
   }
 }

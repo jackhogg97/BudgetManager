@@ -77,3 +77,16 @@ struct EditBudgetsView: View {
     }
   }
 }
+
+#Preview {
+  let container = PreviewContext.GetContainer()
+  let context = container.mainContext
+
+  let groceries = Category("Groceries", budget: 500, colorHex: "#FF0000")
+  let rent = Category("Rent", budget: 1200, colorHex: "#00FF00")
+  context.insert(groceries)
+  context.insert(rent)
+
+  return EditBudgetsView(context)
+    .modelContainer(container)
+}
