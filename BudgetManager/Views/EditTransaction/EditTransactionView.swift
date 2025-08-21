@@ -27,8 +27,6 @@ struct EditTransactionView: View {
 
   var body: some View {
     VStack(alignment: .center) {
-      Text("Add transaction")
-        .font(.title)
       Form {
         Section {
           HStack {
