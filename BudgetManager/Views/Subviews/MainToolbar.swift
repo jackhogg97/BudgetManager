@@ -5,11 +5,17 @@
 //  Created by Jack Hogg on 17/08/2025.
 //
 
+import SwiftData
 import SwiftUI
 
 struct MainToolbar: View {
-  @Environment(\.modelContext) var context
   @State var showingAddTransaction: Bool = false
+
+  private var context: ModelContext
+
+  init(_ context: ModelContext) {
+    self.context = context
+  }
 
   var body: some View {
     HStack {

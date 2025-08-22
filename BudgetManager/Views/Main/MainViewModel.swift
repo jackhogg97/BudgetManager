@@ -39,6 +39,7 @@ final class MainViewModel: ObservableObject {
     dateFormatter.dateFormat = "dd MMMM yy"
     categories = dataRepo.fetch(Category.self, sort: [SortDescriptor(\.budget, order: .reverse)])
     transactions = dataRepo.fetch(Transaction.self)
+    print(categories, transactions)
     dataByMonth = getDataByMonth()
     selectedTabIndex = getLastestMonthIndex()
   }

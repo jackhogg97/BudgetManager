@@ -6,19 +6,27 @@
 //
 
 import LocalAuthentication
+import SwiftData
 import SwiftUI
 
 @main
 struct BudgetManagerApp: App {
-  @Environment(\.modelContext) var context
+  private let container: ModelContainer
   @State private var isUnlocked = false
+
+  init() {
+    do {
+      container = try ModelContainer(for: Category.self, Transaction.self)
+    } catch {
+      fatalError("Failed to create ModelContainer: \(error)")
+    }
+  }
 
   var body: some Scene {
     WindowGroup {
       ZStack {
         if isUnlocked {
-          MainView(context: context)
-            .modelContainer(for: [Category.self, Transaction.self])
+          MainView(container.mainContext)
         } else {
           VStack {
             Image(systemName: "lock.square")

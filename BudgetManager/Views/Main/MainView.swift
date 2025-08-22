@@ -10,12 +10,13 @@ import SwiftData
 import SwiftUI
 
 struct MainView: View {
-  @Environment(\.modelContext) private var modelContext
   @State private var vm: MainViewModel
+  var context: ModelContext
 
-  init(context: ModelContext) {
+  init(_ context: ModelContext) {
     let dataRepo = SwiftDataRepository(context: context)
     _vm = State(wrappedValue: MainViewModel(dataRepo: dataRepo))
+    self.context = context
   }
 
   var body: some View {
@@ -26,7 +27,7 @@ struct MainView: View {
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
-          MainToolbar()
+          MainToolbar(context)
         }
       }
     }
@@ -70,7 +71,7 @@ struct MainView: View {
           }
           .padding(.horizontal)
           Spacer()
-          MonthlySpendView(modelContext, transactions: month.transactions, dateRange: month.label)
+          MonthlySpendView(context, transactions: month.transactions, dateRange: month.label)
         }
         .tag(index)
       }
@@ -91,6 +92,6 @@ struct MainView: View {
   let transaction = Transaction("Big shop", category: groceries, amount: 50.0, date: Date())
   container.mainContext.insert(transaction)
 
-  return MainView(context: container.mainContext)
+  return MainView(container.mainContext)
     .modelContainer(container)
 }
