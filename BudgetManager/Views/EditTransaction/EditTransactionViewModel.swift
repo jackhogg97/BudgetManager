@@ -10,32 +10,56 @@ import SwiftData
 
 @Observable
 final class EditTransactionViewModel {
-  var dataRepo: DataRepository
+  let dataRepo: DataRepository
+  let categories: [Category]
 
-  var categories: [Category]
-  var currentTransaction: Transaction
+  private(set) var existingTransaction: Transaction?
+
+  var name: String = ""
+  var category: Category?
+  var amount: Double = 0.0
+  var date: Date = .init()
+  var notes: String = ""
 
   init(_ repo: DataRepository, transaction: Transaction?) {
     dataRepo = repo
     categories = repo.fetch(Category.self)
-    currentTransaction = transaction ?? Transaction(
-      name: "",
-      category: nil,
-      amount: 0.0,
-      date: Date(),
-      notes: nil,
-    )
-    currentTransaction.category = categories.first
+
+    if let transaction {
+      existingTransaction = transaction
+      name = transaction.name
+      category = transaction.category
+      amount = transaction.amount
+      date = transaction.date
+      notes = transaction.notes
+    } else {
+      category = categories.first
+    }
   }
 
   func isSaveButtonDisabled() -> Bool {
-    currentTransaction.name == "" || currentTransaction.category == nil || currentTransaction.amount == 0.0
+    name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+      || category == nil || amount == 0.0
   }
 
   func saveTransaction() {
-    if isSaveButtonDisabled() {
-      return
+    if isSaveButtonDisabled() { return }
+
+    if let transaction = existingTransaction {
+      transaction.name = name
+      transaction.category = category!
+      transaction.amount = amount
+      transaction.date = date
+      transaction.notes = notes
+      dataRepo.save(transaction)
+    } else {
+      dataRepo.save(Transaction(
+        name,
+        category: category!,
+        amount: amount,
+        date: date,
+        notes: notes
+      ))
     }
-    dataRepo.save(currentTransaction)
   }
 }

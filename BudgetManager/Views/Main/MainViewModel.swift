@@ -43,7 +43,6 @@ final class MainViewModel: ObservableObject {
     transactions = dataRepo.fetch(Transaction.self)
     dataByMonth = getDataByMonth()
     selectedTabIndex = getLastestMonthIndex()
-    print(transactions)
   }
 
   func fetch() {

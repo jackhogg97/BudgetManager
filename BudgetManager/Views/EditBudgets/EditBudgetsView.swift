@@ -64,7 +64,6 @@ struct EditBudgetsView: View {
           .presentationDetents([.medium])
         }
     }
-    .onDisappear(perform: vm.save)
     .onAppear(perform: vm.fetchCategories)
     .toolbar {
       ToolbarItemGroup(placement: .keyboard) {

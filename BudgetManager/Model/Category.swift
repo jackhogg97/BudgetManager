@@ -10,7 +10,7 @@ import Foundation
 import SwiftData
 
 @Model
-class Category {
+class Category: BaseModel {
   @Attribute(.unique) var id: UUID
   var name: String
   var cat_color: String

@@ -10,7 +10,6 @@ import SwiftUI
 
 struct EditTransactionView: View {
   @Environment(\.dismiss) var dismiss
-  @Environment(\.modelContext) private var context
 
   enum FieldShowing {
     case name, amount, notes
@@ -30,12 +29,12 @@ struct EditTransactionView: View {
         Section {
           HStack {
             Text("Name")
-            TextField("Name", text: $vm.currentTransaction.name)
+            TextField("Name", text: $vm.name)
               .multilineTextAlignment(.trailing)
               .focused($fieldShowing, equals: .name)
           }
           HStack {
-            Picker("Category", selection: $vm.currentTransaction.category) {
+            Picker("Category", selection: $vm.category) {
               ForEach(vm.categories, id: \.name) { category in
                 Text(category.name).tag(Optional(category))
               }
@@ -44,17 +43,17 @@ struct EditTransactionView: View {
             }
           }
           HStack {
-            DatePicker("Date", selection: $vm.currentTransaction.date)
+            DatePicker("Date", selection: $vm.date)
           }
           HStack {
             Text("Amount")
-            TextField("Amount", value: $vm.currentTransaction.amount, formatter: numberFormatter())
+            TextField("Amount", value: $vm.amount, formatter: numberFormatter())
               .multilineTextAlignment(.trailing)
               .keyboardType(.decimalPad)
               .focused($fieldShowing, equals: .amount)
           }
           HStack {
-            TextField("Notes", text: $vm.currentTransaction.notes)
+            TextField("Notes", text: $vm.notes)
               .frame(height: 150, alignment: .topLeading)
               .focused($fieldShowing, equals: .notes)
           }

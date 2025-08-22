@@ -6,9 +6,11 @@
 //
 
 import Foundation
+import OSLog
 import SwiftData
 
 class DataRepository {
+  let logger = Logger()
   private let context: ModelContext
 
   init(context: ModelContext) {
@@ -20,45 +22,50 @@ class DataRepository {
   }
 
   func save() {
+    logger.debug("Saving")
     do {
       try context.save()
     } catch {
-      print("Error saving: \(error)")
+      logger.error("Error saving: \(error)")
     }
   }
 
-  func save<T: PersistentModel>(_ object: T) {
+  func save<T: BaseModel>(_ object: T) {
+    logger.debug("Saving \(object.name)")
     context.insert(object)
     do {
       try context.save()
     } catch {
-      print("Error saving \(T.self): \(error)")
+      logger.error("Error saving \(T.self): \(error)")
     }
   }
 
-  func fetch<T: PersistentModel>(
+  func fetch<T: BaseModel>(
     _: T.Type,
     sort: [SortDescriptor<T>] = []
   ) -> [T] {
+    logger.debug("Fetching")
     do {
       let descriptor = FetchDescriptor<T>(sortBy: sort)
       return try context.fetch(descriptor)
     } catch {
-      print("Error fetching \(T.self): \(error)")
+      logger.error("Error fetching \(T.self): \(error)")
       return []
     }
   }
 
-  func insert(_ object: some PersistentModel) {
+  func insert(_ object: some BaseModel) {
+    logger.debug("Inserting \(object.name)")
     context.insert(object)
   }
 
-  func delete<T: PersistentModel>(_ object: T) {
+  func delete<T: BaseModel>(_ object: T) {
+    logger.debug("Deleting \(object.name)")
     context.delete(object)
     do {
       try context.save()
     } catch {
-      print("Error saving \(T.self): \(error)")
+      logger.error("Error saving \(T.self): \(error)")
     }
   }
 }
