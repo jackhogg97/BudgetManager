@@ -19,11 +19,9 @@ class Category {
   @Relationship(deleteRule: .cascade, inverse: \Transaction.category)
   var transactions: [Transaction] = []
 
-  var currentSpend: Double = 0.0
-
-//  var currentSpend: Double {
-//    transactions.reduce(0.0) { $0 + $1.amount }
-//  }
+  var currentSpend: Double {
+    transactions.reduce(0.0) { $0 + $1.amount }
+  }
 
   init(id: UUID, name: String, budget: Double, colorHex: String) {
     self.id = id

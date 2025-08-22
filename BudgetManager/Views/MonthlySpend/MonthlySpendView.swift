@@ -13,25 +13,25 @@ struct MonthlySpendView: View {
   let BAR_MAX_HEIGHT = 35.0
   let BAR_IDEAL_HEIGHT = 35.0
 
-  @State private var showingDifference: Bool = UserDefaults.standard.bool(forKey: K.Keys.SHOWING_DIFFERENCE)
+  @State private var vm: MonthlySpendViewModel
 
-  var transactions: [Transaction]
-  var dateRange: String
-  @Query(sort: [SortDescriptor<Category>(\.budget, order: .reverse)]) private var categories: [Category]
+  init(_ context: ModelContext, transactions _: [Transaction], dateRange: String) {
+    let repo = SwiftDataRepository(context: context)
+    _vm = State(wrappedValue: MonthlySpendViewModel(repo, dataRange: dateRange))
+  }
 
   var body: some View {
-    let _ = calculateCurrentSpend()
     GeometryReader {
       _ in
       VStack(alignment: .center, spacing: 0) {
-        if categories.isEmpty {
+        if vm.categories.isEmpty {
           Text("Click edit to add budgets")
         } else {
           HStack {
             Spacer()
             Button {
-              showingDifference.toggle()
-              UserDefaults.standard.set(showingDifference, forKey: K.Keys.SHOWING_DIFFERENCE)
+              vm.showingDifference.toggle()
+              UserDefaults.standard.set(vm.showingDifference, forKey: K.Keys.SHOWING_DIFFERENCE)
             } label: {
               getTotalLabel()
             }.buttonStyle(.plain)
@@ -46,10 +46,10 @@ struct MonthlySpendView: View {
 
   var CategoryBars: some View {
     ScrollView {
-      ForEach(categories, id: \.id) {
+      ForEach(vm.categories, id: \.id) {
         category in
         NavigationLink {
-          TransactionsByDayCategoryView(category: category.name, transactions: transactions, dateRangeLabel: dateRange)
+          TransactionsByDayCategoryView(category: category.name, transactions: category.transactions, dateRangeLabel: vm.dateRange)
         }
         label: {
           VStack(spacing: 0) {
@@ -64,7 +64,7 @@ struct MonthlySpendView: View {
             }
             .padding(.horizontal)
 
-            let percentFilled = getRowWidth(category: category)
+            let percentFilled = vm.getRowWidth(category: category)
             ZStack(alignment: .leading) {
               bar()
               bar(percentageFilled: percentFilled, colour: Color(hex: category.cat_color) ?? .blue)
@@ -85,18 +85,18 @@ struct MonthlySpendView: View {
   }
 
   func getTotalLabel() -> Text {
-    showingDifference ? getTotalDifferenceLabel() : getTotalSpentBudgetLabel()
+    vm.showingDifference ? getTotalDifferenceLabel() : getTotalSpentBudgetLabel()
   }
 
   func getCategoryLabel(category: Category) -> Text {
-    showingDifference ?
+    vm.showingDifference ?
       getDifferenceLabel(spend: category.currentSpend, budget: category.budget) :
       getSpentBudgetLabel(spend: category.currentSpend, budget: category.budget)
   }
 
   func getTotalSpentBudgetLabel() -> Text {
-    let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
-    let totalBudget = categories.reduce(0) { $0 + $1.budget }
+    let totalCurrentSpend = vm.categories.reduce(0) { $0 + $1.currentSpend }
+    let totalBudget = vm.categories.reduce(0) { $0 + $1.budget }
 
     return getSpentBudgetLabel(spend: totalCurrentSpend, budget: totalBudget)
   }
@@ -113,8 +113,8 @@ struct MonthlySpendView: View {
   }
 
   func getTotalDifferenceLabel() -> Text {
-    let totalCurrentSpend = categories.reduce(0) { $0 + $1.currentSpend }
-    let totalBudget = categories.reduce(0) { $0 + $1.budget }
+    let totalCurrentSpend = vm.categories.reduce(0) { $0 + $1.currentSpend }
+    let totalBudget = vm.categories.reduce(0) { $0 + $1.budget }
 
     return getDifferenceLabel(spend: totalCurrentSpend, budget: totalBudget)
   }
@@ -125,26 +125,21 @@ struct MonthlySpendView: View {
 
     return Text(String(format: "£%.2F", difference)).foregroundColor(color)
   }
-
-  func getRowWidth(category: Category) -> Double {
-    category.currentSpend / category.budget
-  }
-
-  func calculateCurrentSpend() {
-    for category in categories {
-      category.currentSpend = 0
-    }
-    for transaction in transactions {
-      if let index = categories.firstIndex(where: { $0.name == transaction.categoryName }) {
-        categories[index].currentSpend += transaction.amount
-      }
-    }
-  }
 }
 
 #Preview {
-  MonthlySpendView(
-    transactions: [],
+  let container = PreviewContext.GetContainer()
+
+  let category = Category("Bar", budget: 100.0, colorHex: "#FF0000")
+  let transaction = Transaction("Foo", category: category, amount: 50.0, date: Date())
+
+  container.mainContext.insert(category)
+  container.mainContext.insert(transaction)
+
+  return MonthlySpendView(
+    container.mainContext,
+    transactions: [transaction],
     dateRange: "15th January - 15th Feburary"
   )
+  .modelContainer(container)
 }

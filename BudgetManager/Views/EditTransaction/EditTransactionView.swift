@@ -38,7 +38,6 @@ struct EditTransactionView: View {
           HStack {
             Picker("Category", selection: $vm.currentTransaction.category) {
               ForEach(vm.categories, id: \.name) { category in
-                let _ = print(category)
                 Text(category.name).tag(Optional(category))
               }
               // Dividers are not rendered in Picker

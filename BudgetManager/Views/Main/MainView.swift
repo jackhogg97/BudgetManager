@@ -70,7 +70,7 @@ struct MainView: View {
           }
           .padding(.horizontal)
           Spacer()
-          MonthlySpendView(transactions: month.transactions, dateRange: month.label)
+          MonthlySpendView(modelContext, transactions: month.transactions, dateRange: month.label)
         }
         .tag(index)
       }
