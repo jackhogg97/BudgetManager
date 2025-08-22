@@ -31,6 +31,7 @@ struct MainView: View {
         }
       }
     }
+    .onAppear(perform: vm.fetch)
   }
 
   var Title: some View {
@@ -72,7 +73,7 @@ struct MainView: View {
           }
           .padding(.horizontal)
           Spacer()
-          MonthlySpendView(context, transactions: month.transactions, dateRange: month.label)
+          MonthlySpendView(context, dateRange: month.label)
         }
         .tag(index)
       }

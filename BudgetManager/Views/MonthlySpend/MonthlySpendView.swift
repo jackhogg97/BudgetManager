@@ -16,7 +16,7 @@ struct MonthlySpendView: View {
   private let context: ModelContext
   @State private var vm: MonthlySpendViewModel
 
-  init(_ context: ModelContext, transactions _: [Transaction], dateRange: String) {
+  init(_ context: ModelContext, dateRange: String) {
     let repo = SwiftDataRepository(context: context)
     _vm = State(wrappedValue: MonthlySpendViewModel(repo, dataRange: dateRange))
     self.context = context
@@ -44,6 +44,7 @@ struct MonthlySpendView: View {
         CategoryBars
       }
     }
+    .onAppear(perform: vm.fetch)
   }
 
   var CategoryBars: some View {
@@ -82,6 +83,7 @@ struct MonthlySpendView: View {
     Rectangle()
       .cornerRadius(5)
       .padding(.vertical, 5)
+      // TODO: this causes in 'Invalid frame dimension (negative or non-finite).'
       .frame(maxWidth: BAR_MAX_WIDTH * percentageFilled, idealHeight: BAR_IDEAL_HEIGHT, maxHeight: BAR_MAX_HEIGHT)
       .foregroundColor(colour)
   }
@@ -140,7 +142,6 @@ struct MonthlySpendView: View {
 
   return MonthlySpendView(
     container.mainContext,
-    transactions: [transaction],
     dateRange: "15th January - 15th Feburary"
   )
   .modelContainer(container)
