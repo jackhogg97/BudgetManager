@@ -15,7 +15,6 @@ final class EditTransactionViewModel {
 
   var categories: [Category]
   var currentTransaction: Transaction
-  var selectedCategory: Category?
 
   init(_ context: ModelContext, repo: SwiftDataRepository,
        transaction: Transaction?)
@@ -30,8 +29,7 @@ final class EditTransactionViewModel {
       date: Date(),
       notes: nil,
     )
-    // Hmm
-    selectedCategory = categories.first
+    currentTransaction.category = categories.first
   }
 
   func isSaveButtonDisabled() -> Bool {
