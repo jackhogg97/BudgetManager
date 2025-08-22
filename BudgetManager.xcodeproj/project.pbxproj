@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30A94742CBEED7B00592A10 /* TransactionModel.swift */; };
-		B30A94782CBF85E300592A10 /* CategoryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30A94772CBF85DC00592A10 /* CategoryModel.swift */; };
 		B31854C22BA45FAE00A28403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31854C12BA45FAE00A28403 /* Constants.swift */; };
 		B3206C552E52527A003BCDF4 /* MainToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3206C542E52526D003BCDF4 /* MainToolbar.swift */; };
 		B3206C782E54DA52003BCDF4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3206C762E54DA52003BCDF4 /* Category.swift */; };
@@ -25,8 +23,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B30A94742CBEED7B00592A10 /* TransactionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionModel.swift; sourceTree = "<group>"; };
-		B30A94772CBF85DC00592A10 /* CategoryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryModel.swift; sourceTree = "<group>"; };
 		B31854C12BA45FAE00A28403 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B3206C542E52526D003BCDF4 /* MainToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbar.swift; sourceTree = "<group>"; };
 		B3206C762E54DA52003BCDF4 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -64,8 +60,6 @@
 		B30A94762CBF832500592A10 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				B30A94772CBF85DC00592A10 /* CategoryModel.swift */,
-				B30A94742CBEED7B00592A10 /* TransactionModel.swift */,
 				B3206C762E54DA52003BCDF4 /* Category.swift */,
 				B3206C772E54DA52003BCDF4 /* Transaction.swift */,
 			);
@@ -229,9 +223,7 @@
 				B330AE562AFE8B9500144798 /* DataController.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
 				B3244E312AFBEAF700CE5CD3 /* Helpers.swift in Sources */,
-				B30A94782CBF85E300592A10 /* CategoryModel.swift in Sources */,
 				B35B4CFC2E57E1B7004A660C /* PreviewContext.swift in Sources */,
-				B30A94752CBEED7B00592A10 /* TransactionModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
