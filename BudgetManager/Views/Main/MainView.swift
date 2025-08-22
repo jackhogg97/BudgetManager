@@ -11,11 +11,11 @@ import SwiftUI
 
 struct MainView: View {
   @Environment(\.modelContext) private var modelContext
-  @StateObject private var vm: MainViewModel
+  @State private var vm: MainViewModel
 
   init(context: ModelContext) {
     let dataRepo = SwiftDataRepository(context: context)
-    _vm = StateObject(wrappedValue: MainViewModel(dataRepo: dataRepo))
+    _vm = State(wrappedValue: MainViewModel(dataRepo: dataRepo))
   }
 
   var body: some View {
@@ -78,4 +78,19 @@ struct MainView: View {
     .tabViewStyle(.page)
     .animation(.easeInOut, value: vm.selectedTabIndex)
   }
+}
+
+#Preview {
+  let container = PreviewContext.GetContainer()
+
+  let groceries = Category("Groceries", budget: 200.0, colorHex: "#0000FF")
+  let entertainment = Category("Entertainment", budget: 200.0, colorHex: "#0000FF")
+  container.mainContext.insert(groceries)
+  container.mainContext.insert(entertainment)
+
+  let transaction = Transaction("Big shop", category: groceries, amount: 50.0, date: Date())
+  container.mainContext.insert(transaction)
+
+  return MainView(context: container.mainContext)
+    .modelContainer(container)
 }

@@ -21,13 +21,14 @@ struct MonthData: Identifiable, Equatable {
   let transactions: [Transaction]
 }
 
+@Observable
 final class MainViewModel: ObservableObject {
   let PERIOD_START_DATE = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
-  @Published var selectedTabIndex: Int = 0
-  @Published var dataByMonth: [MonthData] = []
-  @Published var categories: [Category]
-  @Published var transactions: [Transaction]
+  var selectedTabIndex: Int = 0
+  var dataByMonth: [MonthData] = []
+  var categories: [Category]
+  var transactions: [Transaction]
 
   var canGoLeft: Bool { selectedTabIndex > 0 }
   var canGoRight: Bool { selectedTabIndex < dataByMonth.count - 1 }
