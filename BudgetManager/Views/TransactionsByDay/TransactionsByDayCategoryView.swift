@@ -5,19 +5,24 @@
 //  Created by JACK HOGG on 16/11/2023.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TransactionsByDayCategoryView: View {
-  @Environment(\.modelContext) var context
-  @StateObject var vm: TransactionsByDayViewModel
+  private var context: ModelContext
+  @State var vm: TransactionsByDayViewModel
 
-  init(category: String, transactions: [Transaction], dateRangeLabel: String) {
-    _vm = StateObject(wrappedValue: TransactionsByDayViewModel(dateRangeLabel: dateRangeLabel, transactions: transactions, category: category))
+  init(_ context: ModelContext, category: Category, transactions _: [Transaction], dateRangeLabel: String) {
+    self.context = context
+    _vm = State(wrappedValue: TransactionsByDayViewModel(
+      dateRangeLabel: dateRangeLabel, transactions: category.transactions, categoryName: category.name
+    )
+    )
   }
 
   var body: some View {
     VStack(alignment: .leading) {
-      Text(vm.category ?? "Unknown category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
+      Text(vm.categoryName ?? "Unknown Category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
       Text(vm.dateRangeLabel).font(.caption).frame(maxWidth: .infinity, alignment: .center)
       TransactionsListView(context: context, days: vm.days, transactionsByDay: vm.transactionByDay)
     }
@@ -25,5 +30,9 @@ struct TransactionsByDayCategoryView: View {
 }
 
 #Preview {
-  TransactionsByDayCategoryView(category: "Category Title", transactions: [], dateRangeLabel: "15 January - 15 Febuary")
+  let container = PreviewContext.GetContainer()
+  let category = Category("Category", budget: 100.0, colorHex: "#0000FF")
+  container.mainContext.insert(category)
+
+  return TransactionsByDayCategoryView(container.mainContext, category: category, transactions: [], dateRangeLabel: "15 January - 15 Febuary")
 }

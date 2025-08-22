@@ -5,14 +5,16 @@
 //  Created by Jack on 03/07/2024.
 //
 
+import SwiftData
 import SwiftUI
 
 struct TransactionsByDayMonthView: View {
-  @Environment(\.modelContext) var context
-  @StateObject var vm: TransactionsByDayViewModel
+  private let context: ModelContext
+  @State var vm: TransactionsByDayViewModel
 
-  init(transactions: [Transaction], dateRangeLabel: String) {
-    _vm = StateObject(wrappedValue: TransactionsByDayViewModel(dateRangeLabel: dateRangeLabel, transactions: transactions))
+  init(_ context: ModelContext, transactions: [Transaction], dateRangeLabel: String) {
+    self.context = context
+    _vm = State(wrappedValue: TransactionsByDayViewModel(dateRangeLabel: dateRangeLabel, transactions: transactions, categoryName: nil))
   }
 
   var body: some View {
@@ -24,5 +26,7 @@ struct TransactionsByDayMonthView: View {
 }
 
 #Preview {
-  TransactionsByDayMonthView(transactions: [], dateRangeLabel: "15 January - 15 Febuary")
+  let container = PreviewContext.GetContainer()
+
+  TransactionsByDayMonthView(container.mainContext, transactions: [], dateRangeLabel: "15 January - 15 Febuary")
 }

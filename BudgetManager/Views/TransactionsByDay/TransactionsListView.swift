@@ -10,10 +10,11 @@ import SwiftData
 import SwiftUI
 
 struct TransactionsListView: View {
-  @Environment(\.modelContext) var context
+  private var context: ModelContext
   @State private var vm: TransactionsListViewModel
 
   init(context: ModelContext, days: [String], transactionsByDay: [String: [Transaction]]) {
+    self.context = context
     _vm = State(wrappedValue: TransactionsListViewModel(context: context, days: days, transactionsByDay: transactionsByDay))
   }
 
