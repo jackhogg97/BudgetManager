@@ -23,7 +23,7 @@ struct MonthData: Identifiable, Equatable {
 
 @Observable
 final class MainViewModel: ObservableObject {
-  let dataRepo: SwiftDataRepository
+  let dataRepo: DataRepository
   let PERIOD_START_DATE = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
   var selectedTabIndex: Int = 0
@@ -36,8 +36,8 @@ final class MainViewModel: ObservableObject {
 
   private let dateFormatter = DateFormatter()
 
-  init(dataRepo: SwiftDataRepository) {
-    self.dataRepo = dataRepo
+  init(_ repo: DataRepository) {
+    dataRepo = repo
     dateFormatter.dateFormat = "dd MMMM yy"
     categories = dataRepo.fetch(Category.self, sort: [SortDescriptor(\.budget, order: .reverse)])
     transactions = dataRepo.fetch(Transaction.self)
@@ -45,7 +45,7 @@ final class MainViewModel: ObservableObject {
     selectedTabIndex = getLastestMonthIndex()
     print(transactions)
   }
-  
+
   func fetch() {
     categories = dataRepo.fetch(Category.self, sort: [SortDescriptor(\.budget, order: .reverse)])
     transactions = dataRepo.fetch(Transaction.self)

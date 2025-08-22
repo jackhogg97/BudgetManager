@@ -10,20 +10,19 @@ import SwiftData
 
 @Observable
 final class TransactionsListViewModel {
-  var context: ModelContext
+  var repo: DataRepository
   var days: [String] = []
   var transactionsByDay: [String: [Transaction]] = [:]
 
   var selectedTransaction: Transaction?
 
-  init(context: ModelContext, days: [String], transactionsByDay: [String: [Transaction]]) {
-    self.context = context
+  init(_ repo: DataRepository, days: [String], transactionsByDay: [String: [Transaction]]) {
+    self.repo = repo
     self.days = days
     self.transactionsByDay = transactionsByDay
   }
 
   func deleteTransaction(_ t: Transaction) {
-    context.delete(t)
-    try? context.save()
+    repo.delete(t)
   }
 }

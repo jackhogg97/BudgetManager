@@ -10,17 +10,13 @@ import SwiftData
 
 @Observable
 final class EditTransactionViewModel {
-  var dataRepo: SwiftDataRepository
-  var context: ModelContext
+  var dataRepo: DataRepository
 
   var categories: [Category]
   var currentTransaction: Transaction
 
-  init(_ context: ModelContext, repo: SwiftDataRepository,
-       transaction: Transaction?)
-  {
+  init(_ repo: DataRepository, transaction: Transaction?) {
     dataRepo = repo
-    self.context = context
     categories = repo.fetch(Category.self)
     currentTransaction = transaction ?? Transaction(
       name: "",
@@ -41,6 +37,5 @@ final class EditTransactionViewModel {
       return
     }
     dataRepo.save(currentTransaction)
-    try? context.save()
   }
 }

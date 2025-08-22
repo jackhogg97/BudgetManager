@@ -20,9 +20,8 @@ struct EditTransactionView: View {
 
   @State var vm: EditTransactionViewModel
 
-  init(_ context: ModelContext, transaction: Transaction?) {
-    let repo = SwiftDataRepository(context: context)
-    _vm = State(wrappedValue: EditTransactionViewModel(context, repo: repo, transaction: transaction))
+  init(_ repo: DataRepository, transaction: Transaction?) {
+    _vm = State(wrappedValue: EditTransactionViewModel(repo, transaction: transaction))
   }
 
   var body: some View {
@@ -92,17 +91,5 @@ struct EditTransactionView: View {
 }
 
 #Preview {
-  let container = PreviewContext.GetContainer()
-  let context = container.mainContext
-
-  let groceries = Category("Groceries", budget: 500, colorHex: "#FF0000")
-  context.insert(groceries)
-
-  return EditTransactionView(context, transaction: Transaction(
-    "Big shop",
-    category: groceries,
-    amount: 100,
-    date: Date()
-  ))
-  .modelContainer(container)
+  EditTransactionView(PreviewContext.MockRepo(), transaction: PreviewContext.Transaction())
 }

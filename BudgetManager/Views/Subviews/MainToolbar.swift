@@ -11,10 +11,10 @@ import SwiftUI
 struct MainToolbar: View {
   @State var showingAddTransaction: Bool = false
 
-  private var context: ModelContext
+  private var repo: DataRepository
 
-  init(_ context: ModelContext) {
-    self.context = context
+  init(_ repo: DataRepository) {
+    self.repo = repo
   }
 
   var body: some View {
@@ -26,10 +26,10 @@ struct MainToolbar: View {
         showingAddTransaction = true
       }
       .sheet(isPresented: $showingAddTransaction) {
-        EditTransactionView(context, transaction: nil)
+        EditTransactionView(repo, transaction: nil)
       }
       Spacer()
-      NavigationLink { EditBudgetsView(context) } label: {
+      NavigationLink { EditBudgetsView(repo) } label: {
         Image(systemName: "slider.horizontal.3")
       }
       Spacer()

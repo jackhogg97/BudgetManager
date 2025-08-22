@@ -17,5 +17,6 @@ enum K {
   enum Colours {
     static let CATEGORIES: [Color] = [.blue, .brown, .cyan, .green, .indigo, .mint, .orange, .pink, .purple, .red, .teal, .yellow]
     static let DEFAULT_CATEGORY: Color = .blue
+    static let DEFAULT_HEX = "#FF0000"
   }
 }

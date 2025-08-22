@@ -10,12 +10,12 @@ import SwiftData
 import SwiftUI
 
 struct TransactionsListView: View {
-  private var context: ModelContext
+  private var data: DataRepository
   @State private var vm: TransactionsListViewModel
 
-  init(context: ModelContext, days: [String], transactionsByDay: [String: [Transaction]]) {
-    self.context = context
-    _vm = State(wrappedValue: TransactionsListViewModel(context: context, days: days, transactionsByDay: transactionsByDay))
+  init(_ data: DataRepository, days: [String], transactionsByDay: [String: [Transaction]]) {
+    self.data = data
+    _vm = State(wrappedValue: TransactionsListViewModel(data, days: days, transactionsByDay: transactionsByDay))
   }
 
   var body: some View {
@@ -45,11 +45,11 @@ struct TransactionsListView: View {
     .listStyle(.plain)
     .sheet(item: $vm.selectedTransaction) {
       transaction in
-      EditTransactionView(context, transaction: transaction)
+      EditTransactionView(data, transaction: transaction)
     }
   }
 }
 
 #Preview {
-//  TransactionsListView(days: [], transactionsByDay: [:], title: "Example")
+  TransactionsListView(PreviewContext.MockRepo(), days: [], transactionsByDay: [:])
 }

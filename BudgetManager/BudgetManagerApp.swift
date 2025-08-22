@@ -12,6 +12,7 @@ import SwiftUI
 @main
 struct BudgetManagerApp: App {
   private let container: ModelContainer
+  private let repo: DataRepository
   @State private var isUnlocked = false
 
   init() {
@@ -20,13 +21,14 @@ struct BudgetManagerApp: App {
     } catch {
       fatalError("Failed to create ModelContainer: \(error)")
     }
+    repo = DataRepository(container.mainContext)
   }
 
   var body: some Scene {
     WindowGroup {
       ZStack {
         if isUnlocked {
-          MainView(container.mainContext)
+          MainView(repo)
         } else {
           VStack {
             Image(systemName: "lock.square")

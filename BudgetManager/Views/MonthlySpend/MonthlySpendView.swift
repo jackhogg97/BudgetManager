@@ -13,13 +13,12 @@ struct MonthlySpendView: View {
   let BAR_MAX_HEIGHT = 35.0
   let BAR_IDEAL_HEIGHT = 35.0
 
-  private let context: ModelContext
+  private let repo: DataRepository
   @State private var vm: MonthlySpendViewModel
 
-  init(_ context: ModelContext, dateRange: String) {
-    let repo = SwiftDataRepository(context: context)
+  init(_ repo: DataRepository, dateRange: String) {
     _vm = State(wrappedValue: MonthlySpendViewModel(repo, dataRange: dateRange))
-    self.context = context
+    self.repo = repo
   }
 
   var body: some View {
@@ -52,7 +51,7 @@ struct MonthlySpendView: View {
       ForEach(vm.categories, id: \.id) {
         category in
         NavigationLink {
-          TransactionsByDayCategoryView(context, category: category, transactions: category.transactions, dateRangeLabel: vm.dateRange)
+          TransactionsByDayCategoryView(repo, category: category, transactions: category.transactions, dateRangeLabel: vm.dateRange)
         }
         label: {
           VStack(spacing: 0) {
@@ -132,17 +131,8 @@ struct MonthlySpendView: View {
 }
 
 #Preview {
-  let container = PreviewContext.GetContainer()
-
-  let category = Category("Bar", budget: 100.0, colorHex: "#FF0000")
-  let transaction = Transaction("Foo", category: category, amount: 50.0, date: Date())
-
-  container.mainContext.insert(category)
-  container.mainContext.insert(transaction)
-
-  return MonthlySpendView(
-    container.mainContext,
+  MonthlySpendView(
+    PreviewContext.MockRepo(),
     dateRange: "15th January - 15th Feburary"
   )
-  .modelContainer(container)
 }

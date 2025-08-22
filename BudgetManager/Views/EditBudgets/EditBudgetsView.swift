@@ -12,9 +12,8 @@ struct EditBudgetsView: View {
   @FocusState private var isKeyboardShowing: Bool
   @State private var vm: EditBudgetsViewModel
 
-  init(_ context: ModelContext) {
-    let repo = SwiftDataRepository(context: context)
-    _vm = State(wrappedValue: EditBudgetsViewModel(context: context, dataRepo: repo))
+  init(_ repo: DataRepository) {
+    _vm = State(wrappedValue: EditBudgetsViewModel(repo))
   }
 
   var body: some View {
@@ -52,13 +51,13 @@ struct EditBudgetsView: View {
               get: { Color(hex: category.cat_color) ?? .blue },
               set: { newColor in
                 if let category = vm.categories.first(where: { $0.id == category.id }) {
-                  category.cat_color = newColor.toHex() ?? "#0000FF"
+                  category.cat_color = newColor.toHex() ?? K.Colours.DEFAULT_HEX
                 }
               }
             ),
             save: { color in
               if let category = vm.categories.first(where: { $0.id == category.id }) {
-                category.cat_color = color.toHex() ?? "#0000FF"
+                category.cat_color = color.toHex() ?? K.Colours.DEFAULT_HEX
               }
             }
           )
@@ -79,14 +78,5 @@ struct EditBudgetsView: View {
 }
 
 #Preview {
-  let container = PreviewContext.GetContainer()
-  let context = container.mainContext
-
-  let groceries = Category("Groceries", budget: 500, colorHex: "#FF0000")
-  let rent = Category("Rent", budget: 1200, colorHex: "#00FF00")
-  context.insert(groceries)
-  context.insert(rent)
-
-  return EditBudgetsView(context)
-    .modelContainer(container)
+  EditBudgetsView(PreviewContext.MockRepo())
 }

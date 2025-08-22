@@ -10,13 +10,12 @@ import SwiftData
 import SwiftUI
 
 struct MainView: View {
+  private let repo: DataRepository
   @State private var vm: MainViewModel
-  var context: ModelContext
 
-  init(_ context: ModelContext) {
-    let dataRepo = SwiftDataRepository(context: context)
-    _vm = State(wrappedValue: MainViewModel(dataRepo: dataRepo))
-    self.context = context
+  init(_ repo: DataRepository) {
+    self.repo = repo
+    _vm = State(wrappedValue: MainViewModel(repo))
   }
 
   var body: some View {
@@ -27,7 +26,7 @@ struct MainView: View {
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
-          MainToolbar(context)
+          MainToolbar(repo)
         }
       }
     }
@@ -57,7 +56,7 @@ struct MainView: View {
             Spacer()
             NavigationLink {
               TransactionsByDayMonthView(
-                context,
+                repo,
                 transactions: month.transactions,
                 dateRangeLabel: month.label
               )
@@ -73,7 +72,7 @@ struct MainView: View {
           }
           .padding(.horizontal)
           Spacer()
-          MonthlySpendView(context, dateRange: month.label)
+          MonthlySpendView(repo, dateRange: month.label)
         }
         .tag(index)
       }
@@ -84,16 +83,5 @@ struct MainView: View {
 }
 
 #Preview {
-  let container = PreviewContext.GetContainer()
-
-  let groceries = Category("Groceries", budget: 200.0, colorHex: "#0000FF")
-  let entertainment = Category("Entertainment", budget: 200.0, colorHex: "#0000FF")
-  container.mainContext.insert(groceries)
-  container.mainContext.insert(entertainment)
-
-  let transaction = Transaction("Big shop", category: groceries, amount: 50.0, date: Date())
-  container.mainContext.insert(transaction)
-
-  return MainView(container.mainContext)
-    .modelContainer(container)
+  MainView(PreviewContext.MockRepo())
 }
