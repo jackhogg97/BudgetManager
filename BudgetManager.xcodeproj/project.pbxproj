@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		B31854C22BA45FAE00A28403 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B31854C12BA45FAE00A28403 /* Constants.swift */; };
-		B3206C552E52527A003BCDF4 /* MainToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3206C542E52526D003BCDF4 /* MainToolbar.swift */; };
 		B3206C782E54DA52003BCDF4 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3206C762E54DA52003BCDF4 /* Category.swift */; };
 		B3206C792E54DA52003BCDF4 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3206C772E54DA52003BCDF4 /* Transaction.swift */; };
 		B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3244E202AFBE7BC00CE5CD3 /* BudgetManagerApp.swift */; };
@@ -23,7 +22,6 @@
 
 /* Begin PBXFileReference section */
 		B31854C12BA45FAE00A28403 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		B3206C542E52526D003BCDF4 /* MainToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbar.swift; sourceTree = "<group>"; };
 		B3206C762E54DA52003BCDF4 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		B3206C772E54DA52003BCDF4 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		B3244E1D2AFBE7BC00CE5CD3 /* BudgetManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BudgetManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,7 +128,6 @@
 		B37CF6722C297F0000A10802 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
-				B3206C542E52526D003BCDF4 /* MainToolbar.swift */,
 				B32AEA6D2CC508D00034CE38 /* ColourPickerView.swift */,
 			);
 			path = Subviews;
@@ -216,7 +213,6 @@
 				B3206C782E54DA52003BCDF4 /* Category.swift in Sources */,
 				B3206C792E54DA52003BCDF4 /* Transaction.swift in Sources */,
 				B32AEA6E2CC508D00034CE38 /* ColourPickerView.swift in Sources */,
-				B3206C552E52527A003BCDF4 /* MainToolbar.swift in Sources */,
 				B31854C22BA45FAE00A28403 /* Constants.swift in Sources */,
 				B3FBE0032E52245000FEBE74 /* DataRepository.swift in Sources */,
 				B3244E212AFBE7BC00CE5CD3 /* BudgetManagerApp.swift in Sources */,
