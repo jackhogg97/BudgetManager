@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftData
+import SwiftUICore
 
 @Observable
 final class EditBudgetsViewModel {
@@ -40,6 +41,12 @@ final class EditBudgetsViewModel {
   func save() {
     UserDefaults.standard.setValue(startDate, forKey: K.Keys.PERIOD_DATE)
     repo.save()
+  }
+
+  func setCategoryColour(_ c: Category, colour: Color) {
+    if let category = categories.first(where: { $0.id == c.id }) {
+      category.cat_color = colour.toHex() ?? K.Colours.DEFAULT_HEX
+    }
   }
 
   func deleteCategory(at offsets: IndexSet) {

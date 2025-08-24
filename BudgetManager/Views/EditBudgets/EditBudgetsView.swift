@@ -49,17 +49,8 @@ struct EditBudgetsView: View {
           ColourPickerView(
             selected: Binding(
               get: { Color(hex: category.cat_color) ?? .blue },
-              set: { newColor in
-                if let category = vm.categories.first(where: { $0.id == category.id }) {
-                  category.cat_color = newColor.toHex() ?? K.Colours.DEFAULT_HEX
-                }
-              }
+              set: { vm.setCategoryColour(category, colour: $0) }
             ),
-            save: { color in
-              if let category = vm.categories.first(where: { $0.id == category.id }) {
-                category.cat_color = color.toHex() ?? K.Colours.DEFAULT_HEX
-              }
-            }
           )
           .presentationDetents([.medium])
         }
