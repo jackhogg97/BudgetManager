@@ -15,15 +15,21 @@ struct TransactionsByDayCategoryView: View {
   init(_ repo: DataRepository, category: Category, transactions _: [Transaction], dateRangeLabel: String) {
     data = repo
     _vm = State(wrappedValue: TransactionsByDayViewModel(
-      dateRangeLabel: dateRangeLabel, transactions: category.transactions, categoryName: category.name
+      repo, dateRangeLabel: dateRangeLabel, transactions: category.transactions, categoryId: category.id
     ))
   }
 
   var body: some View {
     VStack(alignment: .leading) {
-      Text(vm.categoryName ?? "Unknown Category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
+      Text(vm.category?.name ?? "Unknown category?").font(.title3).frame(maxWidth: .infinity, alignment: .center)
       Text(vm.dateRangeLabel).font(.caption).frame(maxWidth: .infinity, alignment: .center)
       TransactionsListView(data, days: vm.days, transactionsByDay: vm.transactionByDay)
+    }
+    .onAppear {
+      print("appearing...")
+      if vm.categoryId != nil {
+        vm.fetchCategory(id: vm.categoryId!)
+      }
     }
   }
 }

@@ -42,11 +42,11 @@ class DataRepository {
 
   func fetch<T: BaseModel>(
     _: T.Type,
-    sort: [SortDescriptor<T>] = []
+    sort: [SortDescriptor<T>] = [],
+    predicate: Predicate<T>? = nil
   ) -> [T] {
-    logger.debug("Fetching")
     do {
-      let descriptor = FetchDescriptor<T>(sortBy: sort)
+      let descriptor = FetchDescriptor<T>(predicate: predicate, sortBy: sort)
       return try context.fetch(descriptor)
     } catch {
       logger.error("Error fetching \(T.self): \(error)")

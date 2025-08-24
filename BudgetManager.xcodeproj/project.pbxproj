@@ -107,9 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				B3206C562E525EE8003BCDF4 /* Main */,
+				B35B4CFF2E58613C004A660C /* MonthlySpend */,
 				B3206C642E54B122003BCDF4 /* TransactionsByDay */,
 				B35B4CF52E5731E0004A660C /* EditBudgets */,
-				B35B4CFF2E58613C004A660C /* MonthlySpend */,
 				B35B4CFA2E57E08A004A660C /* EditTransaction */,
 				B37CF6722C297F0000A10802 /* Subviews */,
 			);

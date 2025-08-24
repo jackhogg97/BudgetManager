@@ -6,25 +6,41 @@
 //
 
 import Foundation
+import SwiftData
 
 @Observable
 final class TransactionsByDayViewModel: ObservableObject {
   var days: [String] = []
   var transactionByDay: [String: [Transaction]] = [:]
   var dateRangeLabel: String
-  var categoryName: String?
+
+  var categoryId: UUID?
+  var category: Category?
+
+  private let repo: DataRepository
 
   private let dateFormatter: DateFormatter
 
-  init(dateRangeLabel: String, transactions: [Transaction], categoryName: String?) {
+  init(_ repo: DataRepository, dateRangeLabel: String, transactions: [Transaction], categoryId: UUID?) {
     dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "dd MMMM yyyy"
     dateFormatter.locale = Locale(identifier: "en_GB")
 
-    self.categoryName = categoryName
+    self.repo = repo
     self.dateRangeLabel = dateRangeLabel
 
+    if categoryId != nil {
+      self.categoryId = categoryId
+      fetchCategory(id: categoryId!)
+    }
+
     (days, transactionByDay) = getTransactionsKeyedByDay(transactions: transactions)
+  }
+
+  func fetchCategory(id: UUID) {
+    if let c = repo.fetch(Category.self, predicate: #Predicate { $0.id == id }).first {
+      category = c
+    }
   }
 
   // Returns an array of date keys and a dictionary with the key and whose values are the transactions

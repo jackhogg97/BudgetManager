@@ -26,6 +26,8 @@ final class MainViewModel: ObservableObject {
   let dataRepo: DataRepository
   let PERIOD_START_DATE = UserDefaults.standard.integer(forKey: K.Keys.PERIOD_DATE)
 
+  var showingAddTransaction: Bool = false
+
   var selectedTabIndex: Int = 0
   var dataByMonth: [MonthData] = []
   var categories: [Category]
@@ -45,9 +47,11 @@ final class MainViewModel: ObservableObject {
     selectedTabIndex = getLastestMonthIndex()
   }
 
-  func fetch() {
+  func refresh() {
+    print("refreshing")
     categories = dataRepo.fetch(Category.self, sort: [SortDescriptor(\.budget, order: .reverse)])
     transactions = dataRepo.fetch(Transaction.self)
+    dataByMonth = getDataByMonth()
   }
 
   func goLeft() {

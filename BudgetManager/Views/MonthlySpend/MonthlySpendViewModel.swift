@@ -10,14 +10,16 @@ import SwiftData
 
 @Observable
 final class MonthlySpendViewModel {
-  let repo: DataRepository
+  private let repo: DataRepository
   var showingDifference: Bool = UserDefaults.standard.bool(forKey: K.Keys.SHOWING_DIFFERENCE)
-  var categories: [Category]
-  var dateRange: String
+  private(set) var categories: [Category]
+  private(set) var transactions: [Transaction]
+  private(set) var dateRange: String
 
   init(_ repo: DataRepository, dataRange: String) {
     self.repo = repo
     categories = repo.fetch(Category.self)
+    transactions = repo.fetch(Transaction.self)
     dateRange = dataRange
   }
 
@@ -27,5 +29,14 @@ final class MonthlySpendViewModel {
 
   func fetch() {
     categories = repo.fetch(Category.self)
+    transactions = repo.fetch(Transaction.self)
+  }
+
+  func refresh(category: Category) -> Category {
+    fetch()
+    if let found = categories.first(where: { $0.id == category.id }) {
+      return found
+    }
+    return category
   }
 }

@@ -26,11 +26,27 @@ struct MainView: View {
       }
       .toolbar {
         ToolbarItemGroup(placement: .bottomBar) {
-          MainToolbar(repo)
+          HStack {
+            Spacer()
+            Button("Recurring transactions", systemImage: "repeat") {}
+            Spacer()
+            Button("Add transaction", systemImage: "plus") {
+              vm.showingAddTransaction = true
+            }
+            .sheet(isPresented: $vm.showingAddTransaction) {
+              EditTransactionView(repo, transaction: nil)
+            }
+            Spacer()
+            NavigationLink { EditBudgetsView(repo) } label: {
+              Image(systemName: "slider.horizontal.3")
+            }
+            Spacer()
+          }
+          .padding(.horizontal)
         }
       }
     }
-    .onAppear(perform: vm.fetch)
+    .onChange(of: vm.showingAddTransaction, vm.refresh)
   }
 
   var Title: some View {

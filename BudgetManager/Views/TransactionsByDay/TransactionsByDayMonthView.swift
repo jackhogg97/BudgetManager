@@ -14,7 +14,7 @@ struct TransactionsByDayMonthView: View {
 
   init(_ data: DataRepository, transactions: [Transaction], dateRangeLabel: String) {
     self.data = data
-    _vm = State(wrappedValue: TransactionsByDayViewModel(dateRangeLabel: dateRangeLabel, transactions: transactions, categoryName: nil))
+    _vm = State(wrappedValue: TransactionsByDayViewModel(data, dateRangeLabel: dateRangeLabel, transactions: transactions, categoryId: nil))
   }
 
   var body: some View {
