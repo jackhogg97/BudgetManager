@@ -56,6 +56,7 @@ struct EditBudgetsView: View {
         }
     }
     .onAppear(perform: vm.fetchCategories)
+    .onDisappear(perform: vm.save)
     .toolbar {
       ToolbarItemGroup(placement: .keyboard) {
         Spacer()
